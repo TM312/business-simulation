@@ -1,0 +1,23 @@
+
+<!-- This is a subtemplate for control_input referenced to by the templates
+  - example.html -->
+
+
+
+<div class="card selector shadow-sm" id="berlinPopulation">
+  <div class="accordion" id="accordionBerlinPopulation">
+    <div class="card-header" id="headerBerlinPopulation">
+      <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseControl_input_description" aria-expanded="false" aria-controls="collapseControl_input_description">
+          {{ control_input.name }}</button></h2>
+    </div>
+    <div id="collapseControl_input_description" class="collapse hide" aria-labelledby="headerBerlinPopulation" data-parent="#accordionBerlinPopulation">
+      <div class="card-body">
+        <p class="card-text">{{ control_input.description }}</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div id="control_input_{{ control_input.id }}"></div>
+    </div>
+  </div>
+  <div class="card-footer"><a href="javascript:void(0)" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Sources" data-content="{{ control_input.sources }}"><em>i</em></a></div>
+</div>

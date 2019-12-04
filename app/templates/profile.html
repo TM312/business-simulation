@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <div class="container">
+    <table>
+        <tr valign="top">
+            <td><img src="{{ profile.avatar(128) }}"></td>
+            <td>
+                <h1>{{ profile.first_name }}</h1>
+                {% if profile.about_me %}<p>{{ profile.about_me }}</p>{% endif %}
+                {% if profile.last_seen %}<p>Last seen on: {{ profile.last_seen }}</p>{% endif %}
+                <p><a href="{{ url_for('editProfile') }}">Edit your profile</a></p>
+
+                <!-- conditional statement makes sure that the Edit link appears only when you are viewing your own profile. -->
+
+
+            </td>
+        </tr>
+    </table>
+    <hr>
+
+    <!--
+    {% for post in posts %}
+        {% include '_post.html' %}  Reference to the subtemplate _post.html
+    {% endfor %} -->
+  </div>
+{% endblock %}

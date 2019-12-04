@@ -1,0 +1,91 @@
+2019-10-25 18:20:29,707 ERROR: Exception on /example [GET] [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/routes.py", line 26, in example
+    return render_template('example.html', title='Example')
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/templating.py", line 138, in render_template
+    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/loaders.py", line 125, in load
+    code = environment.compile(source, name, filename)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 591, in compile
+    self.handle_exception(exc_info, source_hint=source_hint)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 780, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/_compat.py", line 37, in reraise
+    raise value.with_traceback(tb)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/templates/example.html", line 528, in template
+    {% endblock content %}
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 497, in _parse
+    return Parser(self, source, name, encode_filename(filename)).parse()
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/parser.py", line 901, in parse
+    result = nodes.Template(self.subparse(), lineno=1)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/parser.py", line 888, in subparse
+    self.stream.expect('block_end')
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/lexer.py", line 384, in expect
+    self.name, self.filename)
+jinja2.exceptions.TemplateSyntaxError: expected token 'end of statement block', got 'content'
+2019-10-25 18:29:11,324 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-25 18:31:17,152 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-25 18:36:50,438 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-25 18:44:26,753 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-25 18:54:12,974 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-25 18:54:52,081 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-26 08:46:24,526 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-26 08:51:43,889 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-26 08:53:05,328 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-10-27 12:02:57,964 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 10:45:12,403 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 10:46:35,298 ERROR: Exception on /reset_password_request [GET] [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py:1891]
+Traceback (most recent call last):
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/routes.py", line 162, in reset_password_request
+    title='Reset Password', form=form)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/templating.py", line 138, in render_template
+    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/templating.py", line 60, in get_source
+    return self._get_source_fast(environment, template)
+  File "/Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/venv/lib/python3.7/site-packages/flask/templating.py", line 89, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: reset_password_request.html
+2019-11-06 10:58:34,236 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 11:14:39,541 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 11:15:24,274 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 11:21:32,795 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 11:24:42,781 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]
+2019-11-06 14:58:08,988 INFO: BusSim startup [in /Users/tm/GoogleDrive/tm/Projects/2_active/BusSim/Website/app/__init__.py:50]

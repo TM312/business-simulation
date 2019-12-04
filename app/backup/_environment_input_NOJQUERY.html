@@ -1,0 +1,82 @@
+
+<!-- This is a subtemplate for control_input referenced to by the templates
+  - example.html -->
+  
+
+<script type="text/javascript" defer>
+  $(document).ready(function () {
+    $.get("{{ url_for('jsonmodel') }}", function (data) {
+      var id = data.environment_inputs[1].name
+      $('#JQUERYTEST').empty();
+      $('#JQUERYTEST').append(id);
+    });
+  });
+</script>
+
+
+<div class="card shadow-sm mb-3">
+    <div class="card-header">
+      <p class="lead mb-0" id="JQUERYTEST" />
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ environment_input.description }}<hr></p>
+      <div class="row">
+        {% if environment_input.type=="static" %}
+          <div class="col">
+            <label class="mr-2 mt-1" for="environment_input{{ environment_input.id }}"><b>Static Value</b></label>
+            <input class="slider mt-1" type="range" name="environment_input{{ environment_input.id }}" 
+              id="environment_input{{ environment_input.id }}" value="{{ environment_input.value_default }}" 
+              min="{{ environment_input.value_min }}" max="{{ environment_input.value_max }}" 
+              step="{{ environment_input.step }}" onmouseup="rangeToArrayStatic()">
+            <output class="slider_label" id="environment_input{{ environment_input.id }}_disp"><p class="ml-5"></p></output>
+          </div>
+        {% elif environment_input.type=="linear" %}
+          <div class="col-md-6">
+            <label class="mr-2 mt-1" for="environment_input{{ environment_input.id }}"><b>Initial Value</b></label>
+            <input class="slider mt-1" type="range" name="environment_input{{ environment_input.id }}" 
+              id="environment_input{{ environment_input.id }}" value="{{ environment_input.value_default }}" 
+              min="{{ environment_input.value_min }}" max="{{ environment_input.value_max }}"
+              step="{{ environment_input.step }}" onmouseup="rangeToArrayLinear()">
+            <output class="slider_label" id="environment_input{{ environment_input.id }}_disp"><p class="ml-5"></p></output>
+          </div>
+          <div class="col-md-6">
+            <label class="mr-2 mt-1" for="environment_input{{ environment_input.id }}"><b>Growth Rate</b></label>
+            <input class="slider mt-1" type="range" name="environment_input{{ environment_input.id }}" 
+              id="environment_input{{ environment_input.id }}" value="{{ environment_input.value_default }}"
+              min="{{ environment_input.value_min }}" max="{{ environment_input.value_max }}" 
+              step="{{ environment_input.step }}" onmouseup="rangeToArrayLinear()">
+            <output class="slider_label" id="environment_input{{ environment_input.id }}_disp"><p class="ml-5"></p></output>
+          </div>
+
+        {% elif environment_input.type=="dynamic" %}
+        <div class="col-md-6">
+          <label class="mr-2 mt-1" for="environment_input{{ environment_input.id }}"><b>Initial Value</b></label>
+          <input class="slider mt-1" type="range" name="environment_input{{ environment_input.id }}"
+            id="environment_input{{ environment_input.id }}" value="{{ environment_input.value_default }}"
+            min="{{ environment_input.value_min }}" max="{{ environment_input.value_max }}" ,
+            step="{{ environment_input.step }}" onmouseup="rangeToArrayLinear()">
+          <output class="slider_label" id="environment_input{{ environment_input.id }}_disp">
+            <p class="ml-5"></p>
+          </output>
+        </div>
+        <div class="col-md-6">
+          <label class="mr-2 mt-1" for="environment_input{{ environment_input.id }}"><b>Growth Factor</b></label>
+          <input class="slider mt-1" type="range" name="environment_input{{ environment_input.id }}"
+            id="environment_input{{ environment_input.id }}" value="{{ environment_input.value_default }}"
+            min="{{ environment_input.value_min }}" max="{{ environment_input.value_max }}" ,
+            step="{{ environment_input.step }}" onmouseup="rangeToArrayLinear()">
+          <output class="slider_label" id="environment_input{{ environment_input.id }}_disp">
+            <p class="ml-5"></p>
+          </output>
+        </div>
+
+        {% endif %}
+      </div>
+      <hr>
+      <div class="container-fluid">
+        <canvas id="environment_input_{{ environment_input.id }}" />
+        <script src="{{ url_for('static', filename='scripts/main.js') }}" defer></script>
+      </div>
+    </div>
+  <div class="card-footer"><a href="javascript:void(0)" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Sources" data-content="{{environment_input.sources}}"><em>i</em></a></div>
+</div>

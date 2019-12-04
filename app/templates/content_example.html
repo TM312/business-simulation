@@ -1,0 +1,421 @@
+<!--
+//       <div class="card selector shadow-sm" id="bRiderShare">
+//         <div class="accordion" id="accordionBRiderShare">
+//           <div class="card-header" id="headerBRiderShare">
+//             <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextBRiderShare" aria-expanded="false" aria-controls="collapseTextBRiderShare">
+//                 Berlin Rider Share</button></h2>
+//           </div>
+//           <div id="collapseTextBRiderShare" class="collapse hide" aria-labelledby="headerBRiderShare" data-parent="#accordionBRiderShare">
+//             <div class="card-body">
+//               <p class="card-text">Only a part of the Berlin population makes use of the new dockless shared scooter mobility solution. A recent study on scooter adoption in revealed that 40% of all Parisians have used a scooter by one of the new mobility providers before. However, usage behavior varies heavily. Lime reports that “11% of Parisians report using e-scooters either ‘frequently’ or ‘from time to time’.” You can define an initial user base and explore the effects of different adoption scenarios.</p>
+//             </div>
+//           </div>
+//           <div class="card-body">
+//             <form>
+//               <div class="form-group">
+//                 <p><b>5%</b></p><input type="range" min="0.05" max="0.3" step="0.05" class="form-control-range" id="bRiderShare">
+//                 <p><b>30%</b></p>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//         <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//       </div>
+//     </div>
+//     <div class="col col-12 col-lg-6">
+//         <div class="card selector" id="cityFees">
+//           <div class="accordion" id="accordionCityFees">
+//             <div class="card-header" id="headerCityFees">
+//               <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextCityFees" aria-expanded="false" aria-controls="collapseTextCityFees">
+//                   City Fees</button></h2>
+//             </div>
+//             <div id="collapseTextCityFees" class="collapse hide" aria-labelledby="headerCityFees" data-parent="#accordionCityFees">
+//               <div class="card-body">
+//                 <p class="card-text">It is not uncommon for cities to charge a fee to operators of dockless vehicles. For instance, in October 2018 the city Louisville in Kentucky, US issued a policy that entailed the following details: <em>“In addition to a license application fee, annual fee, bond and fee for a designation group parking area, operators will pay $1/day per vehicle.”</em> Similarly, The Verge reports <em>“Baltimore charged Bird and Lime each a $15,000 fee up front and a $1 per scooter fee per day. In Raleigh, North Carolina, Bird added a $2 transportation fee on top of its $1 unlock fee after the City Council implemented a $300 per scooter fee.”</em></p>
+//                 <p class="card-text">By clicking the checkbox, you can decide if or if not to include city fees in any scenario. In the prior case, this implies an annual fee of 50€ per scooter and a daily fee of 1€ per scooter. </p>
+//               </div>
+//             </div>
+//             <div class="card-body">
+//               <div class="form-check">
+//                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+//                   <label class="form-check-label highlightedFont" for="defaultCheck1">Include city fees</label>
+//               </div>
+//             </div>
+//           </div>
+//           <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//         </div>
+
+//         <div class="card selector" id="marketShare">
+//           <div class="accordion" id="accordionMarketShare">
+//             <div class="card-header" id="headerMarketShare">
+//               <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextMarketShare" aria-expanded="false" aria-controls="collapseTextMarketShare">
+//                   Market Share</button></h2>
+//             </div>
+//             <div id="collapseTextMarketShare" class="collapse hide" aria-labelledby="headerMarketShare" data-parent="#accordionMarketShare">
+//               <div class="card-body">
+//                 <p class="card-text">This variable represents the market share of the focal firm among shared scooter providers. At the current state, users can set the market share for the simulation. This is a major simplification compared to the real business. In reality, pricing, marketing, and further factors cause dynamics in customer behavior that are difficult to predict. In contrast, by allowing to simulate different scenarios you get an idea of how changes in market share may influence different KPIs.</p>
+//               </div>
+//             </div>
+//             <div class="card-body">
+//               <form>
+//                 <div class="form-group">
+//                   <p><b>10%</b></p><input type="range" min="0.1" max="0.9" step="0.2" class="form-control-range" id="marketShare">
+//                   <p><b>90%</b></p>
+//                 </div>
+//               </form>
+//             </div>
+//           </div>
+//           <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//         </div>
+
+//         <div class="card selector" id="scooters">
+//           <div class="accordion" id="accordionScooters">
+//             <div class="card-header" id="headerScooters">
+//               <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextScooters" aria-expanded="false" aria-controls="collapseTextScooters">
+//                   Scooters</button></h2>
+//             </div>
+//             <div id="collapseTextScooters" class="collapse hide" aria-labelledby="headerScooters" data-parent="#accordionScooters">
+//               <div class="card-body">
+//                 <p class="card-text">One of the most fundamental business question concerns the number of scooters a provider deploys in the city. More scooters imply greater user comfort as the walking distance to the next scooter decreases. However, it has significant effects on the costs of operation as more scooters need to be purchased, charged, and maintained. Further, the utilization of each scooter decreases. Finally, the question remains: how to adjust the number of scooters once the user base increases?.</p>
+//                 <p class="card-text">In practice, many cities limit the number of scooters any provider is allowed to deploy in order to remain a certain degree of control over negative side effects. For instance, Louisville’s dockless policy specifies: <em>“During the probationary period, operators may begin with 150 vehicles and, if ridership exceeds four rides per vehicle per day, increase their fleet by 100 vehicles per month, up to 650. Ultimately, operators will be permitted 1,050 vehicles if they successfully complete the probationary period and meet performance standards, such as responsiveness to complaints and ridership.”</em> Similar policies can be found in various cities, such as Vienna, Madrid. As of now, there exists no such policy in Berlin.</p>
+//               </div>
+//             </div>
+//             <div class="card-body">
+//               <form>
+//                 <div class="form-group">
+//                   <p><b>500</b></p><input type="range" min="500" max="2500" value="800" step="100" class="form-control-range" id="scootersInitial">
+//                   <p><b>2500</b></p>
+//                 </div>
+//               </form>
+//             </div>
+//           </div>
+//           <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//         </div>
+//       </div>
+//   </div>
+// </div>
+// <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+// <div class="row">
+//   <div class="col col-12 col-lg-6">
+
+//     <div class="card selector" id="berlinPopulation">
+//       <div class="accordion" id="accordionBerlinPopulation">
+//         <div class="card-header" id="headerBerlinPopulation">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextBerlinPopulation" aria-expanded="false" aria-controls="collapseTextBerlinPopulation">
+//               Berlin Population</button></h2>
+//         </div>
+//         <div id="collapseTextBerlinPopulation" class="collapse hide" aria-labelledby="headerBerlinPopulation" data-parent="#accordionBerlinPopulation">
+//           <div class="card-body">
+//             <p class="card-text">As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <img src="{{url_for('static', filename='diagram.png')}}" class="card-img" alt="...">
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+
+//     <div class="card selector" id="bRiderShare">
+//       <div class="accordion" id="accordionBRiderShare">
+//         <div class="card-header" id="headerBRiderShare">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextBRiderShare" aria-expanded="false" aria-controls="collapseTextBRiderShare">
+//               Berlin Rider Share</button></h2>
+//         </div>
+//         <div id="collapseTextBRiderShare" class="collapse hide" aria-labelledby="headerBRiderShare" data-parent="#accordionBRiderShare">
+//           <div class="card-body">
+//             <p class="card-text">Only a part of the Berlin population makes use of the new dockless shared scooter mobility solution. A recent study on scooter adoption in revealed that 40% of all Parisians have used a scooter by one of the new mobility providers before. However, usage behavior varies heavily. Lime reports that “11% of Parisians report using e-scooters either ‘frequently’ or ‘from time to time’.” You can define an initial user base and explore the effects of different adoption scenarios.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <form>
+//             <div class="form-group">
+//               <p><b>5%</b></p><input type="range" min="0.05" max="0.3" step="0.05" class="form-control-range" id="bRiderShare">
+//               <p><b>30%</b></p>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+//   </div>
+
+//   <div class="col col-12 col-lg-6">
+//     <div class="card selector" id="cityFees">
+//       <div class="accordion" id="accordionCityFees">
+//         <div class="card-header" id="headerCityFees">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextCityFees" aria-expanded="false" aria-controls="collapseTextCityFees">
+//               City Fees</button></h2>
+//         </div>
+//         <div id="collapseTextCityFees" class="collapse hide" aria-labelledby="headerCityFees" data-parent="#accordionCityFees">
+//           <div class="card-body">
+//             <p class="card-text">It is not uncommon for cities to charge a fee to operators of dockless vehicles. For instance, in October 2018 the city Louisville in Kentucky, US issued a policy that entailed the following details: <em>“In addition to a license application fee, annual fee, bond and fee for a designation group parking area, operators will pay $1/day per vehicle.”</em> Similarly, The Verge reports <em>“Baltimore charged Bird and Lime each a $15,000 fee up front and a $1 per scooter fee per day. In Raleigh, North Carolina, Bird added a $2 transportation fee on top of its $1 unlock fee after the City Council implemented a $300 per scooter fee.”</em></p>
+//             <p class="card-text">By clicking the checkbox, you can decide if or if not to include city fees in any scenario. In the prior case, this implies an annual fee of 50€ per scooter and a daily fee of 1€ per scooter. </p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <div class="form-check">
+//             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+//               <label class="form-check-label highlightedFont" for="defaultCheck1">Include city fees</label>
+//           </div>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+
+//     <div class="card selector" id="marketShare">
+//       <div class="accordion" id="accordionMarketShare">
+//         <div class="card-header" id="headerMarketShare">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextMarketShare" aria-expanded="false" aria-controls="collapseTextMarketShare">
+//               Market Share</button></h2>
+//         </div>
+//         <div id="collapseTextMarketShare" class="collapse hide" aria-labelledby="headerMarketShare" data-parent="#accordionMarketShare">
+//           <div class="card-body">
+//             <p class="card-text">This variable represents the market share of the focal firm among shared scooter providers. At the current state, users can set the market share for the simulation. This is a major simplification compared to the real business. In reality, pricing, marketing, and further factors cause dynamics in customer behavior that are difficult to predict. In contrast, by allowing to simulate different scenarios you get an idea of how changes in market share may influence different KPIs.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <form>
+//             <div class="form-group">
+//               <p><b>10%</b></p><input type="range" min="0.1" max="0.9" step="0.2" class="form-control-range" id="marketShare">
+//               <p><b>90%</b></p>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+
+//     <div class="card selector" id="scooters">
+//       <div class="accordion" id="accordionScooters">
+//         <div class="card-header" id="headerScooters">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextScooters" aria-expanded="false" aria-controls="collapseTextScooters">
+//               Scooters</button></h2>
+//         </div>
+//         <div id="collapseTextScooters" class="collapse hide" aria-labelledby="headerScooters" data-parent="#accordionScooters">
+//           <div class="card-body">
+//             <p class="card-text">One of the most fundamental business question concerns the number of scooters a provider deploys in the city. More scooters imply greater user comfort as the walking distance to the next scooter decreases. However, it has significant effects on the costs of operation as more scooters need to be purchased, charged, and maintained. Further, the utilization of each scooter decreases. Finally, the question remains: how to adjust the number of scooters once the user base increases?.</p>
+//             <p class="card-text">In practice, many cities limit the number of scooters any provider is allowed to deploy in order to remain a certain degree of control over negative side effects. For instance, Louisville’s dockless policy specifies: <em>“During the probationary period, operators may begin with 150 vehicles and, if ridership exceeds four rides per vehicle per day, increase their fleet by 100 vehicles per month, up to 650. Ultimately, operators will be permitted 1,050 vehicles if they successfully complete the probationary period and meet performance standards, such as responsiveness to complaints and ridership.”</em> Similar policies can be found in various cities, such as Vienna, Madrid. As of now, there exists no such policy in Berlin.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <form>
+//             <div class="form-group">
+//               <p><b>500</b></p><input type="range" min="500" max="2500" value="800" step="100" class="form-control-range" id="scootersInitial">
+//               <p><b>2500</b></p>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+//   </div>
+
+// </div>
+
+// </div>
+// <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">C</div>
+// <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+
+// <div class="row">
+//   <div class="col col-12 col-lg-6">
+
+//     <div class="card selector" id="berlinPopulation">
+//       <div class="accordion" id="accordionBerlinPopulation">
+//         <div class="card-header" id="headerBerlinPopulation">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextBerlinPopulation" aria-expanded="false" aria-controls="collapseTextBerlinPopulation">
+//               Berlin Population</button></h2>
+//         </div>
+//         <div id="collapseTextBerlinPopulation" class="collapse hide" aria-labelledby="headerBerlinPopulation" data-parent="#accordionBerlinPopulation">
+//           <div class="card-body">
+//             <p class="card-text">As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <img src="images/diagram.png" class="card-img" alt="...">
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+
+//     <div class="card selector" id="bRiderShare">
+//       <div class="accordion" id="accordionBRiderShare">
+//         <div class="card-header" id="headerBRiderShare">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextBRiderShare" aria-expanded="false" aria-controls="collapseTextBRiderShare">
+//               Berlin Rider Share</button></h2>
+//         </div>
+//         <div id="collapseTextBRiderShare" class="collapse hide" aria-labelledby="headerBRiderShare" data-parent="#accordionBRiderShare">
+//           <div class="card-body">
+//             <p class="card-text">Only a part of the Berlin population makes use of the new dockless shared scooter mobility solution. A recent study on scooter adoption in revealed that 40% of all Parisians have used a scooter by one of the new mobility providers before. However, usage behavior varies heavily. Lime reports that “11% of Parisians report using e-scooters either ‘frequently’ or ‘from time to time’.” You can define an initial user base and explore the effects of different adoption scenarios.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <form>
+//             <div class="form-group">
+//               <p><b>5%</b></p><input type="range" min="0.05" max="0.3" step="0.05" class="form-control-range" id="bRiderShare">
+//               <p><b>30%</b></p>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+//   </div>
+
+//   <div class="col col-12 col-lg-6">
+//     <div class="card selector" id="cityFees">
+//       <div class="accordion" id="accordionCityFees">
+//         <div class="card-header" id="headerCityFees">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextCityFees" aria-expanded="false" aria-controls="collapseTextCityFees">
+//               City Fees</button></h2>
+//         </div>
+//         <div id="collapseTextCityFees" class="collapse hide" aria-labelledby="headerCityFees" data-parent="#accordionCityFees">
+//           <div class="card-body">
+//             <p class="card-text">It is not uncommon for cities to charge a fee to operators of dockless vehicles. For instance, in October 2018 the city Louisville in Kentucky, US issued a policy that entailed the following details: <em>“In addition to a license application fee, annual fee, bond and fee for a designation group parking area, operators will pay $1/day per vehicle.”</em> Similarly, The Verge reports <em>“Baltimore charged Bird and Lime each a $15,000 fee up front and a $1 per scooter fee per day. In Raleigh, North Carolina, Bird added a $2 transportation fee on top of its $1 unlock fee after the City Council implemented a $300 per scooter fee.”</em></p>
+//             <p class="card-text">By clicking the checkbox, you can decide if or if not to include city fees in any scenario. In the prior case, this implies an annual fee of 50€ per scooter and a daily fee of 1€ per scooter. </p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <div class="form-check">
+//             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+//               <label class="form-check-label highlightedFont" for="defaultCheck1">Include city fees</label>
+//           </div>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+
+//     <div class="card selector" id="marketShare">
+//       <div class="accordion" id="accordionMarketShare">
+//         <div class="card-header" id="headerMarketShare">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextMarketShare" aria-expanded="false" aria-controls="collapseTextMarketShare">
+//               Market Share</button></h2>
+//         </div>
+//         <div id="collapseTextMarketShare" class="collapse hide" aria-labelledby="headerMarketShare" data-parent="#accordionMarketShare">
+//           <div class="card-body">
+//             <p class="card-text">This variable represents the market share of the focal firm among shared scooter providers. At the current state, users can set the market share for the simulation. This is a major simplification compared to the real business. In reality, pricing, marketing, and further factors cause dynamics in customer behavior that are difficult to predict. In contrast, by allowing to simulate different scenarios you get an idea of how changes in market share may influence different KPIs.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <form>
+//             <div class="form-group">
+//               <p><b>10%</b></p><input type="range" min="0.1" max="0.9" step="0.2" class="form-control-range" id="marketShare">
+//               <p><b>90%</b></p>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+
+//     <div class="card selector" id="scooters">
+//       <div class="accordion" id="accordionScooters">
+//         <div class="card-header" id="headerScooters">
+//           <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextScooters" aria-expanded="false" aria-controls="collapseTextScooters">
+//               Scooters</button></h2>
+//         </div>
+//         <div id="collapseTextScooters" class="collapse hide" aria-labelledby="headerScooters" data-parent="#accordionScooters">
+//           <div class="card-body">
+//             <p class="card-text">One of the most fundamental business question concerns the number of scooters a provider deploys in the city. More scooters imply greater user comfort as the walking distance to the next scooter decreases. However, it has significant effects on the costs of operation as more scooters need to be purchased, charged, and maintained. Further, the utilization of each scooter decreases. Finally, the question remains: how to adjust the number of scooters once the user base increases?.</p>
+//             <p class="card-text">In practice, many cities limit the number of scooters any provider is allowed to deploy in order to remain a certain degree of control over negative side effects. For instance, Louisville’s dockless policy specifies: <em>“During the probationary period, operators may begin with 150 vehicles and, if ridership exceeds four rides per vehicle per day, increase their fleet by 100 vehicles per month, up to 650. Ultimately, operators will be permitted 1,050 vehicles if they successfully complete the probationary period and meet performance standards, such as responsiveness to complaints and ridership.”</em> Similar policies can be found in various cities, such as Vienna, Madrid. As of now, there exists no such policy in Berlin.</p>
+//           </div>
+//         </div>
+//         <div class="card-body">
+//           <form>
+//             <div class="form-group">
+//               <p><b>500</b></p><input type="range" min="500" max="2500" value="800" step="100" class="form-control-range" id="scootersInitial">
+//               <p><b>2500</b></p>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//       <div class="card-footer"><a href="#" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"><em>i</em></a></div>
+//     </div>
+//   </div>
+
+// </div>
+
+// </div>
+// </div>
+// <div class="col col-6" id="outputVars">
+// <div class="card selector" id="adoption">
+//   <div class="accordion" id="accordionAdoption">
+//     <div class="card-header" id="headerAdoption">
+//       <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextAdoption" aria-expanded="false" aria-controls="collapseTextAdoption">
+//           Adoption & Customer Behavior</button></h2>
+//     </div>
+//     <div id="collapseTextAdoption" class="collapse hide" aria-labelledby="headerAdoption" data-parent="#accordionAdoption">
+//       <div class="card-body">
+//         <p class="card-text">This is the tricky part of the simulation. How do changes in pricing affect usage frequencies or trip durations? Unfortunately, there exists very little empirical data for all the strategic questions managers ask. Yet, testing different options provides a good understanding about the fundamental mechanisms underlying the business model.</p>
+//       </div>
+//     </div>
+//     <div class="card-body">
+//       <div class="container-fluid" id="avgScootDistance">
+//         <div id="chart2_div"></div>
+//       </div>
+//       <div class="container-fluid" id="usage">
+//         <div id="chart3_div"></div>
+//       </div>
+//       <div class="container-fluid" id="avgTripDur">
+//         <div id="chart4_div"></div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// <div class="card selector" id="street">
+//   <div class="accordion" id="accordionStreet">
+//     <div class="card-header" id="headerStreet">
+//       <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextStreet" aria-expanded="false" aria-controls="collapseTextStreet">
+//           Street</button></h2>
+//     </div>
+//     <div id="collapseTextStreet" class="collapse hide" aria-labelledby="headerStreet" data-parent="#accordionStreet">
+//       <div class="card-body">
+//         <p class="card-text">Text about Street</p>
+//       </div>
+//     </div>
+//     <div class="card-body">
+//       <div class="container-fluid" id="avgScootDistance">
+//         <div id="chart2_div"></div>
+//       </div>
+//       <div class="container-fluid" id="usage">
+//         <div id="chart3_div"></div>
+//       </div>
+//       <div class="container-fluid" id="avgTripDur">
+//         <div id="chart4_div"></div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// <div class="card selector" id="financials">
+//   <div class="accordion" id="accordionFinancials">
+//     <div class="card-header" id="headerFinancials">
+//       <h2 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTextFinancials" aria-expanded="false" aria-controls="collapseTextFinancials">
+//           Financials</button></h2>
+//     </div>
+//     <div id="collapseTextFinancials" class="collapse hide" aria-labelledby="headerFinancials" data-parent="#accordionFinancials">
+//       <div class="card-body">
+//         <p class="card-text">Text about Financials.</p>
+//       </div>
+//     </div>
+//     <div class="card-body">
+//       <div class="container-fluid" id="avgScootDistance">
+//         <div id="chart2_div"></div>
+//       </div>
+//       <div class="container-fluid" id="usage">
+//         <div id="chart3_div"></div>
+//       </div>
+//       <div class="container-fluid" id="avgTripDur">
+//         <div id="chart4_div"></div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+// </div>
+// </div>
+// </div>
+// </div>
+// </div>
+// </div>
+// </section>
+-->

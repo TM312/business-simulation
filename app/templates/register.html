@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+  <div class="container">
+    <h1 class="mb-2">Register</h1>
+    <div class="row" id="register_form">
+      <div class="col-6">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-row" id="title">
+              <div class="form-group col-md-2">
+                {{ form.title(class="form-control") }}
+                <small id="title_errors" class="form-text text-muted">
+                  {% for error in form.title.errors %}[{{ error }}]{% endfor %}
+                </small>
+              </div>
+            </div>
+
+              <div class="form-group" id="first_name">
+                {{ form.first_name(class="form-control") }}
+                <small id="first_errors" class="form-text text-muted">
+                  {% for error in form.first_name.errors %}[{{ error }}]{% endfor %}
+                </small>
+              </div>
+              <div class="form-group" id="last_name">
+                {{ form.last_name(class="form-control") }}
+                <small id="last_errors" class="form-text text-muted">
+                  {% for error in form.last_name.errors %}[{{ error }}]{% endfor %}
+                </small>
+              </div>
+
+              <div class="form-group" id="email">
+                {{ form.email(class="form-control") }}
+                <small id="email_errors" class="form-text text-muted">
+                  {% for error in form.email.errors %}[{{ error }}]{% endfor %}
+                </small>
+              </div>
+
+              <div class="form-group" id="password">
+                {{ form.password(class="form-control") }}
+                <small id="password" class="form-text text-muted">
+                  {% for error in form.password.errors %}[{{ error }}]{% endfor %}
+                </small>
+              </div>
+              <div class="form-group" id="password2">
+                {{ form.password2(class="form-control") }}
+                <small id="password2" class="form-text text-muted">
+                  {% for error in form.password2.errors %}[{{ error }}]{% endfor %}
+                </small>
+              </div>
+
+            <button type="submit" class="btn btn-primary mt-2">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="mt-2">
+      <small class="text-muted">Have an account?</small> <span><a href="{{ url_for('login') }}" class="badge badge-light">Sign in</a></span>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+/***** Backgrounds *****/
+
+body {
+   padding-top: 70px;
+ }
+
+/**** fun things to experiment with :
+
+@media(min-width:768px) {
+  .bg-main2 {
+    background-color:darkslateblue;
+  }
+}
+
+****/
+
+
+/***** Typography *****/
+
+
+.highlightedFont {
+  color:#35AFC5;
+}
+
+
+.hero {
+  background-color: lightblue;
+  padding-top:50px;
+  padding-bottom:50px;
+}
+
+.heroSliderContainer {
+  height:50px;
+  border-radius: 5px;
+  border: solid darkgrey 1px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.img-rounded {
+  border-radius: 5px;
+}
+
+/**** landing page size ****/
+
+.example {
+  background: url_for('static', filename='/images/berlin2.png');
+  background-size: cover;
+  z-index: 20;
+   /** position:relative; **/
+}
+
+.landing {
+  text-align:center;
+}
+
+
+.skewed {
+  transform:skew(-6deg, -6deg);
+  background-color:#BA93CF;
+  width:100%;
+}
+
+.unskew {
+  transform: skew(6deg, 6deg);
+}
+
+.selector {
+  /* margin-top: 1.5rem; */
+  margin-bottom: 1.5rem;
+  border-color:#35AFC5;
+}
+
+.backgroundImage {
+  background-image: url("../images/berlin3.png");
+  background-size: cover;
+}
+
+.exampleContainer {
+  background: rgba(255,255,255,0.9);
+  border-color: grey;
+  border: solid 1px;
+  border-radius: 5px;
+}
+
+.exampleContainer .exampleCard {
+  background: white;
+  opacity: 1;
+
+}

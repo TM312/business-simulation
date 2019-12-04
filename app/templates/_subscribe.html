@@ -1,0 +1,25 @@
+
+<section class="subscribe hero" id="five">
+  <div class="container col-lg-6 py-5">
+    <div class="card selector shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Stay In Contact</h5>
+        <p class="card-text">Business simulations are great for innovation managers, VCs, and entrepreneurs to better understand
+          the workings of their business models. If you find this approach interesting or just want to share some thoughts,
+          please drop us a note. We are curious for your feedback.</p>
+        <form action="" method="post">
+          {{ form.hidden_tag() }}
+          <div class="form-group d-flex">
+            {{ form.email(class="form-control") }}
+            <input type="submit" class="btn btn-primary ml-5" />
+          </div>
+          <small id="title_errors" class="form-text text-info">
+            {% for error in form.email.errors %} <em><b>{{ error }}</b></em> {% endfor %}
+          </small>
+          <p class="text-muted mt-2"><small>No spam. You can unsubscribe at any time.</small></p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>

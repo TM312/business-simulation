@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+
+
+{% endblock%}
+
+{% block app_content %}
+
+
+
+  <section id="landing">
+    <div class="container py-5">
+
+      <div class="row">
+        <div class="col col-lg-6" id="heroText">
+          <p class="lead">{{ model.introductory_text }}</p>
+          <p class="lead">Based on a mix of real data points and educated guesses, we have built a simulation model that allows you to explore different key components and how strategic decisions may influence each other.</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <section class="example backgroundImage" id="example">
+    <div class="container-fluid">
+      <h3 class="text-secondary">Introduction</h3>
+      <div class="container exampleContainer shadow-lg">
+          <div class="row">
+            <div class="col col-6">
+              <div class="card selector exampleCard">
+                <div class="card-header"><p class="lead mb-0">Time Horizon</p></div>
+                <div class="card-body">
+                  <p>some content</p>
+                  <p>This a slider that specifies the time horizon of the simulation. By moving it can be set – in this case between 12 and 36 months – triggering a recalculation of all variables.</p>
+                      <input type="range" name="weight" id="time_horizon" value="{{ model.time_horizon }}" min="12" max="36" step="6" oninput="time_horizon_disp.value = time_horizon.value">
+                      <output id="time_horizon_disp"><p class="ml-5"></p></output>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col col-6">
+              <div class="container-fluid">
+                <div class="card selector">
+                  <div class="card-header">
+                    <p class="lead mb-0">User growth</p>
+                  </div>
+                  <div class="card-body">
+                 
+                    <p>some content</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <p class="text-center">The simulation’s context is the city of Berlin – a simplification, that allows to better grasp important details of the ongoing mechanisms. In the following you can set different strategic parameters and observe how changes play out across different KPIs.</p>
+        <br>
+      </div>
+      <br>
+    </div>
+    <hr>
+  </section>
+
+
+<section id="simulation">
+  <div class="container-fluid">
+    <div class="row mb-3">
+      <div class="col-2">
+        <h3 class="text-secondary">Simulation Model</h3>
+      </div>
+      <div class="col-5">
+        <h5 class="text-center">Input Parameters</h5>
+      </div>
+      <div class="col-5">
+        <h5 class="text-center">KPIs</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-2">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link" id="v-pills-control_inputs-tab" data-toggle="pill" href="#v-pills-control_inputs"
+            role="tab" aria-controls="v-pills-control_inputs" aria-selected="true">Control Inputs</a>
+          <a class="nav-link active" id="v-pills-environmental_inputs-tab" data-toggle="pill"
+            href="#v-pills-environmental_inputs" role="tab" aria-controls="v-pills-environmental_inputs"
+            aria-selected="false">Environmental Inputs</a>
+          <a class="nav-link disabled" id="v-pills-scenario_analysis-tab" data-toggle="pill"
+            href="#v-pills-scenario_analysis" role="tab" aria-controls="v-pills-scenario_analysis"
+            aria-selected="false">Scenario Analysis</a>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="tab-content" id="v-pills-tabContent">
+          <div class="tab-pane fade" id="v-pills-control_inputs" role="tabpanel"
+            aria-labelledby="v-pills-control_inputs-tab">
+
+            {% for control_input in model.control_inputs %}
+                {% include '_control_input.html' %}
+            {% endfor %}
+
+          </div>
+
+          <!-- <script src="{{ url_for('static', filename='scripts/jquery.js') }}"/> //can hopefully export to this at some point -->
+         
+
+
+          <div class="tab-pane fade show active" id="v-pills-environmental_inputs" role="tabpanel"
+            aria-labelledby="v-pills-environmental_inputs-tab">
+
+
+            <script>
+
+              $(document).ready(function () {
+
+                $.get("{{ url_for('jsonmodel') }}", function (data) {
+                  var environment_input = data.environment_inputs
+                  console.log(environment_input)
+                  $.each(environment_input, function () {
+                    $('#v-pills-environmental_inputs').load("{{url_for('static', filename='_environment_input2.html') }}");
+
+                    var id = this.id
+                    var name = this.name
+                    var input_type = this.input_type
+                    var value_min = this.value_min;
+                    var value_max = this.value_max;
+                    var step = this.step;
+                    var value = this.value_default;
+                    var description = this.description;
+                    var sources = this.sources;
+                    console.log(name)
+
+                    $('#name').text(name);
+                    $('#input_type').val(input_type);
+                    $("#input").attr({
+                      "max": value_max,
+                      "min": value_min,
+                      "step": step,
+                      "value": value,
+                    });
+                    $('#description').text(description);
+                    $('#sources').attr({
+                      "data-content": sources,
+
+                    });
+                  });                  
+                });
+              });
+
+            </script>
+
+          </div>
+          <div class="tab-pane fade" id="v-pills-scenario_analysis" role="tabpanel"
+            aria-labelledby="v-pills-scenario_analysis-tab">
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <p>[Content for KPIs]</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+{% endblock %}
+
+
+

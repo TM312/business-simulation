@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+  <div class="container">
+    <h1>Sign In</h1>
+    <div class="row" id="login_form">
+      <div class="col-6">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              {{ form.email(class="form-control") }}
+              <small id="email_errors" class="form-text text-muted">
+                {% for error in form.email.errors %}[{{ error }}]{% endfor %}
+              </small>
+            </div>
+            <div class="form-group">
+              {{ form.password(class="form-control")}}
+              <small id="password_errors" class="form-text text-muted">
+                {% for error in form.password.errors %}
+                [{{ error }}]
+                {% endfor %}
+              </small>
+              <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </div>
+        </form>
+      </div>
+    </div>
+
+    <span class="mt-2">
+      <small class="text-muted">New User?</small> <span><a href="{{ url_for('register') }}" class="badge badge-light">Sign Up</a></span>
+    </span>
+    <span class="mt-2">
+      | <small class="text-muted">Forgot Your Password?</small> <span><a href="{{ url_for('reset_password_request') }}" class="badge badge-light">Reset password</a></span>
+    </span>
+    <!-- <p> <a href="{{ url_for('register') }}">Click to Register!</a></p>
+    <p>Forgot Your Password? <a href="{{ url_for('reset_password_request') }}">Click to reset it</a></p> -->
+  </div>
+
+{% endblock %}

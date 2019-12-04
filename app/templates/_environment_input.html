@@ -1,0 +1,34 @@
+
+<!-- This is a subtemplate for control_input referenced to by the templates
+  - example.html -->
+  
+
+
+<div class="card shadow-sm mb-3">
+    <div class="card-header">
+      <p class="lead mb-0" id="name" />
+    </div>
+    <div class="card-body">
+      <p class="card-text" id="description"/>
+      <div class="row">
+
+
+          <div class="col">
+            <label class="mr-2 mt-1" for="environment_input{{ environment_input.id }}"><b>Static Value</b></label>
+            <input class="slider mt-1" type="range" id="input" name="environment_input{{ environment_input.id }}" 
+              id="environment_input{{ environment_input.id }}" value="{{ environment_input.value_default }}" 
+              min="{{ environment_input.value_min }}" max="{{ environment_input.value_max }}" 
+              step="{{ environment_input.step }}" onmouseup="rangeToArrayStatic()">
+            <output class="slider_label" id="environment_input{{ environment_input.id }}_disp"><p class="ml-5"></p></output>
+          </div>
+    
+
+      </div>
+      <hr>
+      <div class="container-fluid">
+        <canvas id="environment_input_{{ environment_input.id }}" />
+        <script src="{{ url_for('static', filename='scripts/environmentInput.js') }}" defer></script>
+      </div>
+    </div>
+  <div class="card-footer"><a href="javascript:void(0)" id="sources" class="badge badge-primary badge-pill float-right" data-toggle="popover" title="Sources" data-content="{{environment_input.sources}}"><em>i</em></a></div>
+</div>

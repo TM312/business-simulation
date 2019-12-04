@@ -1,0 +1,119 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+
+    {% block header %}{% endblock %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+
+    {% if title %}
+      <title>{{ title }} – Business Simulation</title>
+    {% else %}
+      <title>Business Simulation</title>
+    {% endif %}
+  </head>
+  <body>
+
+{% block content %}
+
+  {% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index') }}">Business Simulation</a>
+
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('example') }}">Example Model</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('pricing') }}">Pricing</a></li>
+            <!-- test routes start -->
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('test') }}">Test</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('jstest') }}">JS Practice</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('jsonmodel') }}">JSON Model</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('reacttest') }}">React Test</a></li>
+
+            <!-- test routes end -->
+
+          </ul>
+          <ul class="nav navbar-nav my-2 my-lg-0">
+            {% if current_user.is_anonymous %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Sign In</a></li>
+            <li class="nav-item">
+                <a class="btn btn-outline-success btn ml-3" role="button" href="{{ url_for('register') }}">Get Started</a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('profile', id=current_user.id) }}">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+            {% endif %}
+          </ul>
+
+
+
+        </div>
+      </div>
+    </nav>
+  {% endblock %}
+
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  {# application content needs to be provided in the app_content block #}
+  
+  {% block app_content %}{% endblock app_content %}
+
+
+  {% block footer %}
+    <section id="footer">
+      <div class="footer bg-light mt-5">
+        <div class="container">
+
+          <ul class="nav align-center justify-content-center">
+            <li class="nav-item">
+              <span class="nav-link text-muted">© {{ year }} {{ company_name }}</span>
+            </li>
+            <li class="nav-item">
+                <span><a class="nav-link text-muted" href="{{ url_for('about') }}">About</a></span>
+            </li>
+            <li class="nav-item">
+              <span><a class="nav-link text-muted" href="{{ url_for('privacy') }}">Privacy</a></span>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+
+{% endblock %}
+
+    <!-- Optional JavaScript -->
+{% block script %}
+
+
+{% endblock %}
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
