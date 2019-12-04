@@ -1,5 +1,10 @@
 <div class="container-fluid">
     <h5>Slider_to_Array</h5>
+    <!-- <button class="btn btn-light" onclick="shiftBackwardTimeHorizon()"><<</button> -->
+    <button class="btn btn-warning" onclick="reduceTimeHorizon()">-1</button>
+    <button class="btn btn-dark" onclick="updateChart()">Update Chart</button>
+    <button class="btn btn-info" onclick="increaseTimeHorizon()">+1</button>
+    <button class="btn btn-light" onclick="shiftForwardTimeHorizon()">>></button>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -11,26 +16,13 @@
         </thead>
         <tbody>
             <tr>
-                <td><canvas id="testChartStatic"></canvas></td>
-                <td><canvas id="testChartLinear"></canvas></td>
-                <td><canvas id="testChartDynamic"></canvas></td>
+                <td><canvas id="testChartStatic"/></td>
+                <td><canvas id="testChartLinear"/></td>
+                <td><canvas id="testChartDynamic"/></td>
             </tr>
         </tbody>
-
-
-    <div class="card">
-        <div class="card-button">
-            <!-- <button class="btn btn-light" onclick="shiftBackwardTimeHorizon()"><<</button> -->
-            <button class="btn btn-warning" onclick="reduceTimeHorizon()">-1</button>
-            <button class="btn btn-dark" onclick="updateChart()">Update Chart</button>
-            <button class="btn btn-info" onclick="increaseTimeHorizon()">+1</button>
-            <button class="btn btn-light" onclick="shiftForwardTimeHorizon()">>></button>
-
-        </div>
-        <div class="card-body">
-            
-        </div>
-    </div>
+    </table>
+</div>
 
 <br><br>
 
@@ -42,29 +34,7 @@
 
     function rangeToArrayStatic() {
         dataOld = dataNew;
-        rangeOutput.value = rangeInput.value;
-        rangeStaticArray.fill(rangeInput.value);
-        rangeArrayStaticOutput.value = rangeStaticArray;
-        dataNew = rangeStaticArray;
-        updateChart();
-    };
 
-    function rangeToArrayLinear() {
-        dataOld = dataNew;
-        rangeOutput.value = rangeInput.value;
-        rangeStaticArray.fill(rangeInput.value);
-        let rangeLinearArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index * rangeGrowthFactorLinear.value) + Number.EPSILON) * 100) / 100));
-        rangeArrayLinearOutput.value = rangeLinearArray;
-        dataNew = rangeLinearArray;
-        updateChart();
-    };
-
-    function rangeToArrayDynamic() {
-        dataOld = dataNew;
-        rangeOutput.value = rangeInput.value;
-        rangeStaticArray.fill(rangeInput.value);
-        let rangeDynamicArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index ** rangeGrowthFactorDynamic.value) + Number.EPSILON) * 100) / 100));
-        rangeArrayDynamicOutput.value = rangeDynamicArray;
         dataNew = rangeDynamicArray;
         updateChart();
     };

@@ -16,27 +16,21 @@
                 <td>
                     <div class="form-inline">
                         <span class="mr-2">Start Value</span>
-                        <input type="range" id="rangeInput" min=0 max=10 value=4 step=1 class="form-control"
-                            onmouseup="rangeToArrayStatic()">
-                        <span class="ml-2"><output id="rangeOutput" type="int" /></span>
+                        <input type="range" id="input_static" min=0 max=10 value=4 step=1 class="form-control"
+                            onmouseup="rangeToArray()">
+                        <span class="ml-2"><output id="output_int_static" type="int" />
                     </div>
                     <div class="form-inline">
-                        <span class="mr-2">Linear Growth Factor:</span>
-                        <input type="range" min=0 max=10 value=4 step=1 id="rangeGrowthFactorLinear" class="form-control"
-                            onmouseup="rangeToArrayLinear()">
-                        <span class="mr-2"><output id="rangeOutputGrowthLinear" type="int" /></span>
-                    </div>
-                    <div class="form-inline">
-                        <span class="mr-2">Growth Factor:</span>
-                        <input type="range" min=0 max=2 value=0.5 step=0.1 id="rangeGrowthFactorDynamic"
-                            class="form-control" onmouseup="rangeToArrayDynamic()">
-                        <span class="mr-2"><output id="rangeOutputGrowthDynamic" type="int" /></span>
+                        <span class="mr-2">Growth Factor</span>
+                        <input type="range" min=0 max=2 value=0.5 step=0.1 id="input_growth"
+                            class="form-control" onmouseup="rangeToArray()">
+                        <span class="mr-2"><output id="output_int_growth" type="int" />
                     </div>
                 </td>
 
-                <td id="rangeToArrayStatic"><output id="rangeArrayStaticOutput" type="array" /></td>
-                <td id="rangeToArrayLinear"><output id="rangeArrayLinearOutput" type="array" /></td>
-                <td id="rangeToArrayDynamic"><output id="rangeArrayDynamicOutput" type="array" /></td>
+                <td id="rangeToArrayStatic"><output id="output_array_static" type="array" />
+                <td id="rangeToArrayLinear"><output id="output_array_linear" type="array" />
+                <td id="rangeToArrayDynamic"><output id="output_array_exp" type="array" />
                 <td>[custom]</td>
             </tr>
         </tbody>
@@ -47,35 +41,21 @@
 
 <script>
     var T = 7
-    let rangeStaticArray = new Array(T);
-    var dataOld = [];
-    var dataNew = [];
 
-    function rangeToArrayStatic() {
-        dataOld = dataNew;
-        output.value = input.value;
-        rangeStaticArray.fill(input.value);
-        rangeArrayStaticOutput.value = rangeStaticArray;
-        dataNew = rangeStaticArray;
+    function rangeToArray() {
+        
+        output_int_static.value = input_static.value;
+        output_int_growth.value = input_growth.value;
+
+        let array_static = new Array(T).fill(input_static.value);
+        let array_linear = array_static.map((value, index) => ( Math.round((value * 1 + input_growth.value * index) * 100 ) / 100  ));
+
+        let array_exp = array_static.map((value, index) => (Math.round((value * input_growth.value ** index + Number.EPSILON) * 100) / 100));
+        
+        output_array_static.value = array_static;
+        output_array_linear.value = array_linear;
+        output_array_exp.value = array_exp;
+        
     };
-
-    function rangeToArrayLinear() {
-        dataOld = dataNew;
-        rangeOutput.value = rangeInput.value;
-        rangeStaticArray.fill(rangeInput.value);
-        let rangeLinearArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index * rangeGrowthFactorLinear.value) + Number.EPSILON) * 100) / 100));
-        rangeArrayLinearOutput.value = rangeLinearArray;
-        dataNew = rangeLinearArray;
-    };
-
-    function rangeToArrayDynamic() {
-        dataOld = dataNew;
-        rangeOutput.value = rangeInput.value;
-        rangeStaticArray.fill(rangeInput.value);
-        let rangeDynamicArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index ** rangeGrowthFactorDynamic.value) + Number.EPSILON) * 100) / 100));
-        rangeArrayDynamicOutput.value = rangeDynamicArray;
-        dataNew = rangeDynamicArray;
-    };
-
 
 </script>

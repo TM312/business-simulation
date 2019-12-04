@@ -1,0 +1,81 @@
+<div class="container-fluid">
+    <h5>Slider_to_Array</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 22%" scope="col">Input</th>
+                <th style="width: 22%" scope="col">Static</th>
+                <th style="width: 22%" scope="col">Linear</th>
+                <th style="width: 22%" scope="col">Dynamic</th>
+                <th style="width: 7%" scope="col">Custom</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr id="Slider_to_Array">
+                <td>
+                    <div class="form-inline">
+                        <span class="mr-2">Start Value</span>
+                        <input type="range" id="rangeInput" min=0 max=10 value=4 step=1 class="form-control"
+                            onmouseup="rangeToArrayStatic()">
+                        <span class="ml-2"><output id="rangeOutput" type="int" />
+                    </div>
+                    <div class="form-inline">
+                        <span class="mr-2">Linear Growth Factor:</span>
+                        <input type="range" min=0 max=10 value=4 step=1 id="rangeGrowthFactorLinear" class="form-control"
+                            onmouseup="rangeToArrayLinear()">
+                        <span class="mr-2"><output id="rangeOutputGrowthLinear" type="int" />
+                    </div>
+                    <div class="form-inline">
+                        <span class="mr-2">Growth Factor:</span>
+                        <input type="range" min=0 max=2 value=0.5 step=0.1 id="rangeGrowthFactorDynamic"
+                            class="form-control" onmouseup="rangeToArrayDynamic()">
+                        <span class="mr-2"><output id="rangeOutputGrowthDynamic" type="int" />
+                    </div>
+                </td>
+
+                <td id="rangeToArrayStatic"><output id="rangeArrayStaticOutput" type="array" />
+                <td id="rangeToArrayLinear"><output id="rangeArrayLinearOutput" type="array" />
+                <td id="rangeToArrayDynamic"><output id="rangeArrayDynamicOutput" type="array" />
+                <td>[custom]</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br><br>
+
+<script>
+    var T = 7
+    let rangeStaticArray = new Array(T);
+    var dataOld = [];
+    var dataNew = [];
+
+    function rangeToArrayStatic() {
+        dataOld = dataNew;
+        output.value = input.value;
+        rangeStaticArray.fill(input.value);
+        rangeArrayStaticOutput.value = rangeStaticArray;
+        dataNew = rangeStaticArray;
+    };
+
+    function rangeToArrayLinear() {
+        dataOld = dataNew;
+        rangeOutput.value = rangeInput.value;
+        rangeStaticArray.fill(rangeInput.value);
+        let rangeLinearArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index * rangeGrowthFactorLinear.value) + Number.EPSILON) * 100) / 100));
+        rangeArrayLinearOutput.value = rangeLinearArray;
+        dataNew = rangeLinearArray;
+    };
+
+    function rangeToArrayDynamic() {
+        dataOld = dataNew;
+        rangeOutput.value = rangeInput.value;
+        rangeStaticArray.fill(rangeInput.value);
+        let rangeDynamicArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index ** rangeGrowthFactorDynamic.value) + Number.EPSILON) * 100) / 100));
+        rangeArrayDynamicOutput.value = rangeDynamicArray;
+        dataNew = rangeDynamicArray;
+    };
+
+
+</script>
