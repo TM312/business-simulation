@@ -1,7 +1,6 @@
 var start = 0;
 var end = chart.data.labels.length;
 
-
 function increaseTimeHorizon() {
     chart.data.labels.push(months[end]);
     chart.update();
