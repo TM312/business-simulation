@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <h5>Integer_to_Array</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 22%" scope="col">Input</th>
+                <th style="width: 22%" scope="col">Static</th>
+                <th style="width: 22%" scope="col">Linear</th>
+                <th style="width: 22%" scope="col">Dynamic</th>
+                <th style="width: 7%" scope="col">Custom</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <div class="form-inline">
+                        <span class="mr-2">Start Value</span>
+                        <input type="float" id="intInput" class="form-control" oninput="intToArray()">
+                        <span class="ml-2"><output id="intOutput" type="int" /></span>
+                    </div>
+                    <div class="form-inline">
+                        <span class="mr-2">Linear Growth Factor:</span>
+                        <input type="float" id="growthFactorLinear" class="form-control" oninput="intToArray()">
+                    </div>
+                    <div class="form-inline">
+                        <span class="mr-2">Growth Factor:</span>
+                        <input type="float" id="growthFactorDynamic" class="form-control" oninput="intToArray()">
+                    </div>
+                </td>
+                <td id="intToArrayStatic"><output id="arrayStaticOutput" type="array"></output></td>
+                <td id="intToArrayLinear"><output id="arrayLinearOutput" type="array"></output></td>
+                <td id="intToArrayDynamic"><output id="arrayDynamicOutput" type="array"></output></td>
+                <td>[custom]</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+    <script>
+        function intToArray() {
+            var T = 4
+
+            intOutput.value = intInput.value;
+
+            let staticArray = new Array(T).fill(intInput.value);
+            arrayStaticOutput.value = staticArray;
+
+            let linearArray = staticArray.map((value, index) => (value * (1 + index * growthFactorLinear.value)));
+            arrayLinearOutput.value = linearArray;
+
+            let dynamicArray = staticArray.map((value, index) => (Math.round((value * (1 + index ** growthFactorDynamic.value) + Number.EPSILON) * 100) / 100));
+            arrayDynamicOutput.value = dynamicArray;
+
+        };
+    </script>
+
+    <br><br>

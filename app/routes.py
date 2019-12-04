@@ -96,11 +96,6 @@ def jsonmodel():
         model = json.load(exampleModel)
     return jsonify(model)
 
-#test route
-@app.route('/reacttest')
-def reacttest():
-    return render_template('reactTest.html', title='reacttest')
-
 
 
 

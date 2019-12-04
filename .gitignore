@@ -1,0 +1,7 @@
+*.bak
+*.pyc
+.DS_Store
+.env
+Content/
+graphics.sketch
+Icon

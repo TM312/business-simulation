@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <h5>Slider_to_Array</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th style="width: 30%" scope="col">Static</th>
+                <th style="width: 30%" scope="col">Linear</th>
+                <th style="width: 30%" scope="col">Dynamic</th>
+                <th style="width: 10%" scope="col">Custom</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><canvas id="testChartStatic"></canvas></td>
+                <td><canvas id="testChartLinear"></canvas></td>
+                <td><canvas id="testChartDynamic"></canvas></td>
+            </tr>
+        </tbody>
+
+
+    <div class="card">
+        <div class="card-button">
+            <!-- <button class="btn btn-light" onclick="shiftBackwardTimeHorizon()"><<</button> -->
+            <button class="btn btn-warning" onclick="reduceTimeHorizon()">-1</button>
+            <button class="btn btn-dark" onclick="updateChart()">Update Chart</button>
+            <button class="btn btn-info" onclick="increaseTimeHorizon()">+1</button>
+            <button class="btn btn-light" onclick="shiftForwardTimeHorizon()">>></button>
+
+        </div>
+        <div class="card-body">
+            
+        </div>
+    </div>
+
+<br><br>
+
+<script>
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    let rangeStaticArray = new Array(T);
+    var dataOld = [];
+    var dataNew = [];
+
+    function rangeToArrayStatic() {
+        dataOld = dataNew;
+        rangeOutput.value = rangeInput.value;
+        rangeStaticArray.fill(rangeInput.value);
+        rangeArrayStaticOutput.value = rangeStaticArray;
+        dataNew = rangeStaticArray;
+        updateChart();
+    };
+
+    function rangeToArrayLinear() {
+        dataOld = dataNew;
+        rangeOutput.value = rangeInput.value;
+        rangeStaticArray.fill(rangeInput.value);
+        let rangeLinearArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index * rangeGrowthFactorLinear.value) + Number.EPSILON) * 100) / 100));
+        rangeArrayLinearOutput.value = rangeLinearArray;
+        dataNew = rangeLinearArray;
+        updateChart();
+    };
+
+    function rangeToArrayDynamic() {
+        dataOld = dataNew;
+        rangeOutput.value = rangeInput.value;
+        rangeStaticArray.fill(rangeInput.value);
+        let rangeDynamicArray = rangeStaticArray.map((value, index) => (Math.round((value * (1 + index ** rangeGrowthFactorDynamic.value) + Number.EPSILON) * 100) / 100));
+        rangeArrayDynamicOutput.value = rangeDynamicArray;
+        dataNew = rangeDynamicArray;
+        updateChart();
+    };
+
+
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+    var ctx = document.getElementById('testChartStatic').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March'],
+            datasets: [{
+                label: false,
+                borderColor: 'rgb(0, 99, 132)',
+                data: dataNew
+            }, {
+                borderColor: 'rgb(12, 44, 240)',
+                data: dataOld,
+            }]
+        },
+        options: {
+            legend: {
+                position: "bottom",
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        callback: function (value, index, values) {
+                            return '$' + value;
+                        }
+                    }
+                }]
+            }
+        }
+    });
+
+
+</script>

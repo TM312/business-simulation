@@ -15,6 +15,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+    <link rel="icon" href="{{url_for('static', filename='images/favicon/favicon.png')}}">
 
     {% if title %}
       <title>{{ title }} – Business Simulation</title>
@@ -43,7 +44,6 @@
             <li class="nav-item"><a class="nav-link" href="{{ url_for('test') }}">Test</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('jstest') }}">JS Practice</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('jsonmodel') }}">JSON Model</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('reacttest') }}">React Test</a></li>
 
             <!-- test routes end -->
 

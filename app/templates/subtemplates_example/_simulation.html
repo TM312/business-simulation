@@ -1,0 +1,98 @@
+<div class="container-fluid" id="simulation">
+    <div class="row mb-3">
+        <div class="col-2">
+            <h3 class="text-secondary">Simulation Model</h3>
+        </div>
+        <div class="col-5">
+            <h5 class="text-center">Input Parameters</h5>
+        </div>
+        <div class="col-5">
+            <h5 class="text-center">KPIs</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link" id="v-pills-control_inputs-tab" data-toggle="pill"
+                    href="#v-pills-control_inputs" role="tab" aria-controls="v-pills-control_inputs"
+                    aria-selected="true">Control Inputs</a>
+                <a class="nav-link active" id="v-pills-environmental_inputs-tab" data-toggle="pill"
+                    href="#v-pills-environmental_inputs" role="tab" aria-controls="v-pills-environmental_inputs"
+                    aria-selected="false">Environmental Inputs</a>
+                <a class="nav-link disabled" id="v-pills-scenario_analysis-tab" data-toggle="pill"
+                    href="#v-pills-scenario_analysis" role="tab" aria-controls="v-pills-scenario_analysis"
+                    aria-selected="false">Scenario Analysis</a>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade" id="v-pills-control_inputs" role="tabpanel"
+                    aria-labelledby="v-pills-control_inputs-tab">
+
+                    {% for control_input in model.control_inputs %}
+                    {% include '_control_input.html' %}
+                    {% endfor %}
+
+                </div>
+
+                <!-- <script src="{{ url_for('static', filename='scripts/jquery.js') }}"/> //can hopefully export to this at some point -->
+
+
+
+                <div class="tab-pane fade show active" id="v-pills-environmental_inputs" role="tabpanel"
+                    aria-labelledby="v-pills-environmental_inputs-tab">
+
+
+                    <script>
+
+                        $(document).ready(function () {
+
+                            $.get("{{ url_for('jsonmodel') }}", function (data) {
+                                var environment_input = data.environment_inputs
+                                console.log(environment_input)
+                                $.each(environment_input, function () {
+                                    $('#v-pills-environmental_inputs').load("{{url_for('static', filename='_environment_input2.html') }}");
+
+                                    var id = this.id
+                                    var name = this.name
+                                    var input_type = this.input_type
+                                    var value_min = this.value_min;
+                                    var value_max = this.value_max;
+                                    var step = this.step;
+                                    var value = this.value_default;
+                                    var description = this.description;
+                                    var sources = this.sources;
+                                    console.log(name)
+
+                                    $('#name').text(name);
+                                    $('#input_type').val(input_type);
+                                    $("#input").attr({
+                                        "max": value_max,
+                                        "min": value_min,
+                                        "step": step,
+                                        "value": value,
+                                    });
+                                    $('#description').text(description);
+                                    $('#sources').attr({
+                                        "data-content": sources,
+
+                                    });
+                                });
+                            });
+                        });
+
+                    </script>
+
+                </div>
+                <div class="tab-pane fade" id="v-pills-scenario_analysis" role="tabpanel"
+                    aria-labelledby="v-pills-scenario_analysis-tab">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <p>[Content for KPIs]</p>
+        </div>
+    </div>
+
+</div>

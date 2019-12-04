@@ -2,148 +2,25 @@
 
 {% block header %}
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript" defer>
-      $(document).ready(function () {
-
-        $('#testbutton').click(function () {
-
-          $.get('https://jsonplaceholder.typicode.com/users', function (data) {
-            $('#testID').empty();
-            $('#testID').append(data[1].name);
-          });
-        });
-      });
-    </script>
-
-    <script>
-
-      $(document).ready(function () {
-        $('#TESTID2').load("{{url_for('about') }}");
-      });
-
-    </script>
-
+    
+    
 {% endblock %}
 
 {% block app_content %}
 
+    {% include 'subtemplates_test/_integer_to_array_table.html' %}
 
+    {% include 'subtemplates_test/_slider_to_array_table.html' %}
 
-<button class="btn btn-info mb-3" id='testbutton'>Click here to Test</button>
-<br>
-<br>
-<p id="testID">This text will be replaced</p>
-<br>
-<h1 style="color:aquamarine">This was a test </h1>
-<br><br><br>
-
-<div id="TESTID2">
-
-
-</div>
-
-
-  <div class="container-fluid">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th style="width: 8%" scope="col">#</th>
-          <th style="width: 20%" scope="col">Input</th>
-          <th style="width: 20%" scope="col">Static</th>
-          <th style="width: 20%" scope="col">Linear</th>
-          <th style="width: 20%" scope="col">Dynamic</th>
-          <th style="width: 7%" scope="col">Custom</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <!-- <tr id="Integer_to_Array">
-          <td>Integer_to_Array</td>
-          <td>
-              Start Value<input type="float" id="intInput" class="form-control" oninput="intToArray()">
-              Linear Growth Factor: <input type="float" id="growthFactorLinear" class="form-control" oninput="intToArray()">
-              Growth Factor: <input type="float" id="growthFactorDynamic" class="form-control" oninput="intToArray()">
-          </td>
-          <td><output id="intOutput" type="int" /></td>
-          <td id="intToArrayStatic"><output id="arrayStaticOutput" type="array"></output></td>
-          <td id="intToArrayLinear"><output id="arrayLinearOutput" type="array"></output></td>
-          <td id="intToArrayDynamic"><output id="arrayDynamicOutput" type="array"></output></td>
-          <td>[custom]</td>
-        </tr> -->
-        <!-- <script>
-            function intToArray() {
-              intOutput.value = intInput.value;
-        
-              let staticArray = new Array(T).fill(intInput.value);
-              arrayStaticOutput.value = staticArray;
-        
-              let linearArray = staticArray.map((value, index) => (value * (1 + index * growthFactorLinear.value)));
-              arrayLinearOutput.value = linearArray;
-        
-              // let dynamicArray = staticArray.map((val, index) => (Math.round( ( (val + index ** growthFactorDynamic.value) + Number.EPSILON) * 100) / 100));
-              let dynamicArray = staticArray.map((value, index) => (value * (1 + index ** growthFactorDynamic.value)));
-              arrayDynamicOutput.value = dynamicArray;
-        
-            };
-        </script>  -->
-
-        
-        <tr id="Slider_to_Array">
-          <td>Slider_to_Array</td>
-          <td>
-              Start Value
-              <input type="range" id="rangeInput" min=0 max=10 value=4 step=1 class="form-control" onmouseup="rangeToArrayStatic()">
-              <output id="rangeOutput" type="int" />
-              Linear Growth Factor: 
-              <input type="range" min=0 max=10 value=4 step=1 id="rangeGrowthFactorLinear" class="form-control" onmouseup="rangeToArrayLinear()">
-              <output id="rangeOutputGrowthLinear" type="int" />
-              Growth Factor: 
-              <input type="range" min=0 max=2 value=0.5 step=0.1 id="rangeGrowthFactorDynamic" class="form-control" onmouseup="rangeToArrayDynamic()">
-              <output id="rangeOutputGrowthDynamic" type="int" />
-          </td>
-          
-          <td id="rangeToArrayStatic"><output id="rangeArrayStaticOutput" type="array" /></td>
-          <td id="rangeToArrayLinear"><output id="rangeArrayLinearOutput" type="array" /></td>
-          <td id="rangeToArrayDynamic"><output id="rangeArrayDynamicOutput" type="array" /></td>
-          <td>[custom]</td>
-        </tr>
-
-        
-      </tbody>
-    </table>
-  </div>
-
-  <hr>
-  <div class="container">
-    <div class="card">
-      <div class="card-button">
-        <!-- <button class="btn btn-light" onclick="shiftBackwardTimeHorizon()"><<</button> -->
-        <button class="btn btn-warning" onclick="reduceTimeHorizon()">-1</button>
-        <button class="btn btn-dark" onclick="updateChart()">Update Chart</button>
-        <button class="btn btn-info" onclick="increaseTimeHorizon()">+1</button>
-        <button class="btn btn-light" onclick="shiftForwardTimeHorizon()">>></button>
-
-      </div>
-      <div class="card-body">
-            <canvas id="testChartStatic"></canvas>
-      </div>
-    </div>
-  </div>
+    {% include 'subtemplates_test/_slider_to_chart_table.html' %}
 
   
-  <hr>
 {% endblock %}
 
 
 {% block script %}
 
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
-
-
-  <!-- <script src="{{ url_for('static', filename='scripts/main.js') }}" defer></script> -->
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
 
 {% endblock %}
 
