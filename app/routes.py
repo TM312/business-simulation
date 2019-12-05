@@ -49,7 +49,31 @@ def example():
 #test route
 @app.route('/test')
 def test():
-    return render_template('test.html', title='Test')
+
+    model = {
+        "timeframe":7,
+        "environment_inputs": [
+        {"id": 1,
+         "name": "Berlin Population",
+         "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
+         "input_type": "static",
+         "value_min": 0.05,
+         "value_max": 0.3,
+         "value_default": 0.05,
+         "step": 0.05,
+         }],
+
+        # {"id": 2,
+        #  "name": "Berlin Rider Share",
+        #  "input_type": "linear",
+        #  "value_min": 1,
+        #  "value_max": 2,
+        #  "value_default": 2,
+        #  "step": 1,
+        #  }]
+    }
+
+    return render_template('test.html', title='Test', model=model)
 
 #API: get all users
 @app.route('/api/users')

@@ -17,6 +17,14 @@ body {
 
 /***** Typography *****/
 
+.chartcanvas {
+  width: 600px;
+}
+
+.sliderinput {
+  border: 2px;
+  border-color:lightblue;
+}
 
 .highlightedFont {
   color:#35AFC5;

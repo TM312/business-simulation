@@ -1,0 +1,36 @@
+<div class="container-fluid my-5">
+    <h5>Input Test Section</h5>
+
+
+    <!-- <button class="btn btn-light" onclick="shiftBackwardTimeHorizon()"><<</button> -->
+    <!-- <button class="btn btn-warning" onclick="reduceTimeHorizon()">-1</button>
+        <button class="btn btn-dark" onclick="updateChart()">Update Chart</button>
+        <button class="btn btn-info" onclick="increaseTimeHorizon()">+1</button>
+        <button class="btn btn-light" onclick="shiftForwardTimeHorizon()">>></button> -->
+
+
+    {% for environment_input in model.environment_inputs %}
+
+        {% if environment_input.input_type == 'static' %}
+            {% include 'subtemplates_test/inputs/_input_static.html' %}
+
+        {% elif environment_input.input_type == 'linear' %}
+            {% include 'subtemplates_test/inputs/_input_static.html' %}
+
+        {% elif environment_input.input_type == 'exp' %}
+            {% include 'subtemplates_test/inputs/_input_static.html' %}
+
+        {% endif %} 
+
+    {% endfor %}
+
+
+    
+
+    <!-- <canvas id="chartLinear" width="300" height="300"></canvas>
+    <canvas id="chartExp" width="300" height="300"></canvas> -->
+
+
+
+<!-- <script src="{{url_for('static', filename='scripts/testsection_range2Chart_Static..js')}}"></script> -->
+<!-- <script src="{{url_for('static', filename='scripts/timeHorizon.js')}}"></script> -->
