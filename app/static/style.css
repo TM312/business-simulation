@@ -17,6 +17,10 @@ body {
 
 /***** Typography *****/
 
+.env_input_header {
+  background-color: #82B8D9;
+}
+
 .chartcanvas {
   width: 400px;
 }

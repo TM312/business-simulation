@@ -1,20 +1,24 @@
 
 
 <div class="card shadow-sm mb-3 chartcanvas">
-    <div class="card-header">
+    <div class="card-header env_input_header">
         <p class="lead mb-0">{{ environment_input.name }}</p>
     </div>
     <div class="card-body">
         <p class="card-text" id="description">{{ environment_input.description }}</p>
 
-        <div class="form-inline" id="inputs">
-            <span class="mr-2">Value</span>
-            <input type="range" id="env_input_static_{{ environment_input.id }}" min={{ environment_input.static_values.value_min }}
-                max={{ environment_input.static_values.value_max }} value={{ environment_input.static_values.value_default }} step={{ environment_input.static_values.step }}
-                class="form-control" onmouseup="update_env_{{ environment_input.id }}()">
-            <span class="ml-2"><output id="env_output_int_static_{{ environment_input.id }}" type="int" />
+        <div class="form-inline text-center" id="inputs">
+            <div class="container bg-light py-1 rounded">
+                <span class="mr-2 font-weight-bold">Value</span>
+                <input type="range" id="env_input_static_{{ environment_input.id }}" min={{ environment_input.static_values.value_min }}
+                    max={{ environment_input.static_values.value_max }} value={{ environment_input.static_values.value_default }}
+                    step={{ environment_input.static_values.step }} class="form-control"
+                    oninput="env_value_display_{{ environment_input.id }}()" onmouseup="update_env_{{ environment_input.id }}()">
+                <span class="ml-2"><output id="env_output_int_static_{{ environment_input.id }}" type="int" />
+            </div>
         </div>
-        <small class="text-muted" id="slider_tip">You can set the value for this input by moving the slider</small>
+        <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
+
 
         <hr>
         <canvas id="chart_static_env_{{ environment_input.id }}" height="200"></canvas>
@@ -30,6 +34,9 @@
     var array_static_env_{{ environment_input.id }}_default = new Array(T).fill({{ environment_input.static_values.value_default }});
     update_env_{{ environment_input.id }}();
 
+    function env_value_display_{{ environment_input.id }}() {
+        env_output_int_static_{{ environment_input.id }}.value = env_input_static_{{ environment_input.id }}.value;
+    };
 
     function update_env_{{ environment_input.id }}() {
         env_output_int_static_{{ environment_input.id }}.value = env_input_static_{{ environment_input.id }}.value;
@@ -48,16 +55,16 @@
                 datasets: [{
                     label: 'current value',
                     borderColor: '#033E8C',
-                    // backgroundColor:'#033E8C',
+                    backgroundColor:'#033E8C',
                     data: array_static_env_{{ environment_input.id }}_new,
-                    // fill:false,
+                    fill:+1,
                     pointRadius:0
                 }, {
                     label: 'default value',
-                    borderColor: '#0455BF',
-                    backgroundColor: '#0455BF',
+                    borderColor: '#367DD9',
+                    backgroundColor: '#367DD9',
                     data: array_static_env_{{ environment_input.id }}_default,
-                    fill:true,
+                    fill:false,
                     pointRadius:0
                 }]
             },

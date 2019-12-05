@@ -87,6 +87,23 @@ def test():
                 "value_default": 1,
                 "step": 1
                 },
+            }, {
+                "id": 3,
+                "name": "Berlin Rider EXP",
+                "description": "Some Text once again",
+                "input_type": "exp",
+                "static_values": {
+                    "value_min": 1,
+                    "value_max": 10,
+                    "value_default": 3,
+                    "step": 1
+                },
+                "growth_factor": {
+                    "value_min":  0,
+                    "value_max":  3,
+                    "value_default": 1,
+                    "step": 1
+                },
             }],
     }
 
