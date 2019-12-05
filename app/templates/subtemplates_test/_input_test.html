@@ -8,27 +8,26 @@
         <button class="btn btn-info" onclick="increaseTimeHorizon()">+1</button>
         <button class="btn btn-light" onclick="shiftForwardTimeHorizon()">>></button> -->
 
+    <div class="card-columns">
+        {% for environment_input in model.environment_inputs %}
+        
+            {% if environment_input.input_type == 'static' %}
+                {% include 'subtemplates_test/inputs/_input_static.html' %}
 
-    {% for environment_input in model.environment_inputs %}
+            {% elif environment_input.input_type == 'linear' %}
+                {% include 'subtemplates_test/inputs/_input_linear.html' %}
 
-        {% if environment_input.input_type == 'static' %}
-            {% include 'subtemplates_test/inputs/_input_static.html' %}
+            {% elif environment_input.input_type == 'exp' %}
+                {% include 'subtemplates_test/inputs/_input_exp.html' %}
 
-        {% elif environment_input.input_type == 'linear' %}
-            {% include 'subtemplates_test/inputs/_input_static.html' %}
+            {% endif %} 
 
-        {% elif environment_input.input_type == 'exp' %}
-            {% include 'subtemplates_test/inputs/_input_static.html' %}
+        {% endfor %}
 
-        {% endif %} 
-
-    {% endfor %}
-
+    </div>
 
     
 
-    <!-- <canvas id="chartLinear" width="300" height="300"></canvas>
-    <canvas id="chartExp" width="300" height="300"></canvas> -->
 
 
 
