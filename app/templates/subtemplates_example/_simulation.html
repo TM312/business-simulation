@@ -1,14 +1,8 @@
 <div class="container-fluid" id="simulation">
     <div class="row mb-3">
-        <div class="col-2">
-            <h3 class="text-secondary">Simulation Model</h3>
-        </div>
-        <div class="col-5">
-            <h5 class="text-center">Input Parameters</h5>
-        </div>
-        <div class="col-5">
-            <h5 class="text-center">KPIs</h5>
-        </div>
+        <div class="col-2"><h3 class="text-secondary">Simulation Model</h3></div>
+        <div class="col-5"><h5 class="text-center">Input Parameters</h5></div>
+        <div class="col-5"><h5 class="text-center">KPIs</h5></div>
     </div>
     <div class="row">
         <div class="col-lg-2">
@@ -30,7 +24,7 @@
                     aria-labelledby="v-pills-control_inputs-tab">
 
                     {% for control_input in model.control_inputs %}
-                    {% include '_control_input.html' %}
+                        {% include '_control_input.html' %}
                     {% endfor %}
 
                 </div>
@@ -42,46 +36,21 @@
                 <div class="tab-pane fade show active" id="v-pills-environmental_inputs" role="tabpanel"
                     aria-labelledby="v-pills-environmental_inputs-tab">
 
+                    {% for environment_input in model.environment_inputs %}
+                    
+                        {% if environment_input.input_type == 'static' %}
+                            {% include 'subtemplates_test/inputs/_input_static.html' %}
 
-                    <script>
+                        {% elif environment_input.input_type == 'linear' %}
+                            {% include 'subtemplates_test/inputs/_input_linear.html' %}
 
-                        $(document).ready(function () {
+                        {% elif environment_input.input_type == 'exp' %}
+                            {% include 'subtemplates_test/inputs/_input_exp.html' %}
 
-                            $.get("{{ url_for('jsonmodel') }}", function (data) {
-                                var environment_input = data.environment_inputs
-                                console.log(environment_input)
-                                $.each(environment_input, function () {
-                                    $('#v-pills-environmental_inputs').load("{{url_for('static', filename='_environment_input2.html') }}");
+                        {% endif %} 
 
-                                    var id = this.id
-                                    var name = this.name
-                                    var input_type = this.input_type
-                                    var value_min = this.value_min;
-                                    var value_max = this.value_max;
-                                    var step = this.step;
-                                    var value = this.value_default;
-                                    var description = this.description;
-                                    var sources = this.sources;
-                                    console.log(name)
-
-                                    $('#name').text(name);
-                                    $('#input_type').val(input_type);
-                                    $("#input").attr({
-                                        "max": value_max,
-                                        "min": value_min,
-                                        "step": step,
-                                        "value": value,
-                                    });
-                                    $('#description').text(description);
-                                    $('#sources').attr({
-                                        "data-content": sources,
-
-                                    });
-                                });
-                            });
-                        });
-
-                    </script>
+                    {% endfor %}
+                
 
                 </div>
                 <div class="tab-pane fade" id="v-pills-scenario_analysis" role="tabpanel"

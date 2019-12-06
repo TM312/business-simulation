@@ -1,34 +1,34 @@
 
-
 <div class="card shadow-sm mb-3 chartcanvas">
     <div class="card-header env_input_header">
         <p class="lead mb-0">{{ environment_input.name }}</p>
     </div>
-    <div class="card-body">
-        <p class="card-text" id="description">{{ environment_input.description }}</p>
-
+    <div class="card-body"> 
+        <p class="card-text" id="description">{{ environment_input.description }}</p>               
         <div class="form-inline text-center" id="inputs">
             <div class="container bg-light py-1 rounded">
                 <span class="mr-2 font-weight-bold">Value</span>
-                <input type="range" id="env_input_static_{{ environment_input.id }}" min={{ environment_input.static_values.value_min }}
-                    max={{ environment_input.static_values.value_max }} value={{ environment_input.static_values.value_default }}
+                <input type="range" id="env_input_static_{{ environment_input.id }}"
+                    min={{ environment_input.static_values.value_min }} max={{ environment_input.static_values.value_max }}
+                    value={{ environment_input.static_values.value_default }}
                     step={{ environment_input.static_values.step }} class="form-control"
-                    oninput="env_value_display_{{ environment_input.id }}()" onmouseup="update_env_{{ environment_input.id }}()">
-                <span class="ml-2"><output id="env_output_int_static_{{ environment_input.id }}" type="int" />
+                    oninput="env_value_display_{{ environment_input.id }}()"
+                    onmouseup="update_env_{{ environment_input.id }}()">
+                <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
+                        id="env_output_int_static_{{ environment_input.id }}" type="int" />
             </div>
         </div>
         <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
-
-
         <hr>
         <canvas id="chart_static_env_{{ environment_input.id }}" height="200"></canvas>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right" data-toggle="popover"
+            title="information" data-content="#"><b>more →</b></a>
     </div>
 </div>
-
-
+   
 
 <script>
-    var T = {{model.timeframe}};
+    var T = {{ model.time_horizon }};
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     var array_static_env_{{ environment_input.id }}_new = new Array(T).fill(0);
     var array_static_env_{{ environment_input.id }}_default = new Array(T).fill({{ environment_input.static_values.value_default }});
@@ -45,24 +45,23 @@
 
     function rangeToChart_env_{{ environment_input.id }}() {
 
-        var ctxStatic_{{ environment_input.id }} = document.getElementById('chart_static_env_{{ environment_input.id }}').getContext('2d');
+        var ctx_static_{{ environment_input.id }} = document.getElementById('chart_static_env_{{ environment_input.id }}').getContext('2d');
         array_static_env_{{ environment_input.id }}_new = new Array(T).fill(env_input_static_{{ environment_input.id }}.value);
 
-        var chart_static_env_{{ environment_input.id }} = new Chart(ctxStatic_{{ environment_input.id }}, {
+        var chart_static_env_{{ environment_input.id }} = new Chart(ctx_static_{{ environment_input.id }}, {
             type: 'line',
             data: {
                 labels: months,
                 datasets: [{
                     label: 'current value',
                     borderColor: '#033E8C',
-                    backgroundColor:'#033E8C',
+                    borderDash: [5, 5],
                     data: array_static_env_{{ environment_input.id }}_new,
                     fill:+1,
                     pointRadius:0
                 }, {
                     label: 'default value',
                     borderColor: '#367DD9',
-                    backgroundColor: '#367DD9',
                     data: array_static_env_{{ environment_input.id }}_default,
                     fill:false,
                     pointRadius:0
@@ -75,7 +74,7 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            max: {{ environment_input.static_values.value_max }}+{{ environment_input.static_values.step }},
+                            max: {{ environment_input.static_values.value_max }} + {{ environment_input.static_values.step }},
                             min: {{ environment_input.static_values.value_min }}-{{ environment_input.static_values.step }},
                             stepSize: {{ environment_input.static_values.step }}
                         }
