@@ -23,9 +23,18 @@
                 <div class="tab-pane fade" id="v-pills-control_inputs" role="tabpanel"
                     aria-labelledby="v-pills-control_inputs-tab">
 
-                    {% for control_input in model.control_inputs %}
-                        {% include '_control_input.html' %}
-                    {% endfor %}
+                    {% if model.price_inputs|length > 0 %}
+                    
+                        {% include 'subtemplates_model/_price_inputs.html' %}
+                    
+                    {% endif %}
+
+                    {% if model.cost_inputs|length > 0 %}
+                    
+                        {% include 'subtemplates_model/_cost_inputs.html' %}
+                    
+                    {% endif %}
+
 
                 </div>
 
@@ -39,13 +48,13 @@
                     {% for environment_input in model.environment_inputs %}
                     
                         {% if environment_input.input_type == 'static' %}
-                            {% include 'subtemplates_test/inputs/_input_static.html' %}
+                            {% include 'subtemplates_model/env_inputs/_static.html' %}
 
                         {% elif environment_input.input_type == 'linear' %}
-                            {% include 'subtemplates_test/inputs/_input_linear.html' %}
+                            {% include 'subtemplates_model/env_inputs/_linear.html' %}
 
                         {% elif environment_input.input_type == 'exp' %}
-                            {% include 'subtemplates_test/inputs/_input_exp.html' %}
+                            {% include 'subtemplates_model/env_inputs/_exp.html' %}
 
                         {% endif %} 
 

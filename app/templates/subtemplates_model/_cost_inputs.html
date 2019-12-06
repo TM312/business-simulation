@@ -1,0 +1,43 @@
+
+<div class="card shadow-sm mb-3 chartcanvas">
+    <div class="card-header cost_input_header">
+        <p class="lead mb-0">Costs</p>
+    </div>
+    <div class="card-body">
+        <div class="container bg-light py-1 rounded">
+
+            {% for cost_input in model.cost_inputs %}
+
+                <div class="form-inline py-2" id="inputs">
+                    <span class="mr-4 font-weight-bold">{{ cost_input.name}}</span>
+                    <button type="button" class="btn btn-outline-primary" onclick="cost_decrease_{{ cost_input.id}}()">&lt;</button>
+                    <span class="col-2 text-center" id="cost_output_int_static_{{ cost_input.id }}">{{ cost_input.static_values.value_default }}</span>
+                    <button type="button" class="btn btn-outline-primary" onclick="cost_increase_{{ cost_input.id}}()">&gt;</button>
+
+                </div>
+
+                <script>
+                    function cost_increase_{{ cost_input.id}}() {
+                            var output = document.getElementById("cost_output_int_static_{{ cost_input.id }}"); 
+                            new_output = Math.round((parseFloat(output.innerHTML) + {{ cost_input.static_values.step }} + Number.EPSILON) * 100) / 100
+                            output.innerHTML = new_output
+
+                        };
+                    function cost_decrease_{{ cost_input.id}}() {
+                            var output = document.getElementById("cost_output_int_static_{{ cost_input.id }}"); 
+                            new_output = Math.round((parseFloat(output.innerHTML) - {{ cost_input.static_values.step }} + Number.EPSILON) * 100) / 100
+                            output.innerHTML = new_output  
+                        };
+
+                
+                </script>
+                
+            {% endfor %}    
+
+            </div>
+
+        <hr>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
+            data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
+    </div>
+</div>

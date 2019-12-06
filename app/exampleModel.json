@@ -4,7 +4,29 @@
   "introductory_text":"Lime and Bird have been a driving force behind the drastic changes in urban mobility we observe these days. We aim at providing a better understanding of the mechanisms of a scooter operator’s business model.",
   "infobox_context":"",
   "time_horizon": 12,
-  "control_inputs": [],
+  "price_inputs": [{
+      "id": 1,
+      "name": "Base Price",
+      "description": "Some Text",
+      "input_type": "static",
+      "static_values": {
+        "value_min": 0,
+        "value_max": 2,
+        "value_default": 1,
+        "step": 0.25
+      }},{
+      "id": 2,
+      "name": "Fare Price",
+      "description": "Some Text",
+      "input_type": "static",
+      "static_values": {
+        "value_min": 0,
+        "value_max": 1,
+        "value_default": 0.1,
+        "step": 0.1
+      }
+    }],
+  "cost_inputs": [],
   "environment_inputs": [{
       "id": 1,
       "name": "Berlin Population",

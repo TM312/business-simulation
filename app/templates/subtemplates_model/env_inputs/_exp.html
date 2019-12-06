@@ -26,10 +26,10 @@
                     </div>
                 </div>
         <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
-
-
         <hr>
         <canvas id="chart_exp_env_{{ environment_input.id }}" height="200"></canvas>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right" data-toggle="popover"
+            title="information" data-content="#"><b>more →</b></a>
     </div>
 </div>
 
@@ -41,8 +41,6 @@
     var array_epx_env_{{ environment_input.id }}_new = new Array(T).fill(0);
     var array_static_env_{{ environment_input.id }}_default = new Array(T).fill({{ environment_input.static_values.value_default }});
     array_exp_env_{{ environment_input.id }}_default = array_static_env_{{ environment_input.id }}_default.map((value, index) => (Math.round((value * ((1 + 1*env_input_growth_{{ environment_input.id }}.value) ** index) + Number.EPSILON) * 100) / 100));
-    console.log(array_static_env_{{ environment_input.id }}_default)
-    console.log(array_exp_env_{{ environment_input.id }}_default)
 
 
     update_env_{{ environment_input.id }}();

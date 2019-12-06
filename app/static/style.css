@@ -21,6 +21,10 @@ body {
   background-color: #82B8D9;
 }
 
+.price_input_header {
+  background-color:#5C73F2
+}
+
 .chartcanvas {
   width: 500px;
 }

@@ -1,0 +1,43 @@
+
+<div class="card shadow-sm mb-3 chartcanvas">
+    <div class="card-header price_input_header">
+        <p class="lead mb-0">Price Model</p>
+    </div>
+    <div class="card-body">
+        <div class="container bg-light py-1 rounded">
+
+            {% for price_input in model.price_inputs %}
+
+                <div class="form-inline py-2" id="inputs">
+                    <span class="mr-4 font-weight-bold">{{ price_input.name}}</span>
+                    <button type="button" class="btn btn-outline-primary" onclick="price_decrease_{{ price_input.id}}()">&lt;</button>
+                    <span class="col-2 text-center" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
+                    <button type="button" class="btn btn-outline-primary" onclick="price_increase_{{ price_input.id}}()">&gt;</button>
+
+                </div>
+
+                <script>
+                    function price_increase_{{ price_input.id}}() {
+                            var output = document.getElementById("price_output_int_static_{{ price_input.id }}"); 
+                            new_output = Math.round((parseFloat(output.innerHTML) + {{ price_input.static_values.step }} + Number.EPSILON) * 100) / 100
+                            output.innerHTML = new_output
+
+                        };
+                    function price_decrease_{{ price_input.id}}() {
+                            var output = document.getElementById("price_output_int_static_{{ price_input.id }}"); 
+                            new_output = Math.round((parseFloat(output.innerHTML) - {{ price_input.static_values.step }} + Number.EPSILON) * 100) / 100
+                            output.innerHTML = new_output  
+                        };
+
+                
+                </script>
+                
+            {% endfor %}    
+
+            </div>
+
+        <hr>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
+            data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
+    </div>
+</div>

@@ -12,13 +12,13 @@
         {% for environment_input in model.environment_inputs %}
         
             {% if environment_input.input_type == 'static' %}
-                {% include 'subtemplates_test/inputs/_input_static.html' %}
+                {% include 'subtemplates_test/env_inputs/_static.html' %}
 
             {% elif environment_input.input_type == 'linear' %}
-                {% include 'subtemplates_test/inputs/_input_linear.html' %}
+                {% include 'subtemplates_test/env_inputs/_linear.html' %}
 
             {% elif environment_input.input_type == 'exp' %}
-                {% include 'subtemplates_test/inputs/_input_exp.html' %}
+                {% include 'subtemplates_test/env_inputs/_exp.html' %}
 
             {% endif %} 
 
