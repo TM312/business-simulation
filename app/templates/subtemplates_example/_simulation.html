@@ -24,7 +24,7 @@
                     aria-labelledby="v-pills-pricecosts-tab">
 
                     {% if model.price_inputs|length > 0 %}
-                    
+
                         {% include 'subtemplates_model/_price_inputs.html' %}
                     
                     {% endif %}
@@ -45,20 +45,21 @@
                 <div class="tab-pane fade" id="v-pills-environmental_inputs" role="tabpanel"
                     aria-labelledby="v-pills-environmental_inputs-tab">
 
-                    {% for environment_input in model.environment_inputs %}
-                    
-                        {% if environment_input.input_type == 'static' %}
-                            {% include 'subtemplates_model/env_inputs/_static.html' %}
+                        {% for environment_input in model.environment_inputs %}
+                        
+                            {% if environment_input.input_type == 'static' %}
+                                {% include 'subtemplates_model/env_inputs/_static.html' %}
 
-                        {% elif environment_input.input_type == 'linear' %}
-                            {% include 'subtemplates_model/env_inputs/_linear.html' %}
+                            {% elif environment_input.input_type == 'linear' %}
+                                {% include 'subtemplates_model/env_inputs/_linear.html' %}
 
-                        {% elif environment_input.input_type == 'exp' %}
-                            {% include 'subtemplates_model/env_inputs/_exp.html' %}
+                            {% elif environment_input.input_type == 'exp' %}
+                                {% include 'subtemplates_model/env_inputs/_exp.html' %}
 
-                        {% endif %} 
+                            {% endif %} 
 
-                    {% endfor %}
+                        {% endfor %}
+
                 
 
                 </div>

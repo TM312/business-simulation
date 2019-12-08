@@ -1,43 +1,115 @@
-
 <div class="card shadow-sm mb-3 chartcanvas">
     <div class="card-header cost_input_header">
         <p class="lead mb-0">Costs</p>
     </div>
     <div class="card-body">
-        <div class="container bg-light py-1 rounded">
 
-            {% for cost_input in model.cost_inputs %}
+        {% for cost_input in model.cost_inputs %}
 
+            <div class="container mb-2 rounded border">
+                <h5 class="mr-4">{{ cost_input.name}}</h5>
                 <div class="form-inline py-2" id="inputs">
-                    <span class="mr-4 font-weight-bold">{{ cost_input.name}}</span>
-                    <button type="button" class="btn btn-outline-primary" onclick="cost_decrease_{{ cost_input.id}}()">&lt;</button>
-                    <span class="col-2 text-center" id="cost_output_int_static_{{ cost_input.id }}">{{ cost_input.static_values.value_default }}</span>
-                    <button type="button" class="btn btn-outline-primary" onclick="cost_increase_{{ cost_input.id}}()">&gt;</button>
 
+                    <div class="container py-1 rounded border">
+                        <div class="form-inline" id="inputs">
+                            <span class="mr-2 font-weight-bold">Value</span>
+                            <input type="range" id="cost_input_static_{{ cost_input.id }}"
+                                min={{ cost_input.static_values.value_min }} max={{ cost_input.static_values.value_max }}
+                                value={{ cost_input.static_values.value_default }} step={{ cost_input.static_values.step }}
+                                class="form-control w-25" oninput="cost_value_display_{{ cost_input.id }}()"
+                                onmouseup="update_cost_{{ cost_input.id }}()">
+                            <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
+                                    id="cost_output_int_static_{{ cost_input.id }}" type="int" /></span>
+                            <button type="button" class="btn btn-sm btn-outline-secondary ml-auto"
+                                onclick="reset_cost_input_{{ cost_input.id }}()">Reset</button>
+                        </div>
+
+                        {% if cost_input.input_type != 'static' %}
+                            <div class="form-inline">
+                                <span class="mr-2 font-weight-bold">Growth Factor</span>
+                                <input type="range" min={{ cost_input.growth_factor.value_min }}
+                                    max={{ cost_input.growth_factor.value_max }}
+                                    value={{ cost_input.growth_factor.value_default }} step={{ cost_input.growth_factor.step }}
+                                    id="cost_input_growth_{{ cost_input.id }}" class="form-control w-25"
+                                    oninput="cost_value_display_{{ cost_input.id }}()"
+                                    onmouseup="update_cost_{{ cost_input.id }}()">
+                                <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
+                                        id="cost_output_int_growth_{{ cost_input.id }}" type="int" /></span>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <button type="button" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
                 </div>
-
-                <script>
-                    function cost_increase_{{ cost_input.id}}() {
-                            var output = document.getElementById("cost_output_int_static_{{ cost_input.id }}"); 
-                            new_output = Math.round((parseFloat(output.innerHTML) + {{ cost_input.static_values.step }} + Number.EPSILON) * 100) / 100
-                            output.innerHTML = new_output
-
-                        };
-                    function cost_decrease_{{ cost_input.id}}() {
-                            var output = document.getElementById("cost_output_int_static_{{ cost_input.id }}"); 
-                            new_output = Math.round((parseFloat(output.innerHTML) - {{ cost_input.static_values.step }} + Number.EPSILON) * 100) / 100
-                            output.innerHTML = new_output  
-                        };
-
-                
-                </script>
-                
-            {% endfor %}    
-
             </div>
+            <div class="text-right">
+                <input type="image" class="mr-2" id="icon_chart_exp_cost_{{ cost_input.id }}"
+                    src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
+                    onclick="toggle_div_chart_exp_cost_{{ cost_input.id }}()" />
+            </div>
+        
+            <div id="div_chart_exp_cost_{{ cost_input.id }}" style="display:none">
+                <canvas id="chart_exp_cost_{{ cost_input.id }}" height="200"></canvas>
+            </div>
+
+
+            <script>
+                function reset_cost_output_int_{{ cost_input.id }}() {
+                    var input_static = document.getElementById('env_input_static_{{ environment_input.id }}')
+                    input_static.value = {{ environment_input.static_values.value_default }};
+                    {% if cost_input.input_type != 'static' %}
+                        var input_growth = document.getElementById('env_input_growth_{{ environment_input.id }}')
+                        input_growth.value = {{ environment_input.growth_factor.value_default }};
+                    {% endif %}
+                    update_env_{{ environment_input.id }}()
+                };
+            </script>
+
+            <script>
+                function viewchange_{{ cost_input.id }}() {
+                    var output = parseFloat(document.getElementById("cost_output_int_static_{{ cost_input.id }}").innerHTML);
+                    var change = document.getElementById("cost_change_int_static_{{ cost_input.id }}");
+                    
+                    if (output != {{ cost_input.static_values.value_default }}) {
+                            result = Math.round(((output - {{ cost_input.static_values.value_default }}) / {{ cost_input.static_values.value_default }} + Number.EPSILON / 100) * 100);
+                            if (result>0) {
+                            change.innerHTML = '+' + result + '%';
+                            } else {
+                                change.innerHTML = result + '%';
+                            };
+                    };
+                };
+
+                function clearview_{{ cost_input.id }}() {
+                    var change = document.getElementById("cost_change_int_static_{{ cost_input.id }}");
+                    change.innerHTML = ""
+                };
+
+                
+            
+            </script>
+                
+        {% endfor %} 
+        <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
+   
 
         <hr>
         <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
             data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
     </div>
 </div>
+
+<script>
+    function toggle_div_chart_exp_cost_{{ cost_input.id }}() {
+        var chart = document.getElementById("div_chart_exp_cost_{{ cost_input.id }}");
+        var icon = document.getElementById("icon_chart_exp_cost_{{ cost_input.id }}");
+        if (chart.style.display === "none") {
+            chart.style.display = "block";
+            icon.src = "{{ url_for('static', filename='images/icons/show.png')}}"
+        } else {
+            chart.style.display = "none";
+            icon.src = "{{ url_for('static', filename='images/icons/hide2.png')}}"
+        };
+    }
+</script>
