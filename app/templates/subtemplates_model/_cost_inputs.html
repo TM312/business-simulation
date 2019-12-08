@@ -6,19 +6,18 @@
 
         {% for cost_input in model.cost_inputs %}
 
-                <p class="mr-4">{{ cost_input.name }}</p>
-                <div class="form-inline py-2" id="inputs">
 
-                    <div class="container py-1 rounded border">
+                    <div class="container mb-2 py-1 rounded border">
+                        <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
 
                         <div class="form-inline" id="inputs">
-                            <span class="mr-2 font-weight-bold">Value</span>
+                            <span class="mr-2">Value</span>
                             <input type="range" id="cost_input_static_{{ cost_input.id }}"
                                 min={{ cost_input.static_values.value_min }} max={{ cost_input.static_values.value_max }}
                                 value={{ cost_input.static_values.value_default }} step={{ cost_input.static_values.step }}
                                 class="form-control w-25" oninput="cost_value_display_{{ cost_input.id }}()"
                                 onmouseup="update_costs()">
-                            <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
+                            <span class="badge badge-pill badge-primary ml-2"><output
                                     id="cost_output_int_static_{{ cost_input.id }}" type="int" /></span>
                             <button type="button" class="btn btn-sm btn-outline-secondary ml-auto"
                                 onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
@@ -26,21 +25,20 @@
 
                         {% if cost_input.input_type != 'static' %}
                             <div class="form-inline">
-                                <span class="mr-2 font-weight-bold">Growth Factor</span>
+                                <span class="mr-2">Growth Factor</span>
                                 <input type="range" min={{ cost_input.growth_factor.value_min }}
                                     max={{ cost_input.growth_factor.value_max }}
                                     value={{ cost_input.growth_factor.value_default }} step={{ cost_input.growth_factor.step }}
                                     id="cost_input_growth_{{ cost_input.id }}" class="form-control w-25"
                                     oninput="cost_value_display_{{ cost_input.id }}()"
                                     onmouseup="update_costs()">
-                                <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
+                                <span class="badge badge-pill badge-primary ml-2"><output
                                         id="cost_output_int_growth_{{ cost_input.id }}" type="int" /></span>
                             </div>
                         {% endif %}
 
                     </div>
 
-                </div>
        
 
             <script>
@@ -59,7 +57,7 @@
                 
         {% endfor %} 
 
-        <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
+        <small class="text-muted" name="slider_tip">You can set the values for these inputs by moving the sliders.</small>
 
             <div class="text-right">
                 <input type="image" class="mr-2" id="icon_chart_costs"
@@ -109,8 +107,8 @@
 
     function update_costs() {
         var ctx_costs = document.getElementById('chart_costs').getContext('2d');
-        var borderColors = ['#367DD9', '#FFD163', '#E8B05A', '#FF7F63']
-        var fillColors = ['#367DD9', '#FFD163', '#E8B05A', '#FF7F63']
+        var borderColors = ['rgb(224, 108, 112)', 'rgb(207,100,103)', '#E8B05A', '#FF7F63']
+        var fillColors = ['rgba(224, 108, 112, 0.3)', 'rgba(207,100,103,0.3)', '#E8B05A', '#FF7F63']
 
 
         {% for cost_input in model.cost_inputs %}
@@ -137,7 +135,8 @@
                     {
                     label: '{{ cost_input.name }}',
                     borderColor: borderColors[parseInt({{ cost_input.id }})-1],
-                    fillColor: fillColors[parseInt({{ cost_input.id }}) -1],
+                    backgroundColor: fillColors[parseInt({{ cost_input.id }}) -1],
+                    fillOpacity: .3,
 
                     data: 
                         {% if cost_input.input_type == 'static' %}
@@ -148,7 +147,7 @@
                             array_exp_cost_{{ cost_input.id }}_new,
                         {% endif %}
 
-                    fill:+1,
+                    fill:true,
                     pointRadius: 0
                     },
 
@@ -161,9 +160,9 @@
             },
             scales: {
                 yAxes: [{
+                    stacked: true,
                     ticks: {
                             maxTicksLimit: 10,
-                            stacked: true
                             }
                         }]
                     }
