@@ -6,25 +6,27 @@
     </div>
     <div class="card-body">
         <p class="card-text" id="description">{{ environment_input.description }}</p>
-                <div class="container bg-light py-1 rounded">
+            <div class="container py-1 rounded border">
+                <div class="form-inline" id="inputs">
+                    <span class="mr-2 font-weight-bold">Value</span>
+                    <input type="range" id="env_input_static_{{ environment_input.id }}"
+                        min={{ environment_input.static_values.value_min }} max={{ environment_input.static_values.value_max }}
+                        value={{ environment_input.static_values.value_default }} step={{ environment_input.static_values.step }}
+                        class="form-control w-25" oninput="env_value_display_{{ environment_input.id }}()" onmouseup="update_env_{{ environment_input.id }}()">
+                    <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output id="env_output_int_static_{{ environment_input.id }}" type="int" /></span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_env_input_static_{{ environment_input.id }}()">Reset</button>
 
-                    <div class="form-inline" id="inputs">
-                        <span class="mr-2 font-weight-bold">Value</span>
-                        <input type="range" id="env_input_static_{{ environment_input.id }}"
-                            min={{ environment_input.static_values.value_min }} max={{ environment_input.static_values.value_max }}
-                            value={{ environment_input.static_values.value_default }} step={{ environment_input.static_values.step }}
-                            class="form-control" oninput="env_value_display_{{ environment_input.id }}()" onmouseup="update_env_{{ environment_input.id }}()">
-                        <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output id="env_output_int_static_{{ environment_input.id }}" type="int" />
-                    </div>
-                    <div class="form-inline">
-                        <span class="mr-2 font-weight-bold">Growth Factor</span>
-                        <input type="range" min={{ environment_input.growth_factor.value_min }}
-                            max={{ environment_input.growth_factor.value_max }} value={{ environment_input.growth_factor.value_default }}
-                            step={{ environment_input.growth_factor.step }} id="env_input_growth_{{ environment_input.id }}"
-                            class="form-control" oninput="env_value_display_{{ environment_input.id }}()" onmouseup="update_env_{{ environment_input.id }}()">
-                        <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output id="env_output_int_growth_{{ environment_input.id }}" type="int" />
-                    </div>
                 </div>
+                <div class="form-inline">
+                    <span class="mr-2 font-weight-bold">Growth Factor</span>
+                    <input type="range" min={{ environment_input.growth_factor.value_min }}
+                        max={{ environment_input.growth_factor.value_max }} value={{ environment_input.growth_factor.value_default }}
+                        step={{ environment_input.growth_factor.step }} id="env_input_growth_{{ environment_input.id }}"
+                        class="form-control w-25" oninput="env_value_display_{{ environment_input.id }}()" onmouseup="update_env_{{ environment_input.id }}()">
+                    <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output id="env_output_int_growth_{{ environment_input.id }}" type="int" /></span>
+                    <button type="button" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_env_input_growth_{{ environment_input.id }}()">Reset</button>
+                </div>
+            </div>
         <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
         <hr>
         <canvas id="chart_exp_env_{{ environment_input.id }}" height="200"></canvas>
@@ -33,7 +35,19 @@
     </div>
 </div>
 
-    
+<script>
+    function reset_env_input_static_{{ environment_input.id }}() {
+        var input = document.getElementById('env_input_static_{{ environment_input.id }}')
+        input.value = {{ environment_input.static_values.value_default }};
+        update_env_{{ environment_input.id }}()
+    };
+
+    function reset_env_input_growth_{{ environment_input.id }}() {
+        var input = document.getElementById('env_input_growth_{{ environment_input.id }}')
+        input.value = {{ environment_input.growth_factor.value_default }};
+        update_env_{{ environment_input.id }}()
+    };
+</script>
 
 <script>
     var T = {{ model.time_horizon }};
