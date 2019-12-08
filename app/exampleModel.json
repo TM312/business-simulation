@@ -26,7 +26,60 @@
         "step": 0.1
       }
     }],
-  "cost_inputs": [],
+  "cost_inputs": [{
+      "id": 1,
+      "name": "Costs 1",
+      "description": "Description Costs 1",
+      "input_type": "static",
+      "static_values": {
+        "value_min": 0.05,
+        "value_max": 0.3,
+        "value_default": 0.05,
+        "step": 0.05
+      },
+      "growth_factor": {
+        "value_min": "",
+        "value_max": "",
+        "value_default": "",
+        "step": ""
+      }
+    },
+    {
+      "id": 2,
+      "name": "Costs 2 lin",
+      "description": "Text Costs 2",
+      "input_type": "linear",
+      "static_values": {
+        "value_min": 0.02,
+        "value_max": 0.4,
+        "value_default": 0.1,
+        "step": 0.02
+      },
+      "growth_factor": {
+        "value_min": 0,
+        "value_max": 0.3,
+        "value_default": 0.1,
+        "step": 0.1
+      }
+    },
+    {
+      "id": 3,
+      "name": "Cost 3 exp",
+      "description": "Some Text once again exp costs 3",
+      "input_type": "exp",
+      "static_values": {
+        "value_min": 0.03,
+        "value_max": 0.15,
+        "value_default": 0.1,
+        "step": 0.01
+      },
+      "growth_factor": {
+        "value_min": -0.25,
+        "value_max": 0.25,
+        "value_default": 0.00,
+        "step": 0.05
+      }
+    }],
   "environment_inputs": [{
       "id": 1,
       "name": "Berlin Population",

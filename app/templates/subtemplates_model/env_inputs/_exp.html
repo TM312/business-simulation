@@ -70,7 +70,7 @@
 <script>
     var T = {{ model.time_horizon }};
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    var array_epx_env_{{ environment_input.id }}_new = new Array(T).fill(0);
+    var array_exp_env_{{ environment_input.id }}_new = new Array(T).fill(0);
     var array_static_env_{{ environment_input.id }}_default = new Array(T).fill({{ environment_input.static_values.value_default }});
     array_exp_env_{{ environment_input.id }}_default = array_static_env_{{ environment_input.id }}_default.map((value, index) => (Math.round((value * ((1 + 1*env_input_growth_{{ environment_input.id }}.value) ** index) + Number.EPSILON) * 100) / 100));
 

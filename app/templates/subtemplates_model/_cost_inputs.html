@@ -6,22 +6,22 @@
 
         {% for cost_input in model.cost_inputs %}
 
-            <div class="container mb-2 rounded border">
-                <h5 class="mr-4">{{ cost_input.name}}</h5>
+                <p class="mr-4">{{ cost_input.name }}</p>
                 <div class="form-inline py-2" id="inputs">
 
                     <div class="container py-1 rounded border">
+
                         <div class="form-inline" id="inputs">
                             <span class="mr-2 font-weight-bold">Value</span>
                             <input type="range" id="cost_input_static_{{ cost_input.id }}"
                                 min={{ cost_input.static_values.value_min }} max={{ cost_input.static_values.value_max }}
                                 value={{ cost_input.static_values.value_default }} step={{ cost_input.static_values.step }}
                                 class="form-control w-25" oninput="cost_value_display_{{ cost_input.id }}()"
-                                onmouseup="update_cost_{{ cost_input.id }}()">
+                                onmouseup="update_costs()">
                             <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
                                     id="cost_output_int_static_{{ cost_input.id }}" type="int" /></span>
                             <button type="button" class="btn btn-sm btn-outline-secondary ml-auto"
-                                onclick="reset_cost_input_{{ cost_input.id }}()">Reset</button>
+                                onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
                         </div>
 
                         {% if cost_input.input_type != 'static' %}
@@ -32,7 +32,7 @@
                                     value={{ cost_input.growth_factor.value_default }} step={{ cost_input.growth_factor.step }}
                                     id="cost_input_growth_{{ cost_input.id }}" class="form-control w-25"
                                     oninput="cost_value_display_{{ cost_input.id }}()"
-                                    onmouseup="update_cost_{{ cost_input.id }}()">
+                                    onmouseup="update_costs()">
                                 <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output
                                         id="cost_output_int_growth_{{ cost_input.id }}" type="int" /></span>
                             </div>
@@ -40,58 +40,36 @@
 
                     </div>
 
-                    <button type="button" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
                 </div>
-            </div>
-            <div class="text-right">
-                <input type="image" class="mr-2" id="icon_chart_exp_cost_{{ cost_input.id }}"
-                    src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
-                    onclick="toggle_div_chart_exp_cost_{{ cost_input.id }}()" />
-            </div>
-        
-            <div id="div_chart_exp_cost_{{ cost_input.id }}" style="display:none">
-                <canvas id="chart_exp_cost_{{ cost_input.id }}" height="200"></canvas>
-            </div>
-
+       
 
             <script>
                 function reset_cost_output_int_{{ cost_input.id }}() {
-                    var input_static = document.getElementById('env_input_static_{{ environment_input.id }}')
-                    input_static.value = {{ environment_input.static_values.value_default }};
+                    var input_static = document.getElementById('cost_input_static_{{ cost_input.id }}')
+                    input_static.value = {{ cost_input.static_values.value_default }};
+
                     {% if cost_input.input_type != 'static' %}
-                        var input_growth = document.getElementById('env_input_growth_{{ environment_input.id }}')
-                        input_growth.value = {{ environment_input.growth_factor.value_default }};
+                        var input_growth = document.getElementById('cost_input_growth_{{ cost_input.id }}')
+                        input_growth.value = {{ cost_input.growth_factor.value_default }};
                     {% endif %}
-                    update_env_{{ environment_input.id }}()
-                };
-            </script>
 
-            <script>
-                function viewchange_{{ cost_input.id }}() {
-                    var output = parseFloat(document.getElementById("cost_output_int_static_{{ cost_input.id }}").innerHTML);
-                    var change = document.getElementById("cost_change_int_static_{{ cost_input.id }}");
-                    
-                    if (output != {{ cost_input.static_values.value_default }}) {
-                            result = Math.round(((output - {{ cost_input.static_values.value_default }}) / {{ cost_input.static_values.value_default }} + Number.EPSILON / 100) * 100);
-                            if (result>0) {
-                            change.innerHTML = '+' + result + '%';
-                            } else {
-                                change.innerHTML = result + '%';
-                            };
-                    };
+                    update_costs()
                 };
-
-                function clearview_{{ cost_input.id }}() {
-                    var change = document.getElementById("cost_change_int_static_{{ cost_input.id }}");
-                    change.innerHTML = ""
-                };
-
-                
-            
             </script>
                 
         {% endfor %} 
+
         <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
+
+            <div class="text-right">
+                <input type="image" class="mr-2" id="icon_chart_costs"
+                    src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
+                    onclick="toggle_div_chart_costs()" />
+            </div>
+            
+            <div id="div_chart_costs" style="display:none">
+                <canvas id="chart_costs" height="200"></canvas>
+            </div>
    
 
         <hr>
@@ -101,9 +79,9 @@
 </div>
 
 <script>
-    function toggle_div_chart_exp_cost_{{ cost_input.id }}() {
-        var chart = document.getElementById("div_chart_exp_cost_{{ cost_input.id }}");
-        var icon = document.getElementById("icon_chart_exp_cost_{{ cost_input.id }}");
+    function toggle_div_chart_costs() {
+        var chart = document.getElementById("div_chart_costs");
+        var icon = document.getElementById("icon_chart_costs");
         if (chart.style.display === "none") {
             chart.style.display = "block";
             icon.src = "{{ url_for('static', filename='images/icons/show.png')}}"
@@ -112,4 +90,89 @@
             icon.src = "{{ url_for('static', filename='images/icons/hide2.png')}}"
         };
     }
+</script>
+
+<script>
+    var T = {{ model.time_horizon }};
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+
+    update_costs();
+        {% for cost_input in model.cost_inputs %}
+            function cost_value_display_{{ cost_input.id }}() {
+                cost_output_int_static_{{ cost_input.id }}.value = cost_input_static_{{ cost_input.id }}.value;
+                {% if cost_input.input_type != 'static' %}
+                    cost_output_int_growth_{{ cost_input.id }}.value = cost_input_growth_{{ cost_input.id }}.value;
+                {% endif %}
+            };
+        {% endfor %}
+
+    function update_costs() {
+        var ctx_costs = document.getElementById('chart_costs').getContext('2d');
+        var borderColors = ['#367DD9', '#FFD163', '#E8B05A', '#FF7F63']
+        var fillColors = ['#367DD9', '#FFD163', '#E8B05A', '#FF7F63']
+
+
+        {% for cost_input in model.cost_inputs %}
+            cost_output_int_static_{{ cost_input.id }}.value = cost_input_static_{{ cost_input.id }}.value;
+            array_static_cost_{{ cost_input.id }}_new = new Array(T).fill(cost_input_static_{{ cost_input.id }}.value);
+            {% if cost_input.input_type != 'static' %}
+                cost_output_int_growth_{{ cost_input.id }}.value = cost_input_growth_{{ cost_input.id }}.value;
+            {% endif %}
+            {% if cost_input.input_type == 'linear' %}
+                array_linear_cost_{{ cost_input.id }}_new = array_static_cost_{{ cost_input.id }}_new.map((value, index) => (Math.round((value * 1 + cost_input_growth_{{ cost_input.id }}.value * index) * 100) / 100));
+            {% elif cost_input.input_type == 'exp' %}
+                array_exp_cost_{{ cost_input.id }}_new = array_static_cost_{{ cost_input.id }}_new.map((value, index) => (Math.round((value * ((1 + 1*cost_input_growth_{{ cost_input.id }}.value) ** index) + Number.EPSILON) * 100) / 100));
+            {% endif %}
+        {% endfor %}
+
+        var chart_costs = new Chart(ctx_costs, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+
+                {% for cost_input in model.cost_inputs %}  
+                
+                    {
+                    label: '{{ cost_input.name }}',
+                    borderColor: borderColors[parseInt({{ cost_input.id }})-1],
+                    fillColor: fillColors[parseInt({{ cost_input.id }}) -1],
+
+                    data: 
+                        {% if cost_input.input_type == 'static' %}
+                            array_static_cost_{{ cost_input.id }}_new,
+                        {% elif cost_input.input_type == 'linear' %}
+                            array_linear_cost_{{ cost_input.id }}_new,
+                        {% elif cost_input.input_type == 'exp' %}
+                            array_exp_cost_{{ cost_input.id }}_new,
+                        {% endif %}
+
+                    fill:+1,
+                    pointRadius: 0
+                    },
+
+                {% endfor %}
+                ]
+            },
+            options: {
+            legend: {
+                position: "bottom",
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                            maxTicksLimit: 10,
+                            stacked: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+
+        chart_costs.update();
+        };
+
+
 </script>
