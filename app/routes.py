@@ -108,16 +108,20 @@ def jsonmodel():
 
 
 #test route
-@app.route('/jstest')
-def jstest():
-    return render_template('jstest.html', title='JSTest')
+@app.route('/ajax')
+def ajax():
+    return render_template('ajax.html', title='AJAX')
 
 #test route
 @app.route('/data')
 def data():
+    data = json.loads(request.data)
+    a = data.get('value')
+    print(a)
+
     # with open('./app/exampleModel.json') as exampleModel:
     #     model = json.load(exampleModel)
-    return jsonify({'results' : sample(range(1,10), 5)})
+    return jsonify({'results' : a})
 
 #unfinished
 @app.route('/pricing')

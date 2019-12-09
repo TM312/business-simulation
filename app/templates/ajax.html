@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+
+{% block header %}
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script> -->
+
+
+{% endblock %}
+
+{% block app_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h1 class="mb-5">Input</h1> 
+            <input type="range" id="input_1" min=1 max=10 value=5 step=1 class="form-control w-25">
+        </div>
+
+        <div class="col-6">
+            <h1 class="mb-5">Output</h1>
+            <p id="output_1"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        $("#input_1").mouseup(function(){
+            var value = $("#input_1").val();
+            console.log(value)
+            $.post("{{url_for('data')}}", JSON.stringify(value), function(value, status){
+                $("#output_1").html(value);
+            });
+        });
+        
+    });
+    
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
