@@ -1,0 +1,62 @@
+<div class="card shadow-sm mb-3 chartcanvas">
+    <div class="card-header kpi_header">
+        <p class="lead mb-0">{{ environment_input.name }}</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text" id="description">{{ environment_input.description }}</p>
+        <canvas id="chart_exp_env_{{ environment_input.id }}" height="200"></canvas>        
+    </div>
+</div>
+
+
+
+
+<script>
+    var T = {{ model.time_horizon }};
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    
+    function update_kpis_{{ kpi.id }}() {
+        var ctx_exp_{{ kpi.id }} = document.getElementById('chart_kpis_{{ kpi.id }}').getContext('2d');
+        
+        // array_kpi_{{ kpi.id }}_default = [FROM PYTHON];
+        // array_kpi_{{ kpi.id }}_new = [FROM PYTHON];
+
+
+        var chart_kpis_{{ kpi.id }} = new Chart(ctx_exp_{{ kpi.id }}, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'current value',
+                    borderColor: '#367DD9',
+                    data: array_kpi_{{ kpi.id }}_new,
+            fill: +1,
+            pointRadius: 0
+        }, {
+            label: 'default value',
+            borderColor: '#B8B6B4',
+            borderDash: [5, 5],
+            data: array_kpi_{{ kpi.id }}_default,
+            fill: false,
+            pointRadius: 0
+                        }]
+                },
+            options: {
+                legend: {
+                    position: "bottom",
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 10,
+                        }
+                    }]
+                }
+            }
+        });
+
+        chart_kpis_{{ kpi.id }}.update();
+    }
+
+
+</script>
