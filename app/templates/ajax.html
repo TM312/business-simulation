@@ -14,6 +14,7 @@
         <div class="col-6">
             <h1 class="mb-5">Input</h1> 
             <input type="range" id="input_1" min=1 max=10 value=5 step=1 class="form-control w-25">
+            <button type="button" id="button_increase_price_input_1" class="btn btn-outline-primary mx-1">&gt;</button>
         </div>
 
         <div class="col-6">
@@ -25,11 +26,14 @@
 
 <script>
     $(document).ready(function () {
-        $('#input_1').on('input', function (event) {
+        $('#input_1').on('input click', function (event) {
+            console.log("success");
             var value1 = $('#input_1').val();
+            
             var postData = {
                 value1: value1
             }
+            console.log(postData);
             $.ajax({
                 type: 'POST',
                 url: '{{ url_for("data") }}',

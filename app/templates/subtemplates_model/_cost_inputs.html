@@ -165,14 +165,14 @@
 
         {% for cost_input in model.cost_inputs %}
             cost_output_int_static_{{ cost_input.id }}.value = cost_input_static_{{ cost_input.id }}.value;
-            array_static_cost_{{ cost_input.id }}_new = new Array(T).fill(cost_input_static_{{ cost_input.id }}.value);
+            window.array_static_cost_{{ cost_input.id }}_new = new Array(T).fill(cost_input_static_{{ cost_input.id }}.value);
             {% if cost_input.input_type != 'static' %}
                 cost_output_int_growth_{{ cost_input.id }}.value = cost_input_growth_{{ cost_input.id }}.value;
             {% endif %}
             {% if cost_input.input_type == 'linear' %}
-                array_linear_cost_{{ cost_input.id }}_new = array_static_cost_{{ cost_input.id }}_new.map((value, index) => (Math.round((value * 1 + cost_input_growth_{{ cost_input.id }}.value * index) * 100) / 100));
+                window.array_linear_cost_{{ cost_input.id }}_new = window.array_static_cost_{{ cost_input.id }}_new.map((value, index) => (Math.round((value * 1 + cost_input_growth_{{ cost_input.id }}.value * index) * 100) / 100));
             {% elif cost_input.input_type == 'exp' %}
-                array_exp_cost_{{ cost_input.id }}_new = array_static_cost_{{ cost_input.id }}_new.map((value, index) => (Math.round((value * ((1 + 1*cost_input_growth_{{ cost_input.id }}.value) ** index) + Number.EPSILON) * 100) / 100));
+                window.array_exp_cost_{{ cost_input.id }}_new = window.array_static_cost_{{ cost_input.id }}_new.map((value, index) => (Math.round((value * ((1 + 1*cost_input_growth_{{ cost_input.id }}.value) ** index) + Number.EPSILON) * 100) / 100));
             {% endif %}
         {% endfor %}
 
@@ -192,11 +192,11 @@
 
                     data: 
                         {% if cost_input.input_type == 'static' %}
-                            array_static_cost_{{ cost_input.id }}_new,
+                            window.array_static_cost_{{ cost_input.id }}_new,
                         {% elif cost_input.input_type == 'linear' %}
-                            array_linear_cost_{{ cost_input.id }}_new,
+                            window.array_linear_cost_{{ cost_input.id }}_new,
                         {% elif cost_input.input_type == 'exp' %}
-                            array_exp_cost_{{ cost_input.id }}_new,
+                            window.array_exp_cost_{{ cost_input.id }}_new,
                         {% endif %}
 
                     fill:true,
