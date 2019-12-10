@@ -12,8 +12,8 @@
                     <span class="mr-4 font-weight-bold">{{ price_input.name}}</span>
                     <span class="col-2 text-center" onmouseover="viewchange_price_inputs_{{ price_input.id }}()" onmouseout="clearview_price_inputs_{{ price_input.id }}()" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
                     <span>
-                        <button type="button" class="btn btn-outline-primary ml-2" onclick="price_decrease_{{ price_input.id}}()">&lt;</button>
-                        <button type="button" class="btn btn-outline-primary mx-1" onclick="price_increase_{{ price_input.id}}()">&gt;</button>
+                        <button type="button" id="button_decrease_price_input_{{ price_input.id }}" class="btn btn-outline-primary ml-2" onclick="price_decrease_{{ price_input.id}}()">&lt;</button>
+                        <button type="button" id="button_increase_price_input_{{ price_input.id }}" class="btn btn-outline-primary mx-1" onclick="price_increase_{{ price_input.id}}()">&gt;</button>
                     </span>
                     <small class="text-muted ml-2"><em id="price_change_int_static_{{ price_input.id }}"></em></small>
                     <button type="button" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_price_output_int_static_{{ price_input.id }}()">Reset</button>
@@ -22,6 +22,9 @@
 
 
                 <script>
+                    var T = 7
+                    array_static_price_{{ price_input.id }} = new Array(T).fill(price_output_int_static_{{ price_input.id }}.textContent)
+                    console.log(array_static_price_{{ price_input.id }})
                     function reset_price_output_int_static_{{ price_input.id }}() {
                         var input = document.getElementById('price_output_int_static_{{ price_input.id }}')
                         input.innerHTML = {{ price_input.static_values.value_default }};

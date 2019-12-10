@@ -74,7 +74,6 @@
     var array_static_env_{{ environment_input.id }}_default = new Array(T).fill({{ environment_input.static_values.value_default }});
     array_exp_env_{{ environment_input.id }}_default = array_static_env_{{ environment_input.id }}_default.map((value, index) => (Math.round((value * ((1 + 1*env_input_growth_{{ environment_input.id }}.value) ** index) + Number.EPSILON) * 100) / 100));
 
-
     update_env_{{ environment_input.id }}();
 
     function env_value_display_{{ environment_input.id }}() {
