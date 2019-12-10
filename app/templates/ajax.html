@@ -18,24 +18,32 @@
 
         <div class="col-6">
             <h1 class="mb-5">Output</h1>
-            <p id="output_1"></p>
+            <p1 id="output_1"></p1>
         </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $('#input_1').on('input', function (event) {
+            var value1 = $('#input_1').val();
+            var postData = {
+                value1: value1
+            }
 
-        $("#input_1").mouseup(function(){
-            var value = $("#input_1").val();
-            console.log(value)
-            $.post("{{url_for('data')}}", JSON.stringify(value), function(value, status){
-                $("#output_1").html(value);
-            });
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for("data") }}',
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(postData)
+                
+            }).done(function (data) {
+                    console.log(value1);
+                    $('#output_1').text(value1)
+                });
+            event.preventDefault();
         });
-        
     });
-    
 
 </script>
 

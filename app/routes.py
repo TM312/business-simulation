@@ -113,15 +113,17 @@ def ajax():
     return render_template('ajax.html', title='AJAX')
 
 #test route
-@app.route('/data')
+@app.route('/data', methods=['POST'])
 def data():
-    data = json.loads(request.data)
-    a = data.get('value')
-    print(a)
+    data = request.get_json()
+    value1 = data['value1']
+    print(type(data))
+    print(value1)
 
     # with open('./app/exampleModel.json') as exampleModel:
     #     model = json.load(exampleModel)
-    return jsonify({'results' : a})
+
+    return jsonify({'data': value1})
 
 #unfinished
 @app.route('/pricing')
