@@ -84,7 +84,7 @@
     $(document).ready(function() {
         var model_inputs = [
             {% for price_input in model.price_inputs %} 
-                'button_increase_price_input_{{ price_input.id }}', 'button_decrease_price_input_{{ price_input.id }}',
+                '#button_increase_price_input_{{ price_input.id }}', '#button_decrease_price_input_{{ price_input.id }}',
             {% endfor %}
 
             {% for cost_input in model.cost_inputs %}
@@ -100,10 +100,10 @@
 
             {% endfor %}
         ];
-        var selector_ids = model_inputs.map(x => "'#"+x).join(",");
+        var selector_ids = model_inputs.join(", ");
         console.log("Selectors: " + selector_ids)
 
-        $('#button_increase_price_input_1').on('input click', function(event) {
+        $(selector_ids).on('input click', function(event) {
             console.log("check")
         });
         

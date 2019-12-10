@@ -15,6 +15,7 @@
             <h1 class="mb-5">Input</h1> 
             <input type="range" id="input_1" min=1 max=10 value=5 step=1 class="form-control w-25">
             <button type="button" id="button_increase_price_input_1" class="btn btn-outline-primary mx-1">&gt;</button>
+            <button type="button" id="button_decrease_price_input_1" class="btn btn-outline-primary mx-1">&gt;</button>
         </div>
 
         <div class="col-6">
@@ -25,8 +26,15 @@
 </div>
 
 <script>
+
+    var model_inputs = ['#button_increase_price_input_1', '#button_decrease_price_input_1'];
+    var selector_ids = model_inputs.join(", ");
+    console.log("Selectors: " + selector_ids)
+    console.log("Selectors: " + "'#button_increase_price_input_1, #button_decrease_price_input_1'")
+
+
     $(document).ready(function () {
-        $('#input_1').on('input click', function (event) {
+        $(selector_ids).on('input click', function (event) {
             console.log("success");
             var value1 = $('#input_1').val();
             
