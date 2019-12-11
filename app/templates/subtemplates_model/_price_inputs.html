@@ -10,61 +10,39 @@
             <div class="container mb-2 rounded border">
                 <div class="form-inline py-2" id="inputs">
                     <span class="mr-4 font-weight-bold">{{ price_input.name}}</span>
-                    <span class="col-2 text-center" onmouseover="viewchange_price_inputs_{{ price_input.id }}()" onmouseout="clearview_price_inputs_{{ price_input.id }}()" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
+                    <span class="col-2 text-center" onmouseover="viewchange_price_inputs(this.id, 'price_change_int_static_{{ price_input.id }}', {{ price_input.static_values.value_default }})" onmouseout="clearview_price_inputs_{{ price_input.id }}()" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
                     <span>
-                        <button type="button" id="button_decrease_price_input_{{ price_input.id }}" class="btn btn-outline-primary ml-2" onclick="price_decrease_{{ price_input.id}}()">&lt;</button>
-                        <button type="button" id="button_increase_price_input_{{ price_input.id }}" class="btn btn-outline-primary mx-1" onclick="price_increase_{{ price_input.id}}()">&gt;</button>
+                        <button type="button" id="button_decrease_price_input_{{ price_input.id }}" class="btn btn-outline-primary ml-2" onclick="price_change_{{ price_input.id}}(this.id)">&lt;</button>
+                        <button type="button" id="button_increase_price_input_{{ price_input.id }}" class="btn btn-outline-primary mx-1" onclick="price_change_{{ price_input.id}}(this.id)">&gt;</button>
                     </span>
                     <small class="text-muted ml-2"><em id="price_change_int_static_{{ price_input.id }}"></em></small>
-                    <button type="button" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_price_output_int_static_{{ price_input.id }}()">Reset</button>
+                    <button type="button" id="reset_button_price_input_{{ price_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_price_output_int_static('price_output_int_static_{{ price_input.id }}', {{ price_input.static_values.value_default }})">Reset</button>
                 </div>
             </div>
 
 
-                <script>
-                    var T = 7
-                    array_static_price_{{ price_input.id }} = new Array(T).fill(price_output_int_static_{{ price_input.id }}.textContent)
-                    console.log(array_static_price_{{ price_input.id }})
-                    function reset_price_output_int_static_{{ price_input.id }}() {
-                        var input = document.getElementById('price_output_int_static_{{ price_input.id }}')
-                        input.innerHTML = {{ price_input.static_values.value_default }};
-                    };
-                </script>
+           
 
                 <script>
-                    function viewchange_price_inputs_{{ price_input.id }}() {
-                        var output = parseFloat(document.getElementById("price_output_int_static_{{ price_input.id }}").innerHTML);
-                        var change = document.getElementById("price_change_int_static_{{ price_input.id }}");
-                        
-                        if (output != {{ price_input.static_values.value_default }} && {{ price_input.static_values.value_default }} != 0 ) {
-                             result = Math.round(((output - {{ price_input.static_values.value_default }}) / {{ price_input.static_values.value_default }} + Number.EPSILON / 100) * 100);
-                             if (result>0) {
-                                change.innerHTML = '+' + result + '%';
-                             } else {
-                                 change.innerHTML = result + '%';
-                             };
-                        };
-                    };
+                 
 
                     function clearview_price_inputs_{{ price_input.id }}() {
                         var change = document.getElementById("price_change_int_static_{{ price_input.id }}");
                         change.innerHTML = ""
                     };
 
-                    function price_increase_{{ price_input.id}}() {
-                        var output = document.getElementById("price_output_int_static_{{ price_input.id }}"); 
-                        new_output = Math.round((parseFloat(output.innerHTML) + {{ price_input.static_values.step }} + Number.EPSILON) * 100) / 100
-                        output.innerHTML = new_output
+                    function price_change_{{ price_input.id}}(button_id) {
+                        var price_{{ price_input.id }}_old = document.getElementById("price_output_int_static_{{ price_input.id }}"); 
+                        var modifier = (button_id == 'button_increase_price_input_{{ price_input.id }}') ? 1 : -1;
+                        price_{{ price_input.id}}_new = Math.round((parseFloat(price_{{ price_input.id }}_old.innerHTML) + (modifier * {{ price_input.static_values.step }}) + Number.EPSILON) * 100) / 100
+                        price_{{ price_input.id }}_old.innerHTML = price_{{ price_input.id}}_new;
                     };
-
-                    function price_decrease_{{ price_input.id}}() {
-                        var output = document.getElementById("price_output_int_static_{{ price_input.id }}"); 
-                        new_output = Math.round((parseFloat(output.innerHTML) - {{ price_input.static_values.step }} + Number.EPSILON) * 100) / 100
-                        output.innerHTML = new_output  
-
-                    };
+                    
                 
+
+
                 </script>
+           
                 
             {% endfor %}    
 

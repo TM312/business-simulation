@@ -78,42 +78,82 @@
 
 </div>
 
+<!-- <script src="{# url_for('static, filename='scripts/update_env.js')#}"/> -->
 
 <script>
-    var T = 7
+    function viewchange_price_inputs(button_id, change_id, default_value) {
+        var output = parseFloat(document.getElementById(button_id).innerHTML);
+        var change_display = document.getElementById(change_id);
+        
+        if (output != default_value && default_value != 0 ) {
+                result = Math.round(((output - default_value) / default_value + Number.EPSILON / 100) * 100);
+                if (result>0) {
+                change_display.innerHTML = '+' + result + '%';
+                } else {
+                    change_display.innerHTML = result + '%';
+                };
+        };
+    };
+
+    function reset_price_output_int_static(output_id_static, value_default_static, output_id_growth, value_default_growth) {
+        var output_static = document.getElementById(output_id_static)
+        output_static.innerHTML = value_default_static;
+    };
+    
+
+
+
+    function price_to_array(id) {
+        var price = document.getElementById("price_output_int_static_" + id);
+        array_static_price = new Array({{ model.time_horizon }}).fill(price.innerHTML)
+        return array_static_price
+        };
+
+    var buttons = [
+        {% for price_input in model.price_inputs %} 
+            '#button_increase_price_input_{{ price_input.id }}', '#button_decrease_price_input_{{ price_input.id }}',
+        {% endfor %}
+
+        {% for price_input in model.price_inputs %}
+            '#reset_button_price_input_{{ price_input.id }}',
+        {% endfor %} 
+
+        {% for cost_input in model.cost_inputs %}
+            '#reset_button_cost_input_{{ cost_input.id }}',
+        {% endfor %} 
+
+        {% for environment_input in model.environment_inputs %}
+            '#reset_button_environment_input_{{ environment_input.id }}',
+        {% endfor %} 
+    ];
+
+    var range_sliders = [
+        {% for cost_input in model.cost_inputs %}
+            '#cost_input_static_{{ cost_input.id }}', '#cost_input_growth_{{ cost_input.id }}',
+        {% endfor %}
+
+        {% for environment_input in model.environment_inputs %}
+            '#env_input_static_{{ environment_input.id }}',
+
+            {% if environment_input.input_type != 'static' %}
+                '#env_input_growth_{{ environment_input.id }}',
+            {% endif %}
+
+        {% endfor %}
+    ];
+    
+    var button_ids = buttons.join(", ");
+    var range_slider_ids = range_sliders.join(", ");
+
+    
+
     $(document).ready(function() {
-        var model_inputs = [
-            {% for price_input in model.price_inputs %} 
-                '#button_increase_price_input_{{ price_input.id }}', '#button_decrease_price_input_{{ price_input.id }}',
-            {% endfor %}
 
-            {% for cost_input in model.cost_inputs %}
-                'cost_input_static_{{ cost_input.id }}', 'cost_input_growth_{{ cost_input.id }}',
-            {% endfor %}
-
-            {% for environment_input in model.environment_inputs %}
-                'env_input_static_{{ environment_input.id }}',
-
-                {% if environment_input.input_type != 'static' %}
-                    'env_input_growth_{{ environment_input.id }}',
-                {% endif %}
-
-            {% endfor %}
-        ];
-        var selector_ids = model_inputs.join(", ");
-        console.log("Selectors: " + selector_ids)
-
-        $(selector_ids).on('input click', function(event) {
-            console.log("check")
-        });
-        
-        
-        $(selector_ids).on('input click', function(event) {
-            console.log('input happened')
+        $(button_ids).on('click', function (event) {
             var modelData = {
                 'price_inputs': {
                     {% for price_input in model.price_inputs %}
-                        '{{ price_input.id }}': array_static_price_{{ price_input.id }},
+                        '{{ price_input.id }}': price_to_array({{ price_input.id }}),
                     {% endfor %}
                 }, 
                 'cost_inputs': {
@@ -122,13 +162,24 @@
                             '{{ cost_input.id }}': window.array_static_cost_{{ cost_input.id }}_new,
                         {% elif cost_input.input_type == 'linear' %}
                             '{{ cost_input.id }}': window.array_linear_cost_{{ cost_input.id }}_new,
-                        {% elif cost_input.input_type == 'linear' %}
+                        {% elif cost_input.input_type == 'exp' %}
                             '{{ cost_input.id }}': window.array_exp_cost_{{ cost_input.id }}_new,
                         {% endif %}
                     {% endfor %}
                 }, 
+                'environment_inputs': {
+                    {% for environment_input in model.environment_inputs %}
+                        {% if environment_input.input_type == 'static' %}
+                            '{{ environment_input.id }}': array_static_env_{{ environment_input.id }}_new,
+                        {% elif environment_input.input_type == 'linear' %}
+                            '{{ environment_input.id }}': window.array_linear_env_{{ environment_input.id }}_new,
+                        {% elif environment_input.input_type == 'exp' %}
+                            '{{ environment_input.id }}': window.array_exp_env_{{ environment_input.id }}_new,
+                        {% endif %}
+                    {% endfor %}
+                }, 
             }
-            console.log(modelData)
+            
             $.ajax({
                 type: 'POST',
                 url: '{{ url_for("data") }}',
@@ -136,12 +187,44 @@
                 data: JSON.stringify(modelData)
                 
             }).done(function (data) {
-                    console.log("success");
-                    
+                console.log("success");
+            });
+            event.preventDefault();   
+        });
+
+        $(range_slider_ids).on('change', function (event) {
+            
+            var modelData = {
+                'price_inputs': {
+                    {% for price_input in model.price_inputs %}
+                        '{{ price_input.id }}': price_to_array({{ price_input.id }}),
+                    {% endfor %}
+                }, 
+                'cost_inputs': {
+                    {% for cost_input in model.cost_inputs %}
+                        {% if cost_input.input_type == 'static' %}
+                            '{{ cost_input.id }}': window.array_static_cost_{{ cost_input.id }}_new,
+                        {% elif cost_input.input_type == 'linear' %}
+                            '{{ cost_input.id }}': window.array_linear_cost_{{ cost_input.id }}_new,
+                        {% elif cost_input.input_type == 'exp' %}
+                            '{{ cost_input.id }}': window.array_exp_cost_{{ cost_input.id }}_new,
+                        {% endif %}
+                    {% endfor %}
+                }, 
+            }
+            
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for("data") }}',
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(modelData)
+                
+            }).done(function (data) {
+                console.log("success");
             });
             event.preventDefault();
-        });
+        });  
+       
     });
-
 
 </script>

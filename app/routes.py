@@ -116,14 +116,15 @@ def ajax():
 @app.route('/data', methods=['POST'])
 def data():
     data = request.get_json()
-    button_increase_price_input_1 = data['button_increase_price_input_1']
-    print(type(button_increase_price_input_1))
-    print('button_increase_price_input_1: ' + button_increase_price_input_1)
+    price_inputs = data['price_inputs']
+    cost_inputs = data['cost_inputs']
+    environment_inputs = data['environment_inputs']
+    print(type(cost_inputs))
 
     # with open('./app/exampleModel.json') as exampleModel:
     #     model = json.load(exampleModel)
 
-    return jsonify({'data': button_increase_price_input_1})
+    return jsonify({'data': cost_inputs})
 
 #unfinished
 @app.route('/pricing')

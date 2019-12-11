@@ -16,14 +16,14 @@
                                 value={{ cost_input.static_values.value_default }} step={{ cost_input.static_values.step }}
                                 class="form-control w-25" 
                                 oninput="cost_value_display_{{ cost_input.id }}()"
-                                onmouseup="update_costs()" 
+                                onmouseup="update_costs({{ model.time_horizon }})" 
                                 onmouseout="clearview_cost_inputs_{{ cost_input.id }}()"/>
                             <span class="badge badge-pill badge-primary ml-2"><output
                                     id="cost_output_int_static_{{ cost_input.id }}" type="int" 
                                     onmouseover="viewchange_cost_inputs_static_{{ cost_input.id }}()"
                                     onmouseout="clearview_cost_inputs_{{ cost_input.id }}()"/></span>
                             <small class="text-muted ml-2"><em id="cost_change_int_static_{{ cost_input.id }}"></em></small>
-                            <button type="button" class="btn btn-sm btn-outline-secondary ml-auto"
+                            <button type="button" id="reset_button_cost_input_{{ cost_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto"
                                 onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
                         </div>
 
@@ -35,7 +35,7 @@
                                     value={{ cost_input.growth_factor.value_default }} step={{ cost_input.growth_factor.step }}
                                     id="cost_input_growth_{{ cost_input.id }}" class="form-control w-25"
                                     oninput="cost_value_display_{{ cost_input.id }}()"
-                                    onmouseup="update_costs()"/>
+                                    onmouseup="update_costs({{ model.time_horizon }})"/>
                                 <span class="badge badge-pill badge-primary ml-2"><output
                                         id="cost_output_int_growth_{{ cost_input.id }}" type="int" 
                                         onmouseover="viewchange_cost_inputs_growth_{{ cost_input.id }}()"
@@ -82,9 +82,8 @@
 </script>
 
 <script>
-    var T = {{ model.time_horizon }};
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    update_costs();
+    update_costs({{ model.time_horizon }});
 
     {% for cost_input in model.cost_inputs %}
 
@@ -98,7 +97,7 @@
                 input_growth.value = {{ cost_input.growth_factor.value_default }};
             {% endif %}
 
-            update_costs()
+            update_costs({{ model.time_horizon }})
         };
 
 
@@ -157,7 +156,7 @@
 
     {% endfor %}
 
-    function update_costs() {
+    function update_costs(T) {
         var ctx_costs = document.getElementById('chart_costs').getContext('2d');
         var borderColors = ['rgb(224, 108, 112)', 'rgb(207,100,103)', '#E8B05A', '#FF7F63']
         var fillColors = ['rgba(224, 108, 112, 0.3)', 'rgba(207,100,103,0.3)', '#E8B05A', '#FF7F63']
