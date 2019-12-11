@@ -44,17 +44,8 @@
                     aria-labelledby="v-pills-environmental_inputs-tab">
 
                         {% for environment_input in model.environment_inputs %}
-                        
-                            {% if environment_input.input_type == 'static' %}
-                                {% include 'subtemplates_model/env_inputs/_static.html' %}
-
-                            {% elif environment_input.input_type == 'linear' %}
-                                {% include 'subtemplates_model/env_inputs/_linear.html' %}
-
-                            {% elif environment_input.input_type == 'exp' %}
-                                {% include 'subtemplates_model/env_inputs/_exp.html' %}
-
-                            {% endif %} 
+                                                   
+                                {% include 'subtemplates_model/_env_inputs.html' %}
 
                         {% endfor %}
 
@@ -78,11 +69,41 @@
 
 </div>
 
-<!-- <script src="{# url_for('static, filename='scripts/update_env.js')#}"/> -->
+<script src="{{ url_for('static', filename='scripts/example.js') }}">
+
+
+
+</script>
 
 <script>
-    function viewchange_price_inputs(button_id, change_id, default_value) {
-        var output = parseFloat(document.getElementById(button_id).innerHTML);
+
+    function toggle_div_chart_env(div_chart_id, div_icon) {
+        var chart = document.getElementById(div_chart_id);
+        var icon = document.getElementById(div_icon);
+        if (chart.style.display === "none") {
+            chart.style.display = "block";
+            icon.src = "{{ url_for('static', filename='images/icons/show.png')}}"
+        } else {
+            chart.style.display = "none";
+            icon.src = "{{ url_for('static', filename='images/icons/hide2.png')}}"
+        };
+    }
+</script>
+
+
+<script>
+    $(document).ready(function() {
+    {% for environment_input in model.environment_inputs %}
+        update_env.apply(this, update_params_env_{{ environment_input.id }})
+    {% endfor %}
+    });
+    
+
+    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+
+    function viewchange(input_id, change_id, default_value) {
+        var output = parseFloat(document.getElementById(input_id).innerHTML);
         var change_display = document.getElementById(change_id);
         
         if (output != default_value && default_value != 0 ) {
@@ -95,20 +116,15 @@
         };
     };
 
-    function reset_price_output_int_static(output_id_static, value_default_static, output_id_growth, value_default_growth) {
-        var output_static = document.getElementById(output_id_static)
-        output_static.innerHTML = value_default_static;
-    };
-    
-
 
 
     function price_to_array(id) {
         var price = document.getElementById("price_output_int_static_" + id);
-        array_static_price = new Array({{ model.time_horizon }}).fill(price.innerHTML)
+        array_static_price = new Array({{ model.time_horizon }}).fill(price.innerHTML);
         return array_static_price
-        };
+    };
 
+    
     var buttons = [
         {% for price_input in model.price_inputs %} 
             '#button_increase_price_input_{{ price_input.id }}', '#button_decrease_price_input_{{ price_input.id }}',

@@ -1,13 +1,15 @@
 {
   "id": 1,
+  "owner": "Public",
   "model_name": "Scooter Operator",
   "introductory_text":"Lime and Bird have been a driving force behind the drastic changes in urban mobility we observe these days. We aim at providing a better understanding of the mechanisms of a scooter operator’s business model.",
   "infobox_context":"",
   "time_horizon": 12,
-  "price_inputs": [{
+  "price_inputs": [
+    {
     "id": 1,
     "name": "Base Price",
-    "description": "Some Text",
+    "description": "Base price for unlocking the scooter",
     "input_type": "static",
     "static_values": {
       "value_min": 0,
@@ -28,112 +30,168 @@
       "step": 0.1
     }
   }],
-  "cost_inputs": [{
+  "cost_inputs": [
+    {
     "id": 1,
-    "name": "Costs 1",
-    "description": "Description Costs 1",
-    "input_type": "static",
+    "bundle":1,
+    "name": "Repair Costs [in $/per Ride]",
+    "description": "",
+    "input_type": "linear",
     "static_values": {
-      "value_min": 0.05,
-      "value_max": 0.3,
-      "value_default": 0.05,
-      "step": 0.05
+      "value_min": 0.10,
+      "value_max": 0.60,
+      "value_default": 0.50,
+      "step": 0.1
     },
     "growth_factor": {
-      "value_min": "",
-      "value_max": "",
-      "value_default": "",
-      "step": ""
+      "value_min": -0.01,
+      "value_max": 0.01,
+      "value_default": 0,
+      "step": 0.01
     }
   },
   {
     "id": 2,
-    "name": "Costs 2 lin",
-    "description": "Text Costs 2",
+    "name": "Charging Costs [in $/per Ride]",
+    "bundle": 1,
+    "description": "",
     "input_type": "linear",
     "static_values": {
-      "value_min": 0.02,
-      "value_max": 0.4,
-      "value_default": 0.1,
-      "step": 0.02
+      "value_min": 0.1,
+      "value_max": 2,
+      "value_default": 1.7,
+      "step": 0.1
       },
     "growth_factor": {
-      "value_min": 0,
-      "value_max": 0.3,
-      "value_default": 0.1,
-      "step": 0.1
+      "value_min": -0.2,
+      "value_max": 0.2,
+      "value_default": 0,
+      "step": 0.05
       }
     },
   {
     "id": 3,
-    "name": "Cost 3 exp",
-    "description": "Some Text once again exp costs 3",
-    "input_type": "exp",
+    "name": "Scooter Costs",
+    "bundle": 2,
+    "description": "",
+    "input_type": "linear",
     "static_values": {
-      "value_min": 0.03,
-      "value_max": 0.15,
-      "value_default": 0.1,
-      "step": 0.01
+      "value_min": 300,
+      "value_max": 600,
+      "value_default": 550,
+      "step": 50
     },
     "growth_factor": {
-      "value_min": -0.25,
-      "value_max": 0.25,
-      "value_default": 0.00,
-      "step": 0.05
+      "value_min": -10,
+      "value_max": 0,
+      "value_default": 10,
+      "step": 1
     }
   }],
-  "environment_inputs": [{
+  "environment_inputs": [
+    {
     "id": 1,
     "name": "Berlin Population",
     "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
+    "input_type": "linear",
+    "static_values": {
+      "value_min": 3000000,
+      "value_max": 4000000,
+      "value_default": 3644000,
+      "step": 1000
+      },
+    "growth_factor": {
+      "value_min": -10000,
+      "value_max": 10000,
+      "value_default": 2500,
+      "step": 500
+      }
+    },{
+    "id": 2,
+    "name": "Covered Area",
+    "description": "Refers to the km^2 in which scooters are present.",
+    "input_type": "linear",
+    "static_values": {
+      "value_min": 10,
+      "value_max": 60,
+      "value_default": 45,
+      "step": 5
+      },
+    "growth_factor": {
+      "value_min": 0,
+      "value_max": 5,
+      "value_default": 1,
+      "step": 1
+      }
+    },{
+    "id": 3,
+    "name": "Usage Minutes",
+    "description": "Is used for the calculation of costs. 93% of rides take place between 6am and 12am.",
     "input_type": "static",
     "static_values": {
-      "value_min": 0.05,
-      "value_max": 0.3,
-      "value_default": 0.05,
-      "step": 0.05
-    },
+      "value_min": 800,
+      "value_max": 1440,
+      "value_default": 1080,
+      "step": 10
+      },
     "growth_factor": {
       "value_min": "",
       "value_max": "",
       "value_default": "",
       "step": ""
+      }
+    },{
+    "id": 4,
+    "name": "Market Share",
+    "description": "This variable represents the market share of the focal firm among shared scooter providers. At the current state, users can set the market share for the simulation. This is a major simplification compared to the real business. In reality, pricing, marketing, and further factors cause dynamics in customer behavior that are difficult to predict. In contrast, by allowing to simulate different scenarios you get an idea of how changes in market share may influence different KPIs.",
+    "input_type": "exp",
+    "static_values": {
+      "value_min": 0.05,
+      "value_max": 0.9,
+      "value_default": 0.3,
+      "step": 0.05
+    },
+    "growth_factor": {
+      "value_min": -0.05,
+      "value_max": 0.05,
+      "value_default": 0,
+      "step": 0.01
     }
-  },{
-    "id": 2,
-    "name": "Berlin Rider Share",
-    "description": "Some Text",
+    },{
+    "id": 5,
+    "name": "Average Scooter Lifespan [in days]",
+    "description": "In March 2019, Quartz released a report on different KPIs for scooter operators such as Lime and Bird, in which it “determined the average lifespan of a Bird scooter in Louisville to be 28.8 day”. The report is based on an open dataset provided by the city of Louisville, Kentucky. In response to Quartz’ report, Lime indicated that the lifespan of a scooter may be longer due to the dynamic moving of scooters across cities without providing details.",
     "input_type": "linear",
     "static_values": {
-      "value_min": 1,
-      "value_max": 10,
-      "value_default": 3,
-      "step": 1
+      "value_min": 15,
+      "value_max": 90,
+      "value_default": 30,
+      "step": 5
     },
     "growth_factor": {
       "value_min": 0,
-      "value_max": 3,
-      "value_default": 1,
-      "step": 1
+      "value_max": 5,
+      "value_default": 0,
+      "step": 0.5
     }
-  },{
-    "id": 3,
-    "name": "Berlin Rider EXP",
-    "description": "Some Text once again",
+    }, {
+    "id": 6,
+    "name": "Share of Scooter Riders among Berlin People",
+    "description": "Only a part of the Berlin population makes use of the new dockless shared scooter mobility solution. A recent study on scooter adoption in revealed that 40% of all Parisians have used a scooter by one of the new mobility providers before. However, usage behavior varies heavily. Lime reports that “11% of Parisians report using e-scooters either ‘frequently’ or ‘from time to time’.",
     "input_type": "exp",
     "static_values": {
-      "value_min": 1,
-      "value_max": 10,
-      "value_default": 3,
-      "step": 1
+      "value_min": 0.05,
+      "value_max": 0.3,
+      "value_default": 0.05,
+      "step": 0.01
     },
     "growth_factor": {
-      "value_min": -0.5,
-      "value_max": 0.5,
-      "value_default": 0.1,
+      "value_min": -0.02,
+      "value_max": 0.02,
+      "value_default": 0,
       "step": 0.01
     }
-  }],
+    }],
   "kpis": [{ "name": "Berlin KPI",
       "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
       "sources":"https://www.statistik-berlin-brandenburg.de/publikationen/stat_berichte/2019/SB_A01-01-00_2018q04_BE.pdf https://www.tagesspiegel.de/berlin/amt-fuer-statistik-berlin-waechst-langsamer-als-erwartet/23078220.html"

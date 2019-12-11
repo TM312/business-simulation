@@ -10,7 +10,7 @@
             <div class="container mb-2 rounded border">
                 <div class="form-inline py-2" id="inputs">
                     <span class="mr-4 font-weight-bold">{{ price_input.name}}</span>
-                    <span class="col-2 text-center" onmouseover="viewchange_price_inputs(this.id, 'price_change_int_static_{{ price_input.id }}', {{ price_input.static_values.value_default }})" onmouseout="clearview_price_inputs_{{ price_input.id }}()" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
+                    <span class="col-2 text-center" onmouseover="viewchange(this.id, 'price_change_int_static_{{ price_input.id }}', {{ price_input.static_values.value_default }})" onmouseout="clearview_price_inputs_{{ price_input.id }}()" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
                     <span>
                         <button type="button" id="button_decrease_price_input_{{ price_input.id }}" class="btn btn-outline-primary ml-2" onclick="price_change_{{ price_input.id}}(this.id)">&lt;</button>
                         <button type="button" id="button_increase_price_input_{{ price_input.id }}" class="btn btn-outline-primary mx-1" onclick="price_change_{{ price_input.id}}(this.id)">&gt;</button>

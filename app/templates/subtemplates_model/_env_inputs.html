@@ -1,0 +1,79 @@
+
+<div class="card shadow-sm mb-3 chartcanvas">
+    <div class="card-header env_input_header">
+        <p class="lead mb-0">{{ environment_input.name }}</p>
+    </div>
+    <div class="card-body">
+        <p class="card-text" id="description">{{ environment_input.description }}</p>
+            <div class="container py-1 rounded border">
+                <div class="form-inline" id="inputs">
+                    <span class="mr-2 font-weight-bold">Value</span>
+                    <input type="range" id="env_input_static_{{ environment_input.id }}"
+                        min={{ environment_input.static_values.value_min }} max={{ environment_input.static_values.value_max }}
+                        value={{ environment_input.static_values.value_default }} step={{ environment_input.static_values.step }}
+                        class="form-control w-25" oninput="display_env.apply(this, display_params_env_value_{{ environment_input.id }})" 
+                        onmouseup="update_env.apply(this, update_params_env_{{ environment_input.id }})">
+                    <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output id="env_output_int_static_{{ environment_input.id }}" type="int" /></span>
+                    <button type="button" id="reset_button_environment_input_{{ environment_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_env_input.apply(this, update_params_env_{{ environment_input.id }})">Reset</button>
+                </div>
+                {% if environment_input.input_type != 'static' %}
+                <div class="form-inline">
+                    <span class="mr-2 font-weight-bold">Growth Factor</span>
+                    <input type="range" id="env_input_growth_{{ environment_input.id }}" 
+                        min={{ environment_input.growth_factor.value_min }} max={{ environment_input.growth_factor.value_max }} 
+                        value={{ environment_input.growth_factor.value_default }} step={{ environment_input.growth_factor.step }}
+                        class="form-control w-25" oninput="display_env.apply(this, display_params_env_value_{{ environment_input.id }})" 
+                        onmouseup="update_env.apply(this, update_params_env_{{ environment_input.id }})">
+                    <span class="badge badge-pill badge-primary font-weight-bold ml-2"><output id="env_output_int_growth_{{ environment_input.id }}" type="int" /></span>
+                </div>
+                {% endif %}
+            </div>
+        <small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small>
+        <div class="text-right">
+            <input type="image" class="mr-2" id="icon_chart_env_{{ environment_input.id }}"
+                src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
+                onclick="toggle_div_chart_env('div_chart_env_{{ environment_input.id }}', 'icon_chart_env_{{ environment_input.id }}')" />
+        </div>
+        
+        <div id="div_chart_env_{{ environment_input.id }}" style="display:none">
+            <canvas id="chart_env_{{ environment_input.id }}" height="200"></canvas>
+        </div>
+        <hr>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right" data-toggle="popover"
+            title="information" data-content="#"><b>more →</b></a>
+    </div>
+</div>
+
+
+
+<script>
+
+    var update_params_env_{{ environment_input.id }} = [
+        {{ model.time_horizon }}, 
+        '{{ environment_input.input_type }}', 
+        'chart_env_{{ environment_input.id }}', 
+       'env_input_static_{{ environment_input.id }}', 
+        'env_output_int_static_{{ environment_input.id }}', 
+        {{ environment_input.static_values.value_default }},
+
+        {% if environment_input.input_type != 'static' %} 
+            'env_input_growth_{{ environment_input.id }}', 
+            'env_output_int_growth_{{ environment_input.id }}', 
+            {{ environment_input.growth_factor.value_default }}
+        {% endif %}
+    ];
+    
+
+    var display_params_env_value_{{ environment_input.id }} = [
+        'env_input_static_{{ environment_input.id }}', 
+        'env_output_int_static_{{ environment_input.id }}',
+        {% if environment_input.input_type != 'static' %}
+            'env_input_growth_{{ environment_input.id }}', 
+            'env_output_int_growth_{{ environment_input.id }}'
+        {% endif %}
+    ];
+    
+            
+    
+
+</script>
