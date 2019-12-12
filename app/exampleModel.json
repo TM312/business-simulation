@@ -33,8 +33,9 @@
   "cost_inputs": [
     {
     "id": 1,
-    "bundle":1,
-    "name": "Repair Costs [in $/per Ride]",
+    "name": "Repair Costs",
+    "bundle": 1,
+    "bundle_name":"Costs per Ride [in $]",
     "description": "",
     "input_type": "linear",
     "static_values": {
@@ -52,8 +53,9 @@
   },
   {
     "id": 2,
-    "name": "Charging Costs [in $/per Ride]",
+    "name": "Charging Costs",
     "bundle": 1,
+    "bundle_name":"Costs per Ride [in $]",
     "description": "",
     "input_type": "linear",
     "static_values": {
@@ -72,7 +74,8 @@
   {
     "id": 3,
     "name": "Scooter Costs",
-    "bundle": 2,
+    "bundle":2,
+    "bundle_name":"Scooter Related Costs",
     "description": "",
     "input_type": "linear",
     "static_values": {
@@ -109,7 +112,7 @@
     },{
     "id": 2,
     "name": "Covered Area",
-    "description": "Refers to the km^2 in which scooters are present.",
+    "description": "Refers to the km\u00B2 in which scooters are present.",
     "input_type": "linear",
     "static_values": {
       "value_min": 10,

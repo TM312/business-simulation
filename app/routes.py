@@ -106,7 +106,6 @@ def jsonmodel():
 
 
 
-
 #test route
 @app.route('/ajax')
 def ajax():
@@ -119,7 +118,10 @@ def data():
     price_inputs = data['price_inputs']
     cost_inputs = data['cost_inputs']
     environment_inputs = data['environment_inputs']
-    print(type(cost_inputs))
+    print(type(environment_inputs))
+    for envinput in environment_inputs:
+        for entry in environment_inputs[envinput]:
+            print(envinput, " : ", entry)
 
     # with open('./app/exampleModel.json') as exampleModel:
     #     model = json.load(exampleModel)

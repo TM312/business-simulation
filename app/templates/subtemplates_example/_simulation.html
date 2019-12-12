@@ -27,9 +27,12 @@
                         {% include 'subtemplates_model/_price_inputs.html' %}
 
                     {% endif %}
+                    
 
                     {% if model.cost_inputs|length > 0 %}
-                        {% include 'subtemplates_model/_cost_inputs.html' %}
+                        {% for grouper, list in model.cost_inputs|groupby('bundle') %}
+                            {% include 'subtemplates_model/_cost_inputs.html' %}
+                        {% endfor %}
                     
                     {% endif %}
 
@@ -77,9 +80,9 @@
 
 <script>
 
-    function toggle_div_chart_env(div_chart_id, div_icon) {
+    function toggle_div_chart(div_chart_id, icon_chart) {
         var chart = document.getElementById(div_chart_id);
-        var icon = document.getElementById(div_icon);
+        var icon = document.getElementById(icon_chart);
         if (chart.style.display === "none") {
             chart.style.display = "block";
             icon.src = "{{ url_for('static', filename='images/icons/show.png')}}"
@@ -100,21 +103,6 @@
     
 
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-
-    function viewchange(input_id, change_id, default_value) {
-        var output = parseFloat(document.getElementById(input_id).innerHTML);
-        var change_display = document.getElementById(change_id);
-        
-        if (output != default_value && default_value != 0 ) {
-                result = Math.round(((output - default_value) / default_value + Number.EPSILON / 100) * 100);
-                if (result>0) {
-                change_display.innerHTML = '+' + result + '%';
-                } else {
-                    change_display.innerHTML = result + '%';
-                };
-        };
-    };
 
 
 
@@ -185,13 +173,7 @@
                 }, 
                 'environment_inputs': {
                     {% for environment_input in model.environment_inputs %}
-                        {% if environment_input.input_type == 'static' %}
-                            '{{ environment_input.id }}': array_static_env_{{ environment_input.id }}_new,
-                        {% elif environment_input.input_type == 'linear' %}
-                            '{{ environment_input.id }}': window.array_linear_env_{{ environment_input.id }}_new,
-                        {% elif environment_input.input_type == 'exp' %}
-                            '{{ environment_input.id }}': window.array_exp_env_{{ environment_input.id }}_new,
-                        {% endif %}
+                        {{ environment_input.id }}: update_env.apply(this, update_params_env_{{ environment_input.id }}),
                     {% endfor %}
                 }, 
             }
@@ -225,6 +207,11 @@
                         {% elif cost_input.input_type == 'exp' %}
                             '{{ cost_input.id }}': window.array_exp_cost_{{ cost_input.id }}_new,
                         {% endif %}
+                    {% endfor %}
+                },
+                'environment_inputs': {
+                    {% for environment_input in model.environment_inputs %}
+                        {{ environment_input.id }}: update_env.apply(this, update_params_env_{{ environment_input.id }}),
                     {% endfor %}
                 }, 
             }

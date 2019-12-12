@@ -1,7 +1,7 @@
 
 <div class="card shadow-sm mb-3 chartcanvas">
     <div class="card-header price_input_header">
-        <p class="lead mb-0">Price Model</p>
+        <p class="mb-0">Pricing</p>
     </div>
     <div class="card-body">
 
@@ -26,11 +26,7 @@
                 <script>
                  
 
-                    function clearview_price_inputs_{{ price_input.id }}() {
-                        var change = document.getElementById("price_change_int_static_{{ price_input.id }}");
-                        change.innerHTML = ""
-                    };
-
+                 
                     function price_change_{{ price_input.id}}(button_id) {
                         var price_{{ price_input.id }}_old = document.getElementById("price_output_int_static_{{ price_input.id }}"); 
                         var modifier = (button_id == 'button_increase_price_input_{{ price_input.id }}') ? 1 : -1;

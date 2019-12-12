@@ -1,8 +1,10 @@
-{% for grouper, list in model.cost_inputs|groupby('bundle') %}
 
 <div class="card shadow-sm mb-3 chartcanvas">
-    <div class="card-header cost_input_header">
-        <p class="lead mb-0">Costs</p>
+    <div class="card-header form-inline py-3">
+        <p class="mb-0">{{ Costs }}</p>
+            <input type="image" class="mr-3 ml-auto" id="icon_chart_costs_{{ grouper }}"
+                src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
+                onclick="toggle_div_chart('div_chart_costs_{{ grouper }}', 'icon_chart_costs_{{ grouper }}')" />
     </div>
     <div class="card-body">
 
@@ -12,18 +14,22 @@
                         <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
 
                         <div class="form-inline" id="inputs">
-                            <span class="mr-2">Value</span>
+                            {% if cost_input.input_type == 'static' %}
+                                <span class="mr-2">Value</span>
+                            {% else %}
+                                <span class="mr-2">Start Value</span>
+                            {% endif %}
                             <input type="range" id="cost_input_static_{{ cost_input.id }}"
                                 min={{ cost_input.static_values.value_min }} max={{ cost_input.static_values.value_max }}
                                 value={{ cost_input.static_values.value_default }} step={{ cost_input.static_values.step }}
                                 class="form-control w-25" 
-                                oninput="cost_value_display_{{ cost_input.id }}()"
+                                oninput="display_output_int.apply(this, display_params_cost_value_{{ cost_input.id }})"
                                 onmouseup="update_costs({{ model.time_horizon }})" 
                                 onmouseout="clearview_cost_inputs_{{ cost_input.id }}()"/>
                             <span class="badge badge-pill badge-primary ml-2"><output
                                     id="cost_output_int_static_{{ cost_input.id }}" type="int" 
                                     onmouseover="viewchange(this.id, 'cost_change_int_static_{{ cost_input.id }}', {{ cost_input.static_values.value_default }})"
-                                    onmouseout="clearview_cost_inputs_{{ cost_input.id }}()"/></span>
+                                    onmouseout="clear_viewchange('cost_change_int_static_{{ cost_input.id }}')"/></span>
                             <small class="text-muted ml-2"><em id="cost_change_int_static_{{ cost_input.id }}"></em></small>
                             <button type="button" id="reset_button_cost_input_{{ cost_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto"
                                 onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
@@ -36,30 +42,54 @@
                                     max={{ cost_input.growth_factor.value_max }}
                                     value={{ cost_input.growth_factor.value_default }} step={{ cost_input.growth_factor.step }}
                                     id="cost_input_growth_{{ cost_input.id }}" class="form-control w-25"
-                                    oninput="cost_value_display_{{ cost_input.id }}()"
+                                    oninput="display_output_int.apply(this, display_params_cost_value_{{ cost_input.id }})"
                                     onmouseup="update_costs({{ model.time_horizon }})"/>
                                 <span class="badge badge-pill badge-primary ml-2"><output
                                         id="cost_output_int_growth_{{ cost_input.id }}" type="int" 
                                         onmouseover="viewchange(this.id, 'cost_change_int_growth_{{ cost_input.id }}', {{ cost_input.growth_factor.value_default }})"
-                                        onmouseout="clearview_cost_inputs_{{ cost_input.id }}()"/></span>
+                                        onmouseout="clear_viewchange('cost_change_int_growth_{{ cost_input.id }}')"/></span>
                                 <small class="text-muted ml-2"><em id="cost_change_int_growth_{{ cost_input.id }}"></em></small>
 
                             </div>
                         {% endif %}
 
-                    </div>     
+                    </div>  
+                    
+            <script>
+
+                var display_params_cost_value_{{ cost_input.id }} = [
+                    'cost_input_static_{{ cost_input.id }}', 
+                    'cost_output_int_static_{{ cost_input.id }}',
+                    {% if cost_input.input_type != 'static' %}
+                        'cost_input_growth_{{ cost_input.id }}', 
+                        'cost_output_int_growth_{{ cost_input.id }}'
+                    {% endif %}
+                ];
+
+
+                function reset_cost_output_int_{{ cost_input.id }}() {
+                    var input_static = document.getElementById('cost_input_static_{{ cost_input.id }}')
+                    input_static.value = {{ cost_input.static_values.value_default }};
+
+                    {% if cost_input.input_type != 'static' %}
+                        var input_growth = document.getElementById('cost_input_growth_{{ cost_input.id }}')
+                        input_growth.value = {{ cost_input.growth_factor.value_default }};
+                    {% endif %}
+
+                    update_costs({{ model.time_horizon }})
+                };          
                 
-        {% endfor %} 
+            </script>
+
+
+
+
+
+    {% endfor %} 
 
         <small class="text-muted" name="slider_tip">You can set the values for these inputs by moving the sliders.</small>
-
-            <div class="text-right">
-                <input type="image" class="mr-2" id="icon_chart_costs"
-                    src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
-                    onclick="toggle_div_chart_costs()" />
-            </div>
             
-            <div id="div_chart_costs" style="display:none">
+            <div id="div_chart_costs_{{ grouper }}" style="display:none">
                 <canvas id="chart_costs" height="200"></canvas>
             </div>
 
@@ -71,62 +101,11 @@
 
 
 
-<script>
-    function toggle_div_chart_costs() {
-        var chart = document.getElementById("div_chart_costs");
-        var icon = document.getElementById("icon_chart_costs");
-        if (chart.style.display === "none") {
-            chart.style.display = "block";
-            icon.src = "{{ url_for('static', filename='images/icons/show.png')}}"
-        } else {
-            chart.style.display = "none";
-            icon.src = "{{ url_for('static', filename='images/icons/hide2.png')}}"
-        };
-    }
-</script>
 
 <script>
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     update_costs({{ model.time_horizon }});
 
-    {% for cost_input in list %}
 
-
-        function reset_cost_output_int_{{ cost_input.id }}() {
-            var input_static = document.getElementById('cost_input_static_{{ cost_input.id }}')
-            input_static.value = {{ cost_input.static_values.value_default }};
-
-            {% if cost_input.input_type != 'static' %}
-                var input_growth = document.getElementById('cost_input_growth_{{ cost_input.id }}')
-                input_growth.value = {{ cost_input.growth_factor.value_default }};
-            {% endif %}
-
-            update_costs({{ model.time_horizon }})
-        };
-
-
-
-
-        function clearview_cost_inputs_{{ cost_input.id }}() {
-            var change_static = document.getElementById("cost_change_int_static_{{ cost_input.id }}");
-            change_static.innerHTML = "";
-
-            {% if cost_input.input_type != 'static' %}
-                var change_growth = document.getElementById("cost_change_int_growth_{{ cost_input.id }}");
-                change_growth.innerHTML = "";
-            {% endif %}
-
-        };
-
-        function cost_value_display_{{ cost_input.id }}() {
-            cost_output_int_static_{{ cost_input.id }}.value = cost_input_static_{{ cost_input.id }}.value;
-            {% if cost_input.input_type != 'static' %}
-                cost_output_int_growth_{{ cost_input.id }}.value = cost_input_growth_{{ cost_input.id }}.value;
-            {% endif %}
-            
-        };
-
-    {% endfor %}
 
     function update_costs(T) {
         var ctx_costs = document.getElementById('chart_costs').getContext('2d');
@@ -199,4 +178,3 @@
 
 </script>
 
-{% endfor %}
