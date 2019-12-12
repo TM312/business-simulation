@@ -30,10 +30,9 @@
                     
 
                     {% if model.cost_inputs|length > 0 %}
-                        {% for grouper, list in model.cost_inputs|groupby('bundle') %}
-                            {% include 'subtemplates_model/_cost_inputs.html' %}
+                        {% for bundle in model.cost_inputs  %}
+                            {% include 'subtemplates_model/_cost_input_bundle.html' %}
                         {% endfor %}
-                    
                     {% endif %}
 
 
@@ -48,7 +47,7 @@
 
                         {% for environment_input in model.environment_inputs %}
                                                    
-                                {% include 'subtemplates_model/_env_inputs.html' %}
+                                {% include 'subtemplates_model/_env_input.html' %}
 
                         {% endfor %}
 
@@ -99,10 +98,57 @@
     {% for environment_input in model.environment_inputs %}
         update_env.apply(this, update_params_env_{{ environment_input.id }})
     {% endfor %}
+
     });
     
 
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+    var borderColors = ['rgb(89, 37, 63)', 'rgb(200, 160, 179)', 'rgb(184, 58, 121)', 'rgb(200, 140, 152)']
+    var fillColors = ['rgba(89, 37, 63, 0.3)', 'rgba(200, 160, 179,0.3)', 'rgba(184, 58, 121, 0.3)', 'rgba(200, 140, 152 0.3)']
+
+
+    function create_cost_input_array(array_env, T, input_type, input_static_id, input_growth) {
+        var array_env_initial = new Array(T).fill(input_static.value);
+        if (input_type == 'static') {
+            array_env = array_env_initial;
+        } else if (input_type == 'linear') {
+            array_env = array_env_initial.map((value, index) => (Math.round((value * 1 + input_growth.value * index) * 100) / 100));
+        } else if (input_type == 'exp') {
+            array_env = array_env_initial.map((value, index) => (Math.round((value * ((1 + 1 * input_growth.value) ** index) + Number.EPSILON) * 100) / 100));
+        };
+    };
+
+    function create_dataset(dataset, label, borderColor, fillColor, array_env) {
+        dataset = JSON.stringify({"label": label, "borderColor": borderColor, 'fillColor':fillColor, "data": array_env, "fill": +1, "pointRadius": 0})};
+       
+
+    
+    function update_costs(T, chart_id, datasets) {
+        var ctx = document.getElementById(chart_id).getContext('2d');    
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: datasets
+            },
+            options: {
+                legend: {
+                    position: "bottom",
+                },
+                scales: {
+                    yAxes: [{
+                        stacked:true,
+                        ticks: {
+                            maxTicksLimit: 10,
+                        }
+                    }]
+                }
+            }
+        });
+        chart.update()
+    };
+
 
 
 

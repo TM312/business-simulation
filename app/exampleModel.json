@@ -32,65 +32,68 @@
   }],
   "cost_inputs": [
     {
-    "id": 1,
-    "name": "Repair Costs",
-    "bundle": 1,
-    "bundle_name":"Costs per Ride [in $]",
-    "description": "",
-    "input_type": "linear",
-    "static_values": {
-      "value_min": 0.10,
-      "value_max": 0.60,
-      "value_default": 0.50,
-      "step": 0.1
-    },
-    "growth_factor": {
-      "value_min": -0.01,
-      "value_max": 0.01,
-      "value_default": 0,
-      "step": 0.01
-    }
-  },
-  {
-    "id": 2,
-    "name": "Charging Costs",
-    "bundle": 1,
-    "bundle_name":"Costs per Ride [in $]",
-    "description": "",
-    "input_type": "linear",
-    "static_values": {
-      "value_min": 0.1,
-      "value_max": 2,
-      "value_default": 1.7,
-      "step": 0.1
+      "bundle_id": 1,
+      "bundle_name": "Costs per Ride [in $]",
+      "bundle_inputs": [{
+        "id": 1,
+        "name": "Repair Costs",
+        "description": "",
+        "input_type": "linear",
+        "static_values": {
+          "value_min": 0.10,
+          "value_max": 0.60,
+          "value_default": 0.50,
+          "step": 0.1
+        },
+        "growth_factor": {
+          "value_min": -0.01,
+          "value_max": 0.01,
+          "value_default": 0,
+          "step": 0.01
+        }
       },
-    "growth_factor": {
-      "value_min": -0.2,
-      "value_max": 0.2,
-      "value_default": 0,
-      "step": 0.05
-      }
-    },
-  {
-    "id": 3,
-    "name": "Scooter Costs",
-    "bundle":2,
-    "bundle_name":"Scooter Related Costs",
-    "description": "",
-    "input_type": "linear",
-    "static_values": {
-      "value_min": 300,
-      "value_max": 600,
-      "value_default": 550,
-      "step": 50
-    },
-    "growth_factor": {
-      "value_min": -10,
-      "value_max": 0,
-      "value_default": 10,
-      "step": 1
-    }
-  }],
+      {
+        "id": 2,
+        "name": "Charging Costs",
+        "description": "",
+        "input_type": "linear",
+        "static_values": {
+          "value_min": 0.1,
+          "value_max": 2,
+          "value_default": 1.7,
+          "step": 0.1
+        },
+        "growth_factor": {
+          "value_min": -0.2,
+          "value_max": 0.2,
+          "value_default": 0,
+          "step": 0.05
+        }
+      }]
+    },{
+      "bundle_id": 2,
+      "bundle_name": "Costs per Ride [in $]",
+      "bundle_inputs": [{
+        "id": 3,
+        "name": "Scooter Costs",
+        "bundle":2,
+        "bundle_name":"Scooter Related Costs",
+        "description": "",
+        "input_type": "linear",
+        "static_values": {
+          "value_min": 300,
+          "value_max": 600,
+          "value_default": 550,
+          "step": 50
+        },
+        "growth_factor": {
+          "value_min": -10,
+          "value_max": 0,
+          "value_default": 10,
+          "step": 1
+        }
+      }]
+    }],
   "environment_inputs": [
     {
     "id": 1,
