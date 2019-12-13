@@ -1,68 +1,96 @@
-
 <div class="card shadow-sm mb-3 chartcanvas">
     <div class="card-header form-inline py-3">
-        <p class="mb-0">{{ bundle.name }}</p>
-            <input type="image" class="mr-3 ml-auto" id="icon_chart_costs_{{ bundle_id }}"
+        <p class="mb-0">{{ bundle }}</p>
+            <input type="image" class="mr-3 ml-auto" id="icon_chart_costs_{{ bundle_id.index }}"
                 src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
-                onclick="toggle_div_chart('div_chart_costs_{{ bundle_id }}', 'icon_chart_costs_{{ bundle_id }}')" />
+                onclick="toggle_div_chart('div_chart_costs_{{ bundle_id.index }}', 'icon_chart_costs_{{ bundle_id.index }}')" />
     </div>
     <div class="card-body">
 
-        {% for cost_input in bundle.bundle_inputs %}
+        {% for cost_input in list %}
 
-                    <div class="container mb-2 py-1 rounded border">
-                        <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
+            <div class="container mb-2 py-1 rounded border">
+                <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
 
-                        <div class="form-inline" id="inputs">
-                            {% if cost_input.input_type == 'static' %}
-                                <span class="mr-2">Value</span>
-                            {% else %}
-                                <span class="mr-2">Start Value</span>
-                            {% endif %}
-                            <input type="range" id="cost_input_static_{{ bundle.bundle_id }}_{{ cost_input.id }}"
-                                min={{ cost_input.static_values.value_min }} max={{ cost_input.static_values.value_max }}
-                                value={{ cost_input.static_values.value_default }} step={{ cost_input.static_values.step }}
-                                class="form-control w-25" 
-                                oninput="display_output_int.apply(this, display_params_cost_value_{{ bundle.bundle_id }}_{{ cost_input.id }})"
-                                onmouseup="update_costs({{ model.time_horizon }})" 
-                                onmouseout="clearview_cost_inputs_{{ bundle.bundle_id }}_{{ cost_input.id }}()"/>
-                            <span class="badge badge-pill badge-primary ml-2"><output
-                                    id="cost_output_int_static_{{ bundle.bundle_id }}_{{ cost_input.id }}" type="int" 
-                                    onmouseover="viewchange(this.id, 'cost_change_int_static_{{ bundle.bundle_id }}_{{ cost_input.id }}', {{ cost_input.static_values.value_default }})"
-                                    onmouseout="clear_viewchange('cost_change_int_static_{{ bundle.bundle_id }}_{{ cost_input.id }}')"/></span>
-                            <small class="text-muted ml-2"><em id="cost_change_int_static_{{ bundle.bundle_id }}_{{ cost_input.id }}"></em></small>
-                            <button type="button" id="reset_button_cost_input_{{ bundle.bundle_id }}_{{ cost_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto"
-                                onclick="reset_cost_output_int_{{ bundle.bundle_id }}_{{ cost_input.id }}()">Reset</button>
-                        </div>
-
-                        {% if cost_input.input_type != 'static' %}
-                            <div class="form-inline">
-                                <span class="mr-2">Growth Factor</span>
-                                <input type="range" min={{ cost_input.growth_factor.value_min }}
-                                    max={{ cost_input.growth_factor.value_max }}
-                                    value={{ cost_input.growth_factor.value_default }} step={{ cost_input.growth_factor.step }}
-                                    id="cost_input_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}" class="form-control w-25"
-                                    oninput="display_output_int.apply(this, display_params_cost_value_{{ bundle.bundle_id }}_{{ cost_input.id }})"
-                                    onmouseup="update_costs({{ model.time_horizon }})"/>
-                                <span class="badge badge-pill badge-primary ml-2"><output
-                                        id="cost_output_int_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}" type="int" 
-                                        onmouseover="viewchange(this.id, 'cost_change_int_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}', {{ cost_input.growth_factor.value_default }})"
-                                        onmouseout="clear_viewchange('cost_change_int_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}')"/></span>
-                                <small class="text-muted ml-2"><em id="cost_change_int_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}"></em></small>
-
-                            </div>
-                        {% endif %}
-
-                    </div>  
+                <div class="form-inline" id="inputs">
+                    {% if cost_input.input_type == 'static' %}
+                        <span class="mr-2">Value</span>
+                    {% else %}
+                        <span class="mr-2">Start Value</span>
+                    {% endif %}
+                    <input type="range" class="form-control w-25" 
+                        id="cost_input_static_{{ bundle_id.index }}_{{ cost_input.id }}"
+                        min={{ cost_input.static_values.value_min }} 
+                        max={{ cost_input.static_values.value_max }}
+                        value={{ cost_input.static_values.value_default }} 
+                        step={{ cost_input.static_values.step }}
+                        oninput="display_output_int.apply(this, display_params_cost_value_{{ bundle_id.index }}_{{ cost_input.id }})"
+                        />
+                    <span class="badge badge-pill badge-primary ml-2">
+                        <output
+                            id="cost_output_int_static_{{ bundle_id.index }}_{{ cost_input.id }}" 
+                            type="int" 
+                            onmouseover="viewchange(this.id, 
+                                                    'cost_change_int_static_{{ bundle_id.index }}_{{ cost_input.id }}', 
+                                                    {{ cost_input.static_values.value_default }}
+                                                    )"
+                            onmouseout="clear_viewchange('cost_change_int_static_{{ bundle_id.index }}_{{ cost_input.id }}')"
+                            />
+                    </span>
+                    <small class="text-muted ml-2"><em id="cost_change_int_static_{{ bundle_id.index }}_{{ cost_input.id }}"></em></small>
                     
+                    <button type="button" id="reset_button_cost_input_{{ bundle_id.index }}_{{ cost_input.id }}" 
+                            class="btn btn-sm btn-outline-secondary ml-auto"
+                            onclick="reset_cost_output_int_{{ bundle_id.index }}_{{ cost_input.id }}()">Reset</button>
+                </div>
+
+                {% if cost_input.input_type != 'static' %}
+                    <div class="form-inline">
+                        <span class="mr-2">Growth Factor</span>
+                        <input type="range" class="form-control w-25"
+                            id="cost_input_growth_{{ bundle_id.index }}_{{ cost_input.id }}"
+                            min={{ cost_input.growth_factor.value_min }}
+                            max={{ cost_input.growth_factor.value_max }}
+                            value={{ cost_input.growth_factor.value_default }} 
+                            step={{ cost_input.growth_factor.step }}
+                            oninput="display_output_int.apply(this, display_params_cost_value_{{ bundle_id.index }}_{{ cost_input.id }})"
+                            />
+                        <span class="badge badge-pill badge-primary ml-2">
+                            <output
+                                id="cost_output_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}" type="int" 
+                                onmouseover="viewchange(this.id, 
+                                                        'cost_change_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}', 
+                                                        {{ cost_input.growth_factor.value_default }}
+                                                        )"
+                                onmouseout="clear_viewchange('cost_change_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}')"/>
+                        </span>
+                        <small class="text-muted ml-2"><em id="cost_change_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}"></em></small>
+
+                    </div>
+                {% endif %}
+
+            </div>  
+            
     
+            <script>
+
+                var display_params_cost_value_{{ bundle_id.index }}_{{ cost_input.id }} = [
+                    'cost_input_static_{{ bundle_id.index }}_{{ cost_input.id }}',
+                    'cost_output_int_static_{{ bundle_id.index }}_{{ cost_input.id }}',
+                    {% if cost_input.input_type != 'static' %}
+                        'cost_input_growth_{{ bundle_id.index }}_{{ cost_input.id }}',
+                        'cost_output_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}'
+                    {% endif %}
+                ];
+
+            </script>
 
         {% endfor %} 
 
         <small class="text-muted" name="slider_tip">You can set the values for these inputs by moving the sliders.</small>
             
-            <div id="div_chart_costs_{{ bundle.bundle_id }}" style="display:none">
-                <canvas id="chart_costs_{{ bundle.bundle_id }}" height="200"></canvas>
+            <div id="div_chart_costs_{{ bundle_id.index }}" style="display:none">
+                <canvas id="chart_costs_{{ bundle_id.index }}" height="200"></canvas>
             </div>
 
         <hr>
@@ -74,57 +102,4 @@
 
 
 
-<script>
-    
-
-    var cost_input_dataset_{{ bundle.bundle_id }} =[];
-
-    {% for cost_input in bundle.bundle_inputs %}
-
-    var display_params_cost_value_{{ bundle.bundle_id }}_{{ cost_input.id }} = [
-        'cost_input_static_{{ bundle.bundle_id }}_{{ cost_input.id }}', 
-        'cost_output_int_static_{{ bundle.bundle_id }}_{{ cost_input.id }}',
-        {% if cost_input.input_type != 'static' %}
-            'cost_input_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}', 
-            'cost_output_int_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}'
-        {% endif %}
-    ];
-
-    var cost_input_array = [];
-    var array_env_{{ bundle.bundle_id }}_{{ cost_input.id }} =[];
-
-
-    var create_cost_array_params = [
-        array_env_{{ bundle.bundle_id }}_{{ cost_input.id }}, 
-        {{ model.time_horizon }}, '{{ cost_input.input_type }}', 
-        'cost_input_static_{{ bundle.bundle_id }}_{{ cost_input.id }}', 
-        'cost_input_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}'
-    ];
-
-    function reset_cost_output_int_{{ bundle.bundle_id }}_{{ cost_input.id }}() {
-        var input_static = document.getElementById('cost_input_static_{{ bundle.bundle_id }}_{{ cost_input.id }}')
-        input_static.value = {{ cost_input.static_values.value_default }};
-
-        {% if cost_input.input_type != 'static' %}
-            var input_growth = document.getElementById('cost_input_growth_{{ bundle.bundle_id }}_{{ cost_input.id }}')
-            input_growth.value = {{ cost_input.growth_factor.value_default }};
-        {% endif %}
-
-        update_costs({{ model.time_horizon }});
-    };          
-    
-        
-      
-        create_cost_input_array.apply(create_cost_array_params);
-        console.log(array_env_{{ bundle.bundle_id}}_{{ cost_input.id }});   
-        
-        create_dataset(cost_input_dataset_{{ bundle.bundle_id }}, '{{ cost_input.name}}', borderColors[{{ loop.index }}], fillColors[{{ loop.index }}], array_env_{{ bundle.bundle_id}}_{{ cost_input.id }});
-        
-        cost_input_datasets_{{ bundle.bundle_id }}.push(cost_input_dataset_{{ bundle.bundle_id }});
-    {% endfor%}
-
-        update_costs({{ model.time_horizon }}, 'chart_costs_{{ bundle.bundle_id }}', cost_input_datasets_{{ bundle.bundle_id }});
- 
-
-</script>
 

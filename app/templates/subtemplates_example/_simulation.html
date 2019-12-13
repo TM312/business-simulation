@@ -30,7 +30,8 @@
                     
 
                     {% if model.cost_inputs|length > 0 %}
-                        {% for bundle in model.cost_inputs  %}
+                        {% for bundle, list in model.cost_inputs|groupby('bundle')  %}
+                            {% set bundle_id = loop %}
                             {% include 'subtemplates_model/_cost_input_bundle.html' %}
                         {% endfor %}
                     {% endif %}
@@ -103,9 +104,7 @@
     
 
     var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-    var borderColors = ['rgb(89, 37, 63)', 'rgb(200, 160, 179)', 'rgb(184, 58, 121)', 'rgb(200, 140, 152)']
-    var fillColors = ['rgba(89, 37, 63, 0.3)', 'rgba(200, 160, 179,0.3)', 'rgba(184, 58, 121, 0.3)', 'rgba(200, 140, 152 0.3)']
+ 
 
 
     function create_cost_input_array(array_env, T, input_type, input_static_id, input_growth) {
@@ -119,18 +118,29 @@
         };
     };
 
-    function create_dataset(dataset, label, borderColor, fillColor, array_env) {
-        dataset = JSON.stringify({"label": label, "borderColor": borderColor, 'fillColor':fillColor, "data": array_env, "fill": +1, "pointRadius": 0})};
+    // function create_dataset(dataset, label, borderColor, fillColor, array_env) {
+    //     dataset = JSON.stringify({"label": label, "borderColor": borderColor, 'fillColor':fillColor, "data": array_env, "fill": +1, "pointRadius": 0})};
        
 
-    
-    function update_costs(T, chart_id, datasets) {
-        var ctx = document.getElementById(chart_id).getContext('2d');    
+ 
+        var cost_ctx = document.getElementById(chart_id).getContext('2d');    
         var chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: months,
-                datasets: datasets
+                datasets: datasets,
+                borderColor: [
+                    'rgb(89, 37, 63)', 
+                    'rgb(200, 160, 179)', 
+                    'rgb(184, 58, 121)', 
+                    'rgb(200, 140, 152)'
+                ],
+                fillColors: [
+                    'rgba(89, 37, 63, 0.3)',
+                    'rgba(200, 160, 179,0.3)',
+                    'rgba(184, 58, 121, 0.3)',
+                    'rgba(200, 140, 152 0.3)'
+                    ],
             },
             options: {
                 legend: {
@@ -146,8 +156,7 @@
                 }
             }
         });
-        chart.update()
-    };
+ 
 
 
 

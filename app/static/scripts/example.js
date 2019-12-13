@@ -2,8 +2,12 @@
 function viewchange(input_id, change_id, default_value) {
     var output = parseFloat(document.getElementById(input_id).innerHTML);
     var change_display = document.getElementById(change_id);
-    
-    if (output != default_value && default_value != 0 ) {
+    if (default_value == 0) {
+        result = "default value: 0";
+        if (output != default_value) {
+            change_display.innerHTML = result
+        };
+    } else if (output != default_value ) {
             result = Math.round(((output - default_value) / default_value + Number.EPSILON / 100) * 100);
             if (result>0) {
             change_display.innerHTML = '+' + result + '%';
@@ -13,8 +17,8 @@ function viewchange(input_id, change_id, default_value) {
     };
 };
 
-function clear_viewchange(changeid) {
-    var change = document.getElementById(changeid);
+function clear_viewchange(change_id) {
+    var change = document.getElementById(change_id);
     change.innerHTML = ""
 };
 
