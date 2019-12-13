@@ -78,8 +78,8 @@
 
     var update_params_env_{{ environment_input.id }} = [
         {{ model.time_horizon }}, 
-        '{{ environment_input.input_type }}', 
-        'chart_env_{{ environment_input.id }}',
+        '{{ environment_input.input_type }}',
+        'chart_env_{{ environment_input.id }}', 
         'env_array_{{ environment_input.id }}', 
        'env_input_static_{{ environment_input.id }}', 
         'env_output_int_static_{{ environment_input.id }}', 
@@ -102,6 +102,27 @@
         {% endif %}
     ];
     
-            
+
+    var create_env_chart_params_{{ environment_input.id }} = [
+        'chart_env_{{ environment_input.id }}',
+        {{ model.time_horizon }}, 
+
+    ]
+       
+    create_env_chart(ctx_id, T, env_array, env_array_default)
+
+    create_arrays_params_env_{{ environment_input.id }} =[
+            36, 
+            '{{ environment_input.input_type }}', 
+            'env_input_static_{{ environment_input.id }}', 
+            'env_output_int_static_{{ environment_input.id }}', 
+
+            {% if environment_input.input_type != 'static' %} 
+                'env_input_growth_{{ environment_input.id }}', 
+                'env_output_int_growth_{{ environment_input.id }}', 
+            {% endif %}
+    ];
+    
+    var env_array_default = create_arrays.apply(this.id, create_arrays_params_env_default_{{ environment_input.id }})
 
 </script>
