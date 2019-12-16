@@ -31,7 +31,9 @@
         
         <button type="button" id="reset_button_cost_input_{{ cost_input.id }}" 
                 class="btn btn-sm btn-outline-secondary ml-auto"
-                onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
+                onclick="reset_input_values.apply(this.id, reset_input_values_params_cost_{{ cost_input.id }})">Reset</button>
+
+
     </div>
 
     {% if cost_input.input_type != 'static' %}
@@ -74,7 +76,6 @@
         {% endif %}
     ];
 
-
     var create_arrays_params_cost_{{ cost_input.id }} =[
         {{ model.time_horizon }},
         '{{ cost_input.input_type }}',
@@ -88,7 +89,6 @@
     ];
 
     var cost_array_default_{{ cost_input.id }} = create_arrays.apply(this.id, create_arrays_params_cost_{{ cost_input.id }});
-    console.log(cost_array_default_{{ cost_input.id }})
 
    
 

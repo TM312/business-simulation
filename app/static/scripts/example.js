@@ -86,7 +86,7 @@ function update_env_chart(chart, update_array_params_env) {
     chart.update();
 };
 
-function reset_input_values_env(max_T, input_type, chart,
+function reset_input_values(max_T, input_type, chart,
     static_input_id, output_static_id, static_input_default_value,
     input_growth_id, output_growth_id, growth_input_default_value) {
 
@@ -101,40 +101,26 @@ function reset_input_values_env(max_T, input_type, chart,
 
     display_output_int(static_input_id, output_static_id, input_growth_id, output_growth_id)
 
-    var update_array_params_env = [max_T, input_type, static_input_id, output_static_id, input_growth_id, output_growth_id];
-    update_env_chart(chart, update_array_params_env)
+    var update_array_params = [max_T, input_type, static_input_id, output_static_id, input_growth_id, output_growth_id];
+
+    if (array_id !== undefined) {
+        update_cost_chart(chart, array_id, update_array_params)
+        console.log("check")
+    } else {
+        update_env_chart(chart, update_array_params)
+    };
+
+
 };
 
 
 // cost input specific functions
 function update_cost_chart(chart, array_id, update_array_params_cost) {
     var cost_array = create_arrays.apply(this.id, update_array_params_cost);
-    console.log(cost_array)
     
     chart.data.datasets[parseInt(array_id)].data = cost_array;
     chart.update();
 };
-
-
-function reset_input_values_cost(max_T, input_type, chart,
-    static_input_id, output_static_id, static_input_default_value,
-    input_growth_id, output_growth_id, growth_input_default_value) {
-
-    var input_static = document.getElementById(static_input_id);
-    input_static.value = static_input_default_value;
-
-    if (input_growth_id !== undefined) {
-        var input_growth = document.getElementById(input_growth_id);
-        input_growth.value = growth_input_default_value;
-    };
-
-
-    display_output_int(static_input_id, output_static_id, input_growth_id, output_growth_id)
-
-    var update_array_params_env = [max_T, input_type, static_input_id, output_static_id, input_growth_id, output_growth_id];
-    update_cost_chart.apply(this.id, update_cost_chart_params)
-};
-
 
 
 
