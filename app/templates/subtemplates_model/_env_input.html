@@ -20,8 +20,8 @@
                         value={{ environment_input.static_values.value_default }} 
                         step={{ environment_input.static_values.step }}
                         class="form-control w-25" 
-                        oninput="display_output_int.apply(this, display_params_env_value_{{ environment_input.id }})" 
-                        onmouseup="update_env.apply(this, update_params_env_{{ environment_input.id }})">
+                        oninput="display_output_int.apply(this.id, display_params_env_value_{{ environment_input.id }})" 
+                        onmouseup="update_env_chart(chart_var_env_{{ environment_input.id }}, create_arrays_params_env_{{ environment_input.id }})">
                     <span class="badge badge-pill badge-primary font-weight-bold ml-2">
                         <output id="env_output_int_static_{{ environment_input.id }}" 
                                 type="int" 
@@ -33,7 +33,7 @@
                     </span>
                     <small class="text-muted ml-2"><em id="environment_change_int_static_{{ environment_input.id }}"></em></small>
 
-                    <button type="button" id="reset_button_environment_input_{{ environment_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_env_input.apply(this, update_params_env_{{ environment_input.id }})">Reset</button>
+                    <button type="button" id="reset_button_environment_input_{{ environment_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_input_values.apply(this.id, reset_input_values_params_{{ environment_input.id }})">Reset</button>
                 </div>
                 {% if environment_input.input_type != 'static' %}
                 <div class="form-inline">
@@ -45,7 +45,7 @@
                         step={{ environment_input.growth_factor.step }}
                         class="form-control w-25" 
                         oninput="display_output_int.apply(this, display_params_env_value_{{ environment_input.id }})" 
-                        onmouseup="update_env.apply(this, update_params_env_{{ environment_input.id }})">
+                        onmouseup="update_env_chart(chart_var_env_{{ environment_input.id }}, create_arrays_params_env_{{ environment_input.id }})">
                     <span class="badge badge-pill badge-primary font-weight-bold ml-2">
                         <output id="env_output_int_growth_{{ environment_input.id }}" type="int"
                                 onmouseover="viewchange(this.id, 
@@ -76,23 +76,6 @@
 
 <script>
 
-    var update_params_env_{{ environment_input.id }} = [
-        {{ model.time_horizon }}, 
-        '{{ environment_input.input_type }}',
-        'chart_env_{{ environment_input.id }}', 
-        'env_array_{{ environment_input.id }}', 
-       'env_input_static_{{ environment_input.id }}', 
-        'env_output_int_static_{{ environment_input.id }}', 
-        {{ environment_input.static_values.value_default }},
-
-        {% if environment_input.input_type != 'static' %} 
-            'env_input_growth_{{ environment_input.id }}', 
-            'env_output_int_growth_{{ environment_input.id }}', 
-            {{ environment_input.growth_factor.value_default }}
-        {% endif %}
-    ];
-    
-
     var display_params_env_value_{{ environment_input.id }} = [
         'env_input_static_{{ environment_input.id }}', 
         'env_output_int_static_{{ environment_input.id }}',
@@ -101,28 +84,77 @@
             'env_output_int_growth_{{ environment_input.id }}'
         {% endif %}
     ];
-    
 
-    var create_env_chart_params_{{ environment_input.id }} = [
-        'chart_env_{{ environment_input.id }}',
-        {{ model.time_horizon }}, 
+    var create_arrays_params_env_{{ environment_input.id }} =[
+        {{ model.time_horizon}}, 
+        '{{ environment_input.input_type }}', 
+        'env_input_static_{{ environment_input.id }}', 
+        'env_output_int_static_{{ environment_input.id }}', 
 
-    ]
-       
-    create_env_chart(ctx_id, T, env_array, env_array_default)
-
-    create_arrays_params_env_{{ environment_input.id }} =[
-            36, 
-            '{{ environment_input.input_type }}', 
-            'env_input_static_{{ environment_input.id }}', 
-            'env_output_int_static_{{ environment_input.id }}', 
-
-            {% if environment_input.input_type != 'static' %} 
-                'env_input_growth_{{ environment_input.id }}', 
-                'env_output_int_growth_{{ environment_input.id }}', 
-            {% endif %}
+        {% if environment_input.input_type != 'static' %} 
+            'env_input_growth_{{ environment_input.id }}', 
+            'env_output_int_growth_{{ environment_input.id }}', 
+        {% endif %}
     ];
     
-    var env_array_default = create_arrays.apply(this.id, create_arrays_params_env_default_{{ environment_input.id }})
+
+
+    var env_array_default_{{ environment_input.id }} = create_arrays.apply(this.id, create_arrays_params_env_{{ environment_input.id }});
+
+
+    var ctx_env_{{ environment_input.id }} = document.getElementById('chart_env_{{ environment_input.id }}').getContext('2d');
+    var chart_var_env_{{ environment_input.id }} = new Chart(ctx_env_{{ environment_input.id }}, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [
+                    {
+                    label: 'current value',
+                    borderColor: '#367DD9',
+                    data: env_array_default_{{ environment_input.id }},
+                    fill: +1,
+                    pointRadius: 0
+                },
+                {
+                    label: 'default value',
+                    borderColor: '#B8B6B4',
+                    borderDash: [5, 5],
+                    data: env_array_default_{{ environment_input.id }},
+                    fill: false,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                legend: {
+                    position: "bottom",
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 10,
+                        }
+                    }]
+                }
+            }
+        });
+
+
+   var reset_input_values_params_{{ environment_input.id }} = [
+        {{ model.time_horizon }},
+        '{{ environment_input.input_type }}', 
+        chart_var_env_{{ environment_input.id }}, 
+        'env_input_static_{{ environment_input.id }}', 
+        'env_output_int_static_{{ environment_input.id }}',
+        {{ environment_input.static_values.value_default }},
+        {% if environment_input.input_type != 'static' %}
+            'env_input_growth_{{ environment_input.id }}',
+            'env_output_int_growth_{{ environment_input.id }}',
+            {{ environment_input.growth_factor.value_default }}
+        {% endif %}
+    ];
+
+
+
+    
 
 </script>

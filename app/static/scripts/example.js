@@ -23,31 +23,6 @@ function clear_viewchange(change_id) {
 };
 
 
-
-function reset_price_output_int_static(output_id_static, value_default_static, output_id_growth, value_default_growth) {
-    var output_static = document.getElementById(output_id_static)
-    output_static.innerHTML = value_default_static;
-    if (output_id_growth !== undefined) {
-        var output_growth = document.getElementById(output_id_growth)
-        output_growth.value = value_default_growth;
-    }
-};
-
-
-function reset_env_input(T, input_type, chart_id, env_array_id_global,
-                        static_input_id, static_output_id, static_input_default_value, 
-                        growth_input_id, growth_output_id, growth_input_default_value) {
-
-    var input_static = document.getElementById(static_input_id)
-    input_static.value = static_input_default_value;
-    if (growth_input_id !== undefined) {
-        var input_growth = document.getElementById(growth_input_id)
-        input_growth.value = growth_input_default_value;
-    }
-    update_env(T, input_type, chart_id, env_array_id_global, static_input_id, static_output_id, static_input_default_value, growth_input_id, growth_output_id, growth_input_default_value);
-
-};
-
 function display_output_int(input_static_id, output_static_id, input_growth_id, output_growth_id) {
     var input_static = document.getElementById(input_static_id);
     var output_static = document.getElementById(output_static_id); 
@@ -58,55 +33,6 @@ function display_output_int(input_static_id, output_static_id, input_growth_id, 
         output_growth.value = input_growth.value;
     }
 };
-
-function create_env_chart(ctx_id, T, env_array, env_array_default) {
-    var ctx = document.getElementById(ctx_id).getContext('2d');
-    var chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: T,
-                datasets: [{
-                    label: 'current value',
-                    borderColor: '#367DD9',
-                    data: env_array,
-                    fill: +1,
-                    pointRadius: 0
-                }, {
-                    label: 'default value',
-                    borderColor: '#B8B6B4',
-                    borderDash: [5, 5],
-                    data: env_array_default;,
-                    fill: false,
-                    pointRadius: 0
-                }]
-            },
-            options: {
-                legend: {
-                    position: "bottom",
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            maxTicksLimit: 10,
-                        }
-                    }]
-                }
-            }
-        });
-
-};
-    
-
-
-function update_env(T, input_type, chart, env_array_id,
-                    static_input_id, static_output_id, static_input_default_value, 
-                    growth_input_id, growth_output_id, growth_input_default_value) {
-
- 
-
-    return env_array_id
-};
-
 
 function create_arrays(max_T, input_type, static_input_id, static_output_id, growth_input_id, growth_output_id) {
 
@@ -132,8 +58,54 @@ function create_arrays(max_T, input_type, static_input_id, static_output_id, gro
 
     };
     return array_env;  
-}
+};
+
+//price specific functions
+function reset_price_output_int_static(output_id_static, value_default_static, output_id_growth, value_default_growth) {
+    var output_static = document.getElementById(output_id_static)
+    output_static.innerHTML = value_default_static;
+    if (output_id_growth !== undefined) {
+        var output_growth = document.getElementById(output_id_growth)
+        output_growth.value = value_default_growth;
+    }
+};
+
+
+
+// environment input specific functions
+function update_env_chart(chart, update_array_params_env) {
+    var env_array = create_arrays.apply(this.id, update_array_params_env);
+    console.log(env_array)
+    if (chart.data.datasets.length > 1) {
+        chart.data.datasets[0].data = env_array;
+    }    
+    chart.update();
+};
 
 
 
 
+
+
+
+
+
+
+function reset_input_values(max_T, input_type, chart,
+    static_input_id, output_static_id, static_input_default_value,
+    input_growth_id, output_growth_id, growth_input_default_value) {
+
+    var input_static = document.getElementById(static_input_id);
+    input_static.value = static_input_default_value;
+
+    if (input_growth_id !== undefined) {
+        var input_growth = document.getElementById(input_growth_id);
+        input_growth.value = growth_input_default_value;
+    };
+
+
+    display_output_int(static_input_id, output_static_id, input_growth_id, output_growth_id)
+
+    var update_array_params_env = [max_T, input_type, static_input_id, output_static_id, input_growth_id, output_growth_id];
+    update_env_chart(chart, update_array_params_env)
+};

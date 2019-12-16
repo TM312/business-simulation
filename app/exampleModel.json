@@ -5,6 +5,7 @@
   "introductory_text":"Lime and Bird have been a driving force behind the drastic changes in urban mobility we observe these days. We aim at providing a better understanding of the mechanisms of a scooter operator’s business model.",
   "infobox_context":"",
   "time_horizon": 12,
+  "max_T": 36,
   "price_inputs": [
     {
     "id": 1,

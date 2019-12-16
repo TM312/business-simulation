@@ -83,6 +83,35 @@
                     {% endif %}
                 ];
 
+                var reset_input_values_params_{{ cost_input.id }} = [
+                    {{ model.time_horizon }},
+                    '{{ cost_input.input_type }}', 
+                    chart_var_cost_{{ cost_input.id }}, 
+                    'cost_input_static_{{ cost_input.id }}', 
+                    'cost_output_int_static_{{ cost_input.id }}',
+                    {{ cost_input.static_values.value_default }},
+                    {% if cost_input.input_type != 'static' %}
+                        'cost_input_growth_{{ cost_input.id }}',
+                        'cost_output_int_growth_{{ cost_input.id }}',
+                        {{ cost_input.growth_factor.value_default }}
+                    {% endif %}
+                ];
+
+                var create_arrays_params_cost_{{ cost_input.id }} =[
+                        {{ model.time_horizon }},
+                        '{{ cost_input.input_type }}',
+                        'cost_input_static_{{ cost_input.id }}',
+                        'cost_output_int_static_{{ cost_input.id }}',
+
+                        {% if cost_input.input_type != 'static' %}
+                    'cost_input_growth_{{ cost_input.id }}',
+                        'cost_output_int_growth_{{ cost_input.id }}',
+                        {% endif %}
+                ];
+
+                var cost_array_default_{{ cost_input.id }} = create_arrays.apply(this.id, create_arrays_params_cost_{{ cost_input.id }});
+
+
             </script>
 
         {% endfor %} 
@@ -98,6 +127,68 @@
             data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
     </div>
 </div>
+
+
+<script>
+
+
+
+    function create_cost_input_array(array_cost, T, input_type, input_static_id, input_growth) {
+        var array_cost_initial = new Array(T).fill(input_static.value);
+        if (input_type == 'static') {
+            array_cost = array_cost_initial;
+        } else if (input_type == 'linear') {
+            array_cost = array_cost_initial.map((value, index) => (Math.round((value * 1 + input_growth.value * index) * 100) / 100));
+        } else if (input_type == 'exp') {
+            array_cost = array_cost_initial.map((value, index) => (Math.round((value * ((1 + 1 * input_growth.value) ** index) + Number.EPSILON) * 100) / 100));
+        };
+    };
+
+    // var dataset -_-> cost_array_default_{{ bundle_id.index }}
+ 
+    var ctx_cost_{{ bundle_id.index }} = document.getElementById('chart_cost_{{ bundle_id.index }}').getContext('2d');
+    var chart_var_cost_{{ bundle_id.index }} = new Chart(ctx_cost_{{ bundle_id.index }}, {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: datasets,
+            borderColor: [
+                'rgb(89, 37, 63)', 
+                'rgb(200, 160, 179)', 
+                'rgb(184, 58, 121)', 
+                'rgb(200, 140, 152)'
+            ],
+            fillColors: [
+                'rgba(89, 37, 63, 0.3)',
+                'rgba(200, 160, 179,0.3)',
+                'rgba(184, 58, 121, 0.3)',
+                'rgba(200, 140, 152 0.3)'
+                ],
+        },
+        options: {
+            legend: {
+                position: "bottom",
+            },
+            scales: {
+                yAxes: [{
+                    stacked:true,
+                    ticks: {
+                        maxTicksLimit: 10,
+                    }
+                }]
+            }
+        }
+    });
+ 
+
+
+</script>
+    
+
+
+
+
+    
 
 
 
