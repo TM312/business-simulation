@@ -1,3 +1,6 @@
+
+
+
 <div class="card shadow-sm mb-3 chartcanvas">
     <div class="card-header form-inline py-3">
         <p class="mb-0">{{ bundle }}</p>
@@ -9,111 +12,8 @@
 
         {% for cost_input in list %}
 
-            <div class="container mb-2 py-1 rounded border">
-                <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
-
-                <div class="form-inline" id="inputs">
-                    {% if cost_input.input_type == 'static' %}
-                        <span class="mr-2">Value</span>
-                    {% else %}
-                        <span class="mr-2">Start Value</span>
-                    {% endif %}
-                    <input type="range" class="form-control w-25" 
-                        id="cost_input_static_{{ bundle_id.index }}_{{ cost_input.id }}"
-                        min={{ cost_input.static_values.value_min }} 
-                        max={{ cost_input.static_values.value_max }}
-                        value={{ cost_input.static_values.value_default }} 
-                        step={{ cost_input.static_values.step }}
-                        oninput="display_output_int.apply(this, display_params_cost_value_{{ bundle_id.index }}_{{ cost_input.id }})"
-                        />
-                    <span class="badge badge-pill badge-primary ml-2">
-                        <output
-                            id="cost_output_int_static_{{ bundle_id.index }}_{{ cost_input.id }}" 
-                            type="int" 
-                            onmouseover="viewchange(this.id, 
-                                                    'cost_change_int_static_{{ bundle_id.index }}_{{ cost_input.id }}', 
-                                                    {{ cost_input.static_values.value_default }}
-                                                    )"
-                            onmouseout="clear_viewchange('cost_change_int_static_{{ bundle_id.index }}_{{ cost_input.id }}')"
-                            />
-                    </span>
-                    <small class="text-muted ml-2"><em id="cost_change_int_static_{{ bundle_id.index }}_{{ cost_input.id }}"></em></small>
-                    
-                    <button type="button" id="reset_button_cost_input_{{ bundle_id.index }}_{{ cost_input.id }}" 
-                            class="btn btn-sm btn-outline-secondary ml-auto"
-                            onclick="reset_cost_output_int_{{ bundle_id.index }}_{{ cost_input.id }}()">Reset</button>
-                </div>
-
-                {% if cost_input.input_type != 'static' %}
-                    <div class="form-inline">
-                        <span class="mr-2">Growth Factor</span>
-                        <input type="range" class="form-control w-25"
-                            id="cost_input_growth_{{ bundle_id.index }}_{{ cost_input.id }}"
-                            min={{ cost_input.growth_factor.value_min }}
-                            max={{ cost_input.growth_factor.value_max }}
-                            value={{ cost_input.growth_factor.value_default }} 
-                            step={{ cost_input.growth_factor.step }}
-                            oninput="display_output_int.apply(this, display_params_cost_value_{{ bundle_id.index }}_{{ cost_input.id }})"
-                            />
-                        <span class="badge badge-pill badge-primary ml-2">
-                            <output
-                                id="cost_output_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}" type="int" 
-                                onmouseover="viewchange(this.id, 
-                                                        'cost_change_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}', 
-                                                        {{ cost_input.growth_factor.value_default }}
-                                                        )"
-                                onmouseout="clear_viewchange('cost_change_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}')"/>
-                        </span>
-                        <small class="text-muted ml-2"><em id="cost_change_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}"></em></small>
-
-                    </div>
-                {% endif %}
-
-            </div>  
-            
-    
-            <script>
-
-                var display_params_cost_value_{{ bundle_id.index }}_{{ cost_input.id }} = [
-                    'cost_input_static_{{ bundle_id.index }}_{{ cost_input.id }}',
-                    'cost_output_int_static_{{ bundle_id.index }}_{{ cost_input.id }}',
-                    {% if cost_input.input_type != 'static' %}
-                        'cost_input_growth_{{ bundle_id.index }}_{{ cost_input.id }}',
-                        'cost_output_int_growth_{{ bundle_id.index }}_{{ cost_input.id }}'
-                    {% endif %}
-                ];
-
-                var reset_input_values_params_{{ cost_input.id }} = [
-                    {{ model.time_horizon }},
-                    '{{ cost_input.input_type }}', 
-                    chart_var_cost_{{ cost_input.id }}, 
-                    'cost_input_static_{{ cost_input.id }}', 
-                    'cost_output_int_static_{{ cost_input.id }}',
-                    {{ cost_input.static_values.value_default }},
-                    {% if cost_input.input_type != 'static' %}
-                        'cost_input_growth_{{ cost_input.id }}',
-                        'cost_output_int_growth_{{ cost_input.id }}',
-                        {{ cost_input.growth_factor.value_default }}
-                    {% endif %}
-                ];
-
-                var create_arrays_params_cost_{{ cost_input.id }} =[
-                        {{ model.time_horizon }},
-                        '{{ cost_input.input_type }}',
-                        'cost_input_static_{{ cost_input.id }}',
-                        'cost_output_int_static_{{ cost_input.id }}',
-
-                        {% if cost_input.input_type != 'static' %}
-                    'cost_input_growth_{{ cost_input.id }}',
-                        'cost_output_int_growth_{{ cost_input.id }}',
-                        {% endif %}
-                ];
-
-                var cost_array_default_{{ cost_input.id }} = create_arrays.apply(this.id, create_arrays_params_cost_{{ cost_input.id }});
-
-
-            </script>
-
+            {% include 'subtemplates_model/_cost_input_individual.html' %}
+        
         {% endfor %} 
 
         <small class="text-muted" name="slider_tip">You can set the values for these inputs by moving the sliders.</small>
@@ -131,39 +31,35 @@
 
 <script>
 
-
-
-    function create_cost_input_array(array_cost, T, input_type, input_static_id, input_growth) {
-        var array_cost_initial = new Array(T).fill(input_static.value);
-        if (input_type == 'static') {
-            array_cost = array_cost_initial;
-        } else if (input_type == 'linear') {
-            array_cost = array_cost_initial.map((value, index) => (Math.round((value * 1 + input_growth.value * index) * 100) / 100));
-        } else if (input_type == 'exp') {
-            array_cost = array_cost_initial.map((value, index) => (Math.round((value * ((1 + 1 * input_growth.value) ** index) + Number.EPSILON) * 100) / 100));
-        };
-    };
-
-    // var dataset -_-> cost_array_default_{{ bundle_id.index }}
- 
-    var ctx_cost_{{ bundle_id.index }} = document.getElementById('chart_cost_{{ bundle_id.index }}').getContext('2d');
-    var chart_var_cost_{{ bundle_id.index }} = new Chart(ctx_cost_{{ bundle_id.index }}, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: datasets,
-            borderColor: [
-                'rgb(89, 37, 63)', 
-                'rgb(200, 160, 179)', 
-                'rgb(184, 58, 121)', 
-                'rgb(200, 140, 152)'
-            ],
-            fillColors: [
+    var ctx_costs_{{ bundle_id.index }} = document.getElementById('chart_costs_{{ bundle_id.index }}').getContext('2d');
+    var borderColors = [
+            'rgb(89, 37, 63)',
+            'rgb(200, 160, 179)',
+            'rgb(184, 58, 121)',
+            'rgb(200, 140, 152)'];
+    
+    var fillColors = [
                 'rgba(89, 37, 63, 0.3)',
                 'rgba(200, 160, 179,0.3)',
                 'rgba(184, 58, 121, 0.3)',
                 'rgba(200, 140, 152 0.3)'
-                ],
+            ];
+
+    var chart_var_cost_{{ bundle_id.index }} = new Chart(ctx_costs_{{ bundle_id.index }}, {
+
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [
+                {% for cost_input in list %}
+                {
+                    label: '{{ cost_input.name }}',
+                    borderColor: borderColors[{{ loop.index }}],
+                    data: cost_array_default_{{ cost_input.id }},
+                    pointRadius: 0
+                },
+                {% endfor %}
+            ],
         },
         options: {
             legend: {
@@ -171,7 +67,7 @@
             },
             scales: {
                 yAxes: [{
-                    stacked:true,
+                    stacked: true,
                     ticks: {
                         maxTicksLimit: 10,
                     }
@@ -179,11 +75,37 @@
             }
         }
     });
- 
+
+    {% for cost_input in list %}
+
+        var update_cost_chart_params_{{ cost_input.id }} =[
+            chart_var_cost_{{ bundle_id.index }},
+            parseInt({{ loop.index -1 }}),
+            create_arrays_params_cost_{{ cost_input.id }}
+        ];
+        console.log({{loop.index -1 }})
+
+
+        var reset_input_values_params_{{ cost_input.id }} =[
+            {{ model.time_horizon }},
+            '{{ cost_input.input_type }}',
+            chart_var_cost_{{ bundle_id.index }},
+            'env_input_static_{{ cost_input.id }}',
+            'env_output_int_static_{{ cost_input.id }}',
+            {{ cost_input.static_values.value_default }},
+            {% if cost_input.input_type != 'static' %}
+            'env_input_growth_{{ cost_input.id }}',
+            'env_output_int_growth_{{ cost_input.id }}',
+            {{ cost_input.growth_factor.value_default }}
+        {% endif %}
+    ];
+
+    {% endfor %}
 
 
 </script>
-    
+
+
 
 
 

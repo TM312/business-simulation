@@ -33,7 +33,7 @@
                     </span>
                     <small class="text-muted ml-2"><em id="environment_change_int_static_{{ environment_input.id }}"></em></small>
 
-                    <button type="button" id="reset_button_environment_input_{{ environment_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_input_values.apply(this.id, reset_input_values_params_{{ environment_input.id }})">Reset</button>
+                    <button type="button" id="reset_button_environment_input_{{ environment_input.id }}" class="btn btn-sm btn-outline-secondary ml-auto" onclick="reset_input_values_env.apply(this.id, reset_input_values_params_{{ environment_input.id }})">Reset</button>
                 </div>
                 {% if environment_input.input_type != 'static' %}
                 <div class="form-inline">

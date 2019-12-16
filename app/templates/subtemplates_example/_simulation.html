@@ -194,18 +194,12 @@
                 }, 
                 'cost_inputs': {
                     {% for cost_input in model.cost_inputs %}
-                        {% if cost_input.input_type == 'static' %}
-                            '{{ cost_input.id }}': window.array_static_cost_{{ cost_input.id }}_new,
-                        {% elif cost_input.input_type == 'linear' %}
-                            '{{ cost_input.id }}': window.array_linear_cost_{{ cost_input.id }}_new,
-                        {% elif cost_input.input_type == 'exp' %}
-                            '{{ cost_input.id }}': window.array_exp_cost_{{ cost_input.id }}_new,
-                        {% endif %}
+                
                     {% endfor %}
                 }, 
                 'environment_inputs': {
                     {% for environment_input in model.environment_inputs %}
-                        {{ environment_input.id }}: update_env.apply(this, update_params_env_{{ environment_input.id }}),
+                        {{ environment_input.id }}: {{ environment_input.id }},
                     {% endfor %}
                 }, 
             }
@@ -232,18 +226,11 @@
                 }, 
                 'cost_inputs': {
                     {% for cost_input in model.cost_inputs %}
-                        {% if cost_input.input_type == 'static' %}
-                            '{{ cost_input.id }}': window.array_static_cost_{{ cost_input.id }}_new,
-                        {% elif cost_input.input_type == 'linear' %}
-                            '{{ cost_input.id }}': window.array_linear_cost_{{ cost_input.id }}_new,
-                        {% elif cost_input.input_type == 'exp' %}
-                            '{{ cost_input.id }}': window.array_exp_cost_{{ cost_input.id }}_new,
-                        {% endif %}
+                        
                     {% endfor %}
                 },
                 'environment_inputs': {
                     {% for environment_input in model.environment_inputs %}
-                        {{ environment_input.id }}: update_env.apply(this, update_params_env_{{ environment_input.id }}),
                     {% endfor %}
                 }, 
             }

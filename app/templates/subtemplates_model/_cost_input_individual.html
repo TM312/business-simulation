@@ -1,0 +1,96 @@
+<div class="container mb-2 py-1 rounded border">
+    <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
+
+    <div class="form-inline" id="inputs">
+        {% if cost_input.input_type == 'static' %}
+            <span class="mr-2">Value</span>
+        {% else %}
+            <span class="mr-2">Start Value</span>
+        {% endif %}
+        <input type="range" class="form-control w-25" 
+            id="cost_input_static_{{ cost_input.id }}"
+            min={{ cost_input.static_values.value_min }} 
+            max={{ cost_input.static_values.value_max }}
+            value={{ cost_input.static_values.value_default }} 
+            step={{ cost_input.static_values.step }}
+            oninput="display_output_int.apply(this.id, display_params_cost_value_{{ cost_input.id }})"
+            onmouseup="update_cost_chart.apply(this.id, update_cost_chart_params_{{ cost_input.id }})"
+            />
+        <span class="badge badge-pill badge-primary ml-2">
+            <output
+                id="cost_output_int_static_{{ cost_input.id }}" 
+                type="int" 
+                onmouseover="viewchange(this.id, 
+                                        'cost_change_int_static_{{ cost_input.id }}', 
+                                        {{ cost_input.static_values.value_default }}
+                                        )"
+                onmouseout="clear_viewchange('cost_change_int_static_{{ cost_input.id }}')"
+                />
+        </span>
+        <small class="text-muted ml-2"><em id="cost_change_int_static_{{ cost_input.id }}"></em></small>
+        
+        <button type="button" id="reset_button_cost_input_{{ cost_input.id }}" 
+                class="btn btn-sm btn-outline-secondary ml-auto"
+                onclick="reset_cost_output_int_{{ cost_input.id }}()">Reset</button>
+    </div>
+
+    {% if cost_input.input_type != 'static' %}
+        <div class="form-inline">
+            <span class="mr-2">Growth Factor</span>
+            <input type="range" class="form-control w-25"
+                id="cost_input_growth_{{ cost_input.id }}"
+                min={{ cost_input.growth_factor.value_min }}
+                max={{ cost_input.growth_factor.value_max }}
+                value={{ cost_input.growth_factor.value_default }} 
+                step={{ cost_input.growth_factor.step }}
+                oninput="display_output_int.apply(this.id, display_params_cost_value_{{ cost_input.id }})"
+                onmouseup="update_cost_chart.apply(this.id, update_cost_chart_params_{{ cost_input.id }})"
+                />
+            <span class="badge badge-pill badge-primary ml-2">
+                <output
+                    id="cost_output_int_growth_{{ cost_input.id }}" type="int" 
+                    onmouseover="viewchange(this.id, 
+                                            'cost_change_int_growth_{{ cost_input.id }}', 
+                                            {{ cost_input.growth_factor.value_default }}
+                                            )"
+                    onmouseout="clear_viewchange('cost_change_int_growth_{{ cost_input.id }}')"/>
+            </span>
+            <small class="text-muted ml-2"><em id="cost_change_int_growth_{{ cost_input.id }}"></em></small>
+
+        </div>
+    {% endif %}
+
+</div>  
+
+
+<script>
+
+    var display_params_cost_value_{{ cost_input.id }} = [
+        'cost_input_static_{{ cost_input.id }}',
+        'cost_output_int_static_{{ cost_input.id }}',
+        {% if cost_input.input_type != 'static' %}
+            'cost_input_growth_{{ cost_input.id }}',
+            'cost_output_int_growth_{{ cost_input.id }}'
+        {% endif %}
+    ];
+
+
+    var create_arrays_params_cost_{{ cost_input.id }} =[
+        {{ model.time_horizon }},
+        '{{ cost_input.input_type }}',
+        'cost_input_static_{{ cost_input.id }}',
+        'cost_output_int_static_{{ cost_input.id }}',
+
+        {% if cost_input.input_type != 'static' %}
+            'cost_input_growth_{{ cost_input.id }}',
+            'cost_output_int_growth_{{ cost_input.id }}',
+        {% endif %}
+    ];
+
+    var cost_array_default_{{ cost_input.id }} = create_arrays.apply(this.id, create_arrays_params_cost_{{ cost_input.id }});
+    console.log(cost_array_default_{{ cost_input.id }})
+
+   
+
+    
+</script>
