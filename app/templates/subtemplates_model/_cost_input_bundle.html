@@ -36,13 +36,17 @@
             'rgb(89, 37, 63)',
             'rgb(200, 160, 179)',
             'rgb(184, 58, 121)',
-            'rgb(200, 140, 152)'];
+            'rgb(200, 140, 152)',
+            'rgb(140, 140, 140)',
+            'rgb(100, 100, 100)'];
     
     var fillColors = [
                 'rgba(89, 37, 63, 0.3)',
                 'rgba(200, 160, 179,0.3)',
                 'rgba(184, 58, 121, 0.3)',
-                'rgba(200, 140, 152 0.3)'
+                'rgba(200, 140, 152, 0.3)',
+                'rgba(140, 140, 140, 0.3)',
+                'rgba(100, 100, 100, 0.3)'
             ];
 
     var chart_var_cost_{{ bundle_id.index }} = new Chart(ctx_costs_{{ bundle_id.index }}, {
@@ -56,7 +60,8 @@
                     label: '{{ cost_input.name }}',
                     borderColor: borderColors[{{ loop.index }}],
                     data: cost_array_default_{{ cost_input.id }},
-                    pointRadius: 0
+                    pointRadius: 0,
+                    fill: false
                 },
                 {% endfor %}
             ],
@@ -67,7 +72,7 @@
             },
             scales: {
                 yAxes: [{
-                    stacked: true,
+                    stacked: false,
                     ticks: {
                         maxTicksLimit: 10,
                     }

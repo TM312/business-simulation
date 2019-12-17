@@ -35,7 +35,7 @@
       {
         "id": 1,
         "name": "Repair Costs",
-        "bundle": "Costs per Ride [in $]",
+        "bundle": "Costs per Ride",
         "description": "",
         "input_type": "linear",
         "static_values": {
@@ -52,9 +52,27 @@
         }
       },{
         "id": 2,
+        "name": "Customer Support Costs",
+        "bundle": "Costs per Ride",
+        "description": "",
+        "input_type": "static",
+        "static_values": {
+          "value_min": 0.0,
+          "value_max": 0.2,
+          "value_default": 0.06,
+          "step": 0.01
+        },
+        "growth_factor": {
+          "value_min": "",
+          "value_max": "",
+          "value_default": "",
+          "step": ""
+        }
+      }, {
+        "id": 3,
         "name": "Charging Costs",
         "description": "",
-        "bundle": "Costs per Ride [in $]",
+        "bundle": "Costs per Ride",
         "input_type": "linear",
         "static_values": {
           "value_min": 0.1,
@@ -69,7 +87,43 @@
           "step": 0.05
         }
       },{
-        "id": 3,
+        "id": 4,
+        "name": "Insurance Costs",
+        "description": "",
+        "bundle": "Costs per Ride",
+        "input_type": "static",
+        "static_values": {
+          "value_min": 0.01,
+          "value_max": 0.1,
+          "value_default": 0.05,
+          "step": 0.01
+        },
+        "growth_factor": {
+          "value_min": "",
+          "value_max": "",
+          "value_default": "",
+          "step": ""
+        }
+      },{
+        "id": 5,
+        "name": "Contra Revenue",
+        "description": "",
+        "bundle": "Costs per Ride",
+        "input_type": "static",
+        "static_values": {
+          "value_min": 0.3,
+          "value_max": 0.8,
+          "value_default": 0.4,
+          "step": 0.05
+        },
+        "growth_factor": {
+          "value_min": "",
+          "value_max": "",
+          "value_default": "",
+          "step": ""
+        }
+      },{
+        "id": 6,
         "name": "Scooter Costs",
         "bundle": "Scooter Related Costs",
         "description": "",
@@ -85,6 +139,42 @@
           "value_max": 0,
           "value_default": 0,
           "step": 1
+        }
+      }, {
+        "id": 7,
+        "name": "Daily City Fees [ per scooter / month] ",
+        "bundle": "City Fees",
+        "description": "",
+        "input_type": "static",
+        "static_values": {
+          "value_min": 0,
+          "value_max": 150,
+          "value_default": 30,
+          "step": 10
+        },
+        "growth_factor": {
+          "value_min": "",
+          "value_max": "",
+          "value_default": "",
+          "step": ""
+        }
+      },{
+        "id": 8,
+        "name": "Annual City Fees [ per scooter / month] ",
+        "bundle": "City Fees",
+        "description": "",
+        "input_type": "static",
+        "static_values": {
+          "value_min": 0,
+          "value_max": 5,
+          "value_default": 0,
+          "step": 1
+        },
+        "growth_factor": {
+          "value_min": "",
+          "value_max": "",
+          "value_default": "",
+          "step": ""
         }
       }],
   "environment_inputs": [
@@ -190,7 +280,46 @@
       "value_default": 0,
       "step": 0.01
     }
-    }],
+    },{
+      "id": 7,
+      "name": "Credit Card Fees [in % of transaction volume]",
+      "description": "",
+      "bundle": "Payment Processing",
+      "input_type": "static",
+      "static_values": {
+        "value_min": 0.05,
+        "value_max": 0.15,
+        "value_default": 0.1,
+        "step": 0.01
+      },
+      "growth_factor": {
+        "value_min": "",
+        "value_max": "",
+        "value_default": "",
+        "step": ""
+      }
+    },
+ ],
+  "demand_fluctuations": [
+    {
+      "id": 1,
+      "name": "Usage Factor",
+      "description": "",
+      "bundle": "Seasonality",
+      "input_type": "osc",
+      "frequency": "annual",
+      "cutoff_min": {
+          "min":0,
+          "max":0.1,
+          "default":0,
+          "step":0.01
+        },
+        "value_max": 0.15,
+        "value_default": 0.1,
+        "step": 0.01
+      }
+
+  ],
   "kpis": [{ "name": "Berlin KPI",
       "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
       "sources":"https://www.statistik-berlin-brandenburg.de/publikationen/stat_berichte/2019/SB_A01-01-00_2018q04_BE.pdf https://www.tagesspiegel.de/berlin/amt-fuer-statistik-berlin-waechst-langsamer-als-erwartet/23078220.html"
@@ -200,3 +329,6 @@
       "sources":"https://www.statistik-berlin-brandenburg.de/publikationen/stat_berichte/2019/SB_A01-01-00_2018q04_BE.pdf https://www.tagesspiegel.de/berlin/amt-fuer-statistik-berlin-waechst-langsamer-als-erwartet/23078220.html"
     }]
 }
+
+
+ 
