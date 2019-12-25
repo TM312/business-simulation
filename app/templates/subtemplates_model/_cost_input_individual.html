@@ -36,7 +36,7 @@
 
     </div>
 
-    {% if cost_input.input_type != 'static' %}
+    {% if cost_input.input_type != 'static' and cost_input.input_type != 'custom' %}
         <div class="form-inline">
             <span class="mr-2">Growth Factor</span>
             <input type="range" class="form-control w-25"
@@ -70,7 +70,7 @@
     var display_params_cost_value_{{ cost_input.id }} = [
         'cost_input_static_{{ cost_input.id }}',
         'cost_output_int_static_{{ cost_input.id }}',
-        {% if cost_input.input_type != 'static' %}
+        {% if cost_input.input_type != 'static' and cost_input.input_type != 'custom' %}
             'cost_input_growth_{{ cost_input.id }}',
             'cost_output_int_growth_{{ cost_input.id }}'
         {% endif %}
@@ -82,7 +82,7 @@
         'cost_input_static_{{ cost_input.id }}',
         'cost_output_int_static_{{ cost_input.id }}',
 
-        {% if cost_input.input_type != 'static' %}
+        {% if cost_input.input_type != 'static' and cost_input.input_type != 'custom' %}
             'cost_input_growth_{{ cost_input.id }}',
             'cost_output_int_growth_{{ cost_input.id }}',
         {% endif %}

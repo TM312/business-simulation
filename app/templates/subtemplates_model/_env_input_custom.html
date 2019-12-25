@@ -1,0 +1,122 @@
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@latest/dist/chartjs-plugin-dragdata.min.js"></script>
+
+<div class="card shadow-sm mb-3 chartcanvas">
+    <div class="card-header form-inline py-3">
+        <p class="mb-0">{{ environment_input.name }}</p>        
+    </div>
+    <div class="card-body">
+        <button type="button" id="reset_button_environment_input_{{ environment_input.id }}"
+            class="btn btn-sm btn-outline-secondary ml-auto"
+            onclick="reset_env_{{ environment_input.id }}()">Reset</button>
+    
+        <div class="mt-3" id="div_chart_env_{{ environment_input.id }}">
+            <canvas id="chart_env_{{ environment_input.id }}" height="200"></canvas>
+        </div>
+        <div class="container no-gutters"><small class="text-muted" name="slider_tip">You can set the value for each period by dragging.</small></div>
+
+        <hr>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
+            data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
+    </div>
+</div>
+
+
+<script>
+ 
+    var ctx_env_{{ environment_input.id }} = document.getElementById('chart_env_{{ environment_input.id }}').getContext('2d');
+    var usage_data_default_env_{{ environment_input.id }} = [0.1, 0.1, 0.3, 0.5, 0.7, 1, 1, 1, 0.9, 0.6, 0.4, 0.2];
+    var options_env_{{ environment_input.id }} = {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [
+                {
+                    label: 'current value',
+                    borderColor: '#367DD9',
+                    data: [0.1, 0.1, 0.3, 0.5, 0.7, 1, 1, 1, 0.9, 0.6, 0.4, 0.2],
+                    fill: +1,           
+                    pointRadius: 2,
+                    pointHitRadius: 25
+                },
+                {
+                    label: 'default value',
+                    borderColor: '#B8B6B4',
+                    borderDash: [5, 5],
+                    data: usage_data_default_env_{{ environment_input.id }},
+                    fill: false,
+                    pointRadius: 0
+                }]
+        },
+
+        options: {
+            events: [],
+            legend: {position: "bottom"},
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        maxTicksLimit: 10
+                    }
+                }]
+            },
+            dragData: true,
+            dragX: false,
+            dragDataRound: 1,
+            onDragEnd: function (e, datasetIndex, index, value) {
+                
+                var modelData = {
+                    'price_inputs': {
+                        {% for price_input in model.price_inputs %}
+                            '{{ price_input.id }}': price_to_array({{ price_input.id }}),
+                        {% endfor %}
+                        },
+
+                    'cost_inputs': {
+
+                        {% for bundle, list in model.cost_inputs | groupby('bundle') %}
+                            {% set bundle_id = loop %}
+                            {% for cost_input in list %}
+                                '{{ cost_input.id }}': chart_var_cost_{{ bundle_id.index }}.data.datasets[{{ loop.index - 1 }}].data,
+                            {% endfor %}
+                        {% endfor %}
+                        
+                        },
+
+                    'environment_inputs': {
+
+                        {% for environment_input in model.environment_inputs %}
+                            '{{ environment_input.id }}': chart_var_env_{{ environment_input.id }}.data.datasets[0].data,
+                        {% endfor %}
+                        
+                        }, 
+                };
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ url_for("data") }}',
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify(modelData)
+                    
+                }).done(function (data) {
+                    console.log("drag");
+                });
+                event.preventDefault();   
+
+
+            }
+        }  
+    };
+
+    var chart_var_env_{{ environment_input.id }} = new Chart(ctx_env_{{ environment_input.id }}, options_env_{{ environment_input.id }});
+
+
+
+   function reset_env_{{ environment_input.id }}() {
+        options_env_{{ environment_input.id }}.data.datasets[0].data = usage_data_default_env_{{ environment_input.id }};
+    };
+
+
+
+
+
+</script>

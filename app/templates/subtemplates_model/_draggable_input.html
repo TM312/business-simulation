@@ -1,0 +1,54 @@
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@latest/dist/chartjs-plugin-dragdata.min.js"></script>
+
+<div>
+    <canvas id="chart" height="300px" width="500px"></canvas>
+</div>
+
+
+<script>
+    var ctx = document.getElementById('chart').getContext('2d');
+    const options = {
+        type: 'line',
+        data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [
+                {
+                    label: 'current value',
+                    borderColor: '#367DD9',
+                    data: [1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1],
+                    fill:true,
+                    borderWidth: 1,
+                    pointRadius: 2,
+                    pointHitRadius: 25
+                },
+                
+            ]
+        },
+        options: {
+            events: [],
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 1,
+                        min: 0
+                    }
+                }]
+            },
+            responsive: false,
+            dragData: true,
+            dragX: false,
+            dragDataRound: 1,
+          
+           
+            
+            onDragEnd: function (e, datasetIndex, index, value) {
+                console.log(options['data']['datasets'][0]['data'])
+
+            }
+            
+        }
+    }
+
+   var chartTest = new Chart(ctx, options);
+
+</script>

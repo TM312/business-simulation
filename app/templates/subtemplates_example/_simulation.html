@@ -50,8 +50,12 @@
                     aria-labelledby="v-pills-environment_inputs-tab">
 
                         {% for environment_input in model.environment_inputs %}
-                                                   
-                                {% include 'subtemplates_model/_env_input.html' %}
+                                
+                                {% if environment_input.input_type == 'custom' %}
+                                    {% include 'subtemplates_model/_env_input_custom.html' %}
+                                {% else %}
+                                    {% include 'subtemplates_model/_env_input.html' %}
+                                {% endif %}
 
                         {% endfor %}
 
@@ -106,41 +110,6 @@
         return array_static_price
     };
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -169,19 +138,23 @@
         {% endfor %}
 
         {% for environment_input in model.environment_inputs %}
-            '#env_input_static_{{ environment_input.id }}',
+            {% if environment_input.input_type != 'custom' %}
 
-            {% if environment_input.input_type != 'static' %}
-                '#env_input_growth_{{ environment_input.id }}',
+                '#env_input_static_{{ environment_input.id }}',
+
+                {% if environment_input.input_type != 'static' %}
+                    '#env_input_growth_{{ environment_input.id }}',
+                {% endif %}
+                
             {% endif %}
-
         {% endfor %}
     ];
+
+    
     
     var button_ids = buttons.join(", ");
     var range_slider_ids = range_sliders.join(", ");
 
-    
 
     $(document).ready(function() {
 
@@ -191,17 +164,24 @@
                     {% for price_input in model.price_inputs %}
                         '{{ price_input.id }}': price_to_array({{ price_input.id }}),
                     {% endfor %}
-                }, 
+                    },
+
                 'cost_inputs': {
-                    {% for cost_input in model.cost_inputs %}
-                
+
+                    {% for bundle, list in model.cost_inputs | groupby('bundle') %}
+                        {% set bundle_id = loop %}
+                        {% for cost_input in list %}
+                            '{{ cost_input.id }}': chart_var_cost_{{ bundle_id.index }}.data.datasets[{{ loop.index - 1 }}].data,
+                        {% endfor %}
                     {% endfor %}
-                }, 
+                    
+                    },
+
                 'environment_inputs': {
                     {% for environment_input in model.environment_inputs %}
-                        {{ environment_input.id }}: {{ environment_input.id }},
+                        '{{ environment_input.id }}': chart_var_env_{{ environment_input.id }}.data.datasets[0].data,
                     {% endfor %}
-                }, 
+                    }, 
             }
             
             $.ajax({
@@ -211,7 +191,7 @@
                 data: JSON.stringify(modelData)
                 
             }).done(function (data) {
-                console.log("success");
+                console.log("reset click");
             });
             event.preventDefault();   
         });
@@ -223,18 +203,26 @@
                     {% for price_input in model.price_inputs %}
                         '{{ price_input.id }}': price_to_array({{ price_input.id }}),
                     {% endfor %}
-                }, 
+                    },
+
                 'cost_inputs': {
-                    {% for cost_input in model.cost_inputs %}
-                        
+
+                    {% for bundle, list in model.cost_inputs | groupby('bundle') %}
+                        {% set bundle_id = loop %}
+                        {% for cost_input in list %}
+                            '{{ cost_input.id }}': chart_var_cost_{{ bundle_id.index }}.data.datasets[{{ loop.index - 1 }}].data,
+                        {% endfor %}
                     {% endfor %}
-                },
+                    
+                    },
+
                 'environment_inputs': {
                     {% for environment_input in model.environment_inputs %}
+                        '{{ environment_input.id }}': chart_var_env_{{ environment_input.id }}.data.datasets[0].data,
                     {% endfor %}
-                }, 
+                    }, 
             }
-            
+
             $.ajax({
                 type: 'POST',
                 url: '{{ url_for("data") }}',
@@ -242,10 +230,12 @@
                 data: JSON.stringify(modelData)
                 
             }).done(function (data) {
-                console.log("success");
+                console.log("rangeslider change");
             });
             event.preventDefault();
         });  
+
+     
        
     });
 

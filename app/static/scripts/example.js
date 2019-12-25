@@ -114,6 +114,8 @@ function reset_input_values(max_T, input_type, chart,
 };
 
 
+
+
 // cost input specific functions
 function update_cost_chart(chart, array_id, update_array_params_cost) {
     var cost_array = create_arrays.apply(this.id, update_array_params_cost);
