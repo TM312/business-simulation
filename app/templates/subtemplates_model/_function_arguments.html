@@ -1,0 +1,37 @@
+<div class="container">
+    <h1>Function</h1>
+    <button class="btn btn-primary" onclick="sumarguments.apply(this.id, argumentlistlong)">Long Sum</button>
+    <button class="btn btn-primary" onclick="sumarguments.apply(this.id, argumentlistshort)">Short Sum</button>
+    <p id="functionarguments"></p>
+
+</div>
+
+<script>
+
+
+    function sumarguments(a,b,c) {
+        if (typeof b !== 'undefined') {
+            var result = a + b + c;
+            console.log('long sum: ' + result)
+        } else {
+            var result = a + c;
+            console.log('short sum: ' + result);
+        };
+        
+        var paragraph = document.getElementById('functionarguments');
+        paragraph.textContent = result;
+    };
+    
+    
+    var argumentlistlong = [
+        a = 1, 
+        b = 2,
+        c = 3
+    ];
+
+    var argumentlistshort = [
+        a = 1, 
+        c = 3
+    ];
+  
+</script>

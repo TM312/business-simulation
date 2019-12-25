@@ -40,7 +40,7 @@ function create_arrays(max_T, input_type, static_input_id, static_output_id, gro
     var output_static = document.getElementById(static_output_id);
     output_static.value = input_static.value;
 
-    if (growth_input_id !== undefined) {
+    if (typeof growth_input_id !== 'undefined') {
         var input_growth = document.getElementById(growth_input_id);
         var output_growth = document.getElementById(growth_output_id)
         output_growth.value = input_growth.value;
@@ -68,7 +68,7 @@ function create_arrays(max_T, input_type, static_input_id, static_output_id, gro
 function reset_price_output_int_static(output_id_static, value_default_static, output_id_growth, value_default_growth) {
     var output_static = document.getElementById(output_id_static)
     output_static.innerHTML = value_default_static;
-    if (output_id_growth !== undefined) {
+    if (typeof output_id_growth !== 'undefined') {
         var output_growth = document.getElementById(output_id_growth)
         output_growth.value = value_default_growth;
     }
@@ -88,12 +88,12 @@ function update_env_chart(chart, update_array_params_env) {
 
 function reset_input_values(max_T, input_type, chart,
     static_input_id, output_static_id, static_input_default_value,
-    input_growth_id, output_growth_id, growth_input_default_value) {
+    input_growth_id, output_growth_id, growth_input_default_value, array_id) {
 
     var input_static = document.getElementById(static_input_id);
     input_static.value = static_input_default_value;
 
-    if (input_growth_id !== undefined) {
+    if (typeof input_growth_id !== 'undefined') {
         var input_growth = document.getElementById(input_growth_id);
         input_growth.value = growth_input_default_value;
     };
@@ -103,7 +103,7 @@ function reset_input_values(max_T, input_type, chart,
 
     var update_array_params = [max_T, input_type, static_input_id, output_static_id, input_growth_id, output_growth_id];
 
-    if (array_id !== undefined) {
+    if (typeof array_id !== 'undefined') {
         update_cost_chart(chart, array_id, update_array_params)
         console.log("check")
     } else {
