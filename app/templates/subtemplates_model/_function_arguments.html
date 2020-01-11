@@ -9,8 +9,12 @@
 <script>
 
 
+    
+
+
     function sumarguments(a,b,c) {
         if (typeof b !== 'undefined') {
+            console.log('type of b: ' + typeof b)
             var result = a + b + c;
             console.log('long sum: ' + result)
         } else {
@@ -23,11 +27,11 @@
     };
     
     
-    var argumentlistlong = [
-        a = 1, 
-        b = 2,
-        c = 3
-    ];
+    // var argumentlistlong = [
+    //     a = 1, 
+    //     b = 2,
+    //     c = 3
+    // ];
 
     var argumentlistshort = [
         a = 1, 

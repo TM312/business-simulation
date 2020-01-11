@@ -92,16 +92,17 @@
 
         var reset_input_values_params_cost_{{ cost_input.id }} =[
             {{ model.time_horizon }},
+            {{ loop.index - 1 }},
             '{{ cost_input.input_type }}',
             chart_var_cost_{{ bundle_id.index }},
 
-            'env_input_static_{{ cost_input.id }}',
-            'env_output_int_static_{{ cost_input.id }}',
+            'cost_input_static_{{ cost_input.id }}',
+            'cost_output_int_static_{{ cost_input.id }}',
             {{ cost_input.static_values.value_default }},
 
             {% if cost_input.input_type != 'static' %}
-                'env_input_growth_{{ cost_input.id }}',
-                'env_output_int_growth_{{ cost_input.id }}',
+                'cost_input_growth_{{ cost_input.id }}',
+                'cost_output_int_growth_{{ cost_input.id }}',
                 {{ cost_input.growth_factor.value_default }},
             {% endif %}
 
