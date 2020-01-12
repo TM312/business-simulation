@@ -1,18 +1,16 @@
 /***** Backgrounds *****/
 
-body {
+/* body {
    padding-top: 70px;
- }
+ } */
 
-/**** fun things to experiment with :
 
-@media(min-width:768px) {
-  .bg-main2 {
-    background-color:darkslateblue;
+@media(max-width:768px) {
+  .category-description {
+    display:none;
   }
 }
 
-****/
 
 
 /***** Typography *****/
@@ -111,5 +109,11 @@ body {
 
 }
 
-/* TESTAREA FLIP CARD */
+
+/* Simulation Model */
+
+.category-description {
+  border: none;
+  /* background: rgb(245, 251, 255); */
+}
 

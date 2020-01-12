@@ -1,0 +1,160 @@
+
+<div class="card shadow-sm mb-3 chartcanvas">
+    <div class="card-header form-inline py-3">
+        <p class="mb-0">{{ operation_input.name }}</p>
+        <input type="image" class="mr-3 ml-auto" id="icon_chart_operation_{{ operation_input.id }}"
+            src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
+            onclick="toggle_div_chart('div_chart_operation_{{ operation_input.id }}', 'icon_chart_operation_{{ operation_input.id }}')" />
+    </div>
+    <div class="card-body">
+            <div class="container py-1">
+                <div class="form-inline" id="inputs">
+                    {% if operation_input.input_type == 'static' %}
+                        <span class="mr-2">Value</span>
+                    {% else %}
+                        <span class="mr-2">Start Value</span>
+                    {% endif %}
+                    <input type="range" id="operation_input_static_{{ operation_input.id }}"
+                        min={{ operation_input.static_values.value_min }} 
+                        max={{ operation_input.static_values.value_max }}
+                        value={{ operation_input.static_values.value_default }} 
+                        step={{ operation_input.static_values.step }}
+                        class="form-control w-25" 
+                        oninput="display_output_int.apply(this.id, display_params_operation_value_{{ operation_input.id }})" 
+                        onmouseup="update_operation_chart(chart_var_operation_{{ operation_input.id }}, create_arrays_params_operation_{{ operation_input.id }})">
+                    <span class="badge badge-pill badge-primary font-weight-bold ml-2">
+                        <output id="operation_output_int_static_{{ operation_input.id }}" 
+                                type="int" 
+                                onmouseover="viewchange(this.id, 
+                                                        'operation_change_int_static_{{ operation_input.id }}', 
+                                                        {{ operation_input.static_values.value_default }}
+                                                        )" 
+                                onmouseout="clear_viewchange('operation_change_int_static_{{ operation_input.id }}')"  />
+                    </span>
+                    <small class="text-muted ml-2"><em id="operation_change_int_static_{{ operation_input.id }}"></em></small>
+
+                    <button type="button" id="operation_input_{{ operation_input.id }}" 
+                            class="btn btn-sm btn-outline-secondary ml-auto" 
+                            onclick="reset_input_values.apply(this.id, reset_input_values_params_operation_{{ operation_input.id }})">Reset</button>
+                </div>
+                {% if operation_input.input_type != 'static' %}
+                    <div class="form-inline">
+                        <span class="mr-2">Growth Factor</span>
+                        <input type="range" id="operation_input_growth_{{ operation_input.id }}" 
+                            min={{ operation_input.growth_factor.value_min }} 
+                            max={{ operation_input.growth_factor.value_max }} 
+                            value={{ operation_input.growth_factor.value_default }} 
+                            step={{ operation_input.growth_factor.step }}
+                            class="form-control w-25" 
+                            oninput="display_output_int.apply(this, display_params_operation_value_{{ operation_input.id }})" 
+                            onmouseup="update_operation_chart(chart_var_operation_{{ operation_input.id }}, create_arrays_params_operation_{{ operation_input.id }})">
+                        <span class="badge badge-pill badge-primary font-weight-bold ml-2">
+                            <output id="operation_output_int_growth_{{ operation_input.id }}" type="int"
+                                    onmouseover="viewchange(this.id, 
+                                                            'operation_change_int_growth_{{ operation_input.id }}', 
+                                                            {{ operation_input.growth_factor.value_default }}
+                                                            )" 
+                                    onmouseout="clear_viewchange('operation_change_int_growth_{{ operation_input.id }}')" />
+                        </span>
+                        <small class="text-muted ml-2"><em id="operation_change_int_growth_{{ operation_input.id }}"></em></small>
+
+                    </div>
+                {% endif %}
+            </div>
+            {% if operation_input.id == 1 %}
+                <div class="container no-gutters"><small class="text-muted" id="slider_tip_operation_input" name="slider_tip">You can set the value for this input by moving the slider.</small></div>
+            {% endif %}
+   
+        
+        <div class="mt-3" id="div_chart_operation_{{ operation_input.id }}" style="display:none">
+            <canvas id="chart_operation_{{ operation_input.id }}" height="200"></canvas>
+        </div>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right" data-toggle="popover"
+            title="information" data-content="#"><b>more →</b></a>
+    </div>
+</div>
+
+
+<script>
+    var display_params_operation_value_{{ operation_input.id }} = [
+        'operation_input_static_{{ operation_input.id }}', 
+        'operation_output_int_static_{{ operation_input.id }}',
+        {% if operation_input.input_type != 'static' %}
+            'operation_input_growth_{{ operation_input.id }}', 
+            'operation_output_int_growth_{{ operation_input.id }}'
+        {% endif %}
+    ];
+
+    var create_arrays_params_operation_{{ operation_input.id }} =[
+        {{ model.time_horizon}}, 
+        '{{ operation_input.input_type }}', 
+        'operation_input_static_{{ operation_input.id }}', 
+        'operation_output_int_static_{{ operation_input.id }}', 
+
+        {% if operation_input.input_type != 'static' %} 
+            'operation_input_growth_{{ operation_input.id }}', 
+            'operation_output_int_growth_{{ operation_input.id }}', 
+        {% endif %}
+    ];
+    
+
+
+    var operation_array_default_{{ operation_input.id }} = create_arrays.apply(this.id, create_arrays_params_operation_{{ operation_input.id }});
+
+
+    var ctx_operation_{{ operation_input.id }} = document.getElementById('chart_operation_{{ operation_input.id }}').getContext('2d');
+    var chart_var_operation_{{ operation_input.id }} = new Chart(ctx_operation_{{ operation_input.id }}, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [
+                    {
+                    label: 'current value',
+                    borderColor: '#367DD9',
+                    data: operation_array_default_{{ operation_input.id }},
+                    fill: +1,
+                        pointRadius: 0
+                },
+                {
+                    label: 'default value',
+                    borderColor: '#B8B6B4',
+                    borderDash: [5, 5],
+                    data: operation_array_default_{{ operation_input.id }},
+                    fill: false,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                legend: {
+                    position: "bottom",
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 10,
+                        }
+                    }]
+                }
+            }
+        });
+
+
+   var reset_input_values_params_operation_{{ operation_input.id }} = [
+        {{ model.time_horizon }},
+        '{{ operation_input.input_type }}', 
+        chart_var_operation_{{ operation_input.id }}, 
+        'operation_input_static_{{ operation_input.id }}', 
+        'operation_output_int_static_{{ operation_input.id }}',
+        {{ operation_input.static_values.value_default }},
+        {% if operation_input.input_type != 'static' %}
+            'operation_input_growth_{{ operation_input.id }}',
+            'operation_output_int_growth_{{ operation_input.id }}',
+            {{ operation_input.growth_factor.value_default }}
+        {% endif %}
+    ];
+
+
+
+    
+
+</script>

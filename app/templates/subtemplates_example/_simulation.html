@@ -1,27 +1,41 @@
 <script src="{{ url_for('static', filename='scripts/example.js') }}"></script>
 
+<div class="container py-4" id="simulationmodel">
+    <h3 class="text-secondary my-3">Simulation Model</h3>
+    <p class="lead">Introduction Text</p>
+</div>
 
 <div class="container-fluid" id="simulation">
-    <div class="row mb-3">
-        <div class="col-2"><h3 class="text-secondary">Simulation Model</h3></div>
-        <div class="col-5"><h5 class="text-center">Input Parameters</h5></div>
-        <div class="col-5"><h5 class="text-center">KPIs</h5></div>
-    </div>
-    <div class="row">
-        <div class="col-lg-2">
+        <div class="row">
+            <div class="col-lg-6 mb-3"><h5 class="text-center">Input Parameters</h5></div>
+            <div class="col-lg-6 mb-3"><h5 class="text-center">KPIs</h5></div>
+        </div>                      
+        <div class="row">
+        <div class="col col-lg-2">
             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link active" id="v-pills-pricecosts-tab" data-toggle="pill"
                     href="#v-pills-pricecosts" role="tab" aria-controls="v-pills-pricecosts"
-                    aria-selected="true">Price & Costs</a>
+                    aria-selected="true"
+                    onmouseover="viewinputdescription('{{ model.input_descriptions.price_cost_input_description }}')" 
+                    onmouseout="clear_description()" >Pricing & Costs</a>
+
+                <a class="nav-link" id="v-pills-operation_inputs-tab" data-toggle="pill" href="#v-pills-operation_inputs" role="tab"
+                    aria-controls="v-pills-operation_inputs" aria-selected="false"
+                    onmouseover="viewinputdescription('{{ model.input_descriptions.operation_input_description }}')"
+                    onmouseout="clear_description()">Operation Inputs</a>
+
                 <a class="nav-link" id="v-pills-environment_inputs-tab" data-toggle="pill"
                     href="#v-pills-environment_inputs" role="tab" aria-controls="v-pills-environment_inputs"
-                    aria-selected="false">Environmental Inputs</a>
-                <a class="nav-link disabled" id="v-pills-scenario_analysis-tab" data-toggle="pill"
-                    href="#v-pills-scenario_analysis" role="tab" aria-controls="v-pills-scenario_analysis"
-                    aria-selected="false">Scenario Analysis</a>
+                    aria-selected="false"
+                    onmouseover="viewinputdescription('{{ model.input_descriptions.environment_input_description }}')" 
+                    onmouseout="clear_description()">Environmental Inputs</a>
+                
+            </div>
+            <div class="p-3 my-3 bg-light" style="display:none" id="inputdescriptioncard">
+                    <small id="inputdescription"></small>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col col-lg-4">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-pricecosts" role="tabpanel"
                     aria-labelledby="v-pills-pricecosts-tab">
@@ -44,7 +58,17 @@
 
                 <!-- <script src="{{ url_for('static', filename='scripts/jquery.js') }}"/> //can hopefully export to this at some point -->
 
+                <div class="tab-pane fade" id="v-pills-operation_inputs" role="tabpanel"
+                    aria-labelledby="v-pills-operation_inputs-tab">
 
+                        {% for operation_input in model.operation_inputs %}
+                            
+                            {% include 'subtemplates_model/_operation_input.html' %}
+
+                        {% endfor %}
+ 
+
+                </div>
 
                 <div class="tab-pane fade" id="v-pills-environment_inputs" role="tabpanel"
                     aria-labelledby="v-pills-environment_inputs-tab">
@@ -62,13 +86,12 @@
                 
 
                 </div>
-                <div class="tab-pane fade" id="v-pills-scenario_analysis" role="tabpanel"
-                    aria-labelledby="v-pills-scenario_analysis-tab">
-
-                </div>
+               
+        
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col col-lg-6">
+
             {# for kpi in model.kpis #}
             
                 {# include 'subtemplates_model/_kpis.html' #}

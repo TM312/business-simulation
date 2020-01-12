@@ -4,6 +4,11 @@
   "model_name": "Scooter Operator",
   "introductory_text":"Lime and Bird have been a driving force behind the drastic changes in urban mobility we observe these days. We aim at providing a better understanding of the mechanisms of a scooter operator’s business model.",
   "infobox_context":"",
+  "input_descriptions":{
+    "price_cost_input_description":"The fundamental parameters that define the logic of revenues and costs.",
+    "operation_input_description":"Operation inputs are variables with significant impact on KPIs that do not directly relate to pricing and costs. Unlike environment inputs they can be well controlled.",
+    "environment_input_description":"Environment inputs are those variables not directly controllable by the business. Environment inputs typically relate to usage or adressable market size."
+  },
   "time_horizon": 12,
   "max_T": 36,
   "price_inputs": [
@@ -187,6 +192,46 @@
           "step": ""
         }
       }],
+  "operation_inputs": [
+    {
+      "id": 1,
+      "name": "Covered Area",
+      "unit": "km\u00B2",
+      "description": "Refers to the km\u00B2 in which scooters are present.",
+      "input_type": "linear",
+      "static_values": {
+        "value_min": 10,
+        "value_max": 60,
+        "value_default": 45,
+        "step": 5
+      },
+      "growth_factor": {
+        "value_min": 0,
+        "value_max": 5,
+        "value_default": 1,
+        "step": 1
+      }
+    },
+    {
+      "id": 5,
+      "name": "Average Scooter Lifespan",
+      "unit": "days",
+      "description": "In March 2019, Quartz released a report on different KPIs for scooter operators such as Lime and Bird, in which it “determined the average lifespan of a Bird scooter in Louisville to be 28.8 day”. The report is based on an open dataset provided by the city of Louisville, Kentucky. In response to Quartz’ report, Lime indicated that the lifespan of a scooter may be longer due to the dynamic moving of scooters across cities without providing details.",
+      "input_type": "linear",
+      "static_values": {
+        "value_min": 15,
+        "value_max": 90,
+        "value_default": 30,
+        "step": 5
+      },
+      "growth_factor": {
+        "value_min": 0,
+        "value_max": 5,
+        "value_default": 0,
+        "step": 0.5
+      }
+    }
+  ],
   "environment_inputs": [
     {
     "id": 1,
@@ -208,24 +253,6 @@
       }
     },{
     "id": 2,
-    "name": "Covered Area",
-    "unit":"km\u00B2",
-    "description": "Refers to the km\u00B2 in which scooters are present.",
-    "input_type": "linear",
-    "static_values": {
-      "value_min": 10,
-      "value_max": 60,
-      "value_default": 45,
-      "step": 5
-      },
-    "growth_factor": {
-      "value_min": 0,
-      "value_max": 5,
-      "value_default": 1,
-      "step": 1
-      }
-    },{
-    "id": 3,
     "name": "Usage Minutes",
     "unit":"min/day",
     "description": "Is used for the calculation of costs. 93% of rides take place between 6am and 12am.",
@@ -243,7 +270,7 @@
       "step": ""
       }
     },{
-    "id": 4,
+    "id": 3,
     "name": "Market Share",
     "unit":"",
     "description": "This variable represents the market share of the focal firm among shared scooter providers. At the current state, users can set the market share for the simulation. This is a major simplification compared to the real business. In reality, pricing, marketing, and further factors cause dynamics in customer behavior that are difficult to predict. In contrast, by allowing to simulate different scenarios you get an idea of how changes in market share may influence different KPIs.",
@@ -260,26 +287,8 @@
       "value_default": 0,
       "step": 0.01
     }
-    },{
-    "id": 5,
-    "name": "Average Scooter Lifespan",
-    "unit":"days",
-    "description": "In March 2019, Quartz released a report on different KPIs for scooter operators such as Lime and Bird, in which it “determined the average lifespan of a Bird scooter in Louisville to be 28.8 day”. The report is based on an open dataset provided by the city of Louisville, Kentucky. In response to Quartz’ report, Lime indicated that the lifespan of a scooter may be longer due to the dynamic moving of scooters across cities without providing details.",
-    "input_type": "linear",
-    "static_values": {
-      "value_min": 15,
-      "value_max": 90,
-      "value_default": 30,
-      "step": 5
-    },
-    "growth_factor": {
-      "value_min": 0,
-      "value_max": 5,
-      "value_default": 0,
-      "step": 0.5
-    }
     }, {
-    "id": 6,
+    "id": 4,
     "name": "Share of Scooter Riders",
     "unit":"",
     "description": "Only a part of the Berlin population makes use of the new dockless shared scooter mobility solution. A recent study on scooter adoption in revealed that 40% of all Parisians have used a scooter by one of the new mobility providers before. However, usage behavior varies heavily. Lime reports that “11% of Parisians report using e-scooters either ‘frequently’ or ‘from time to time’.",
@@ -297,7 +306,7 @@
       "step": 0.01
     }
     },{
-      "id": 7,
+      "id": 5,
       "name": "Credit Card Fees",
       "unit":"share of transaction volume",
       "description": "",
@@ -316,7 +325,7 @@
         "step": ""
       }
     },{
-      "id": 8,
+      "id": 6,
       "name": "Usage",
       "unit":"",
       "description": "",

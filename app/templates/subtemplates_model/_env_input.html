@@ -62,14 +62,13 @@
                 {% endif %}
             </div>
             {% if environment_input.id == 1 %}
-                <div class="container no-gutters"><small class="text-muted" name="slider_tip">You can set the value for this input by moving the slider.</small></div>
+                <div class="container no-gutters"><small class="text-muted" id="slider_tip_env_input" name="slider_tip">You can set the value for this input by moving the slider.</small></div>
             {% endif %}
    
         
         <div class="mt-3" id="div_chart_env_{{ environment_input.id }}" style="display:none">
             <canvas id="chart_env_{{ environment_input.id }}" height="200"></canvas>
         </div>
-        <hr>
         <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right" data-toggle="popover"
             title="information" data-content="#"><b>more →</b></a>
     </div>

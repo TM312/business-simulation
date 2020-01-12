@@ -1,3 +1,20 @@
+// while hovering over the input type navigation area this function displays the description of the respective field
+function viewinputdescription(input_description) {
+    var description_card = document.getElementById('inputdescriptioncard');
+    var description_field = document.getElementById('inputdescription');
+    if (typeof input_description != 'undefined'){
+        description_card.style.display = 'block';
+        description_field.innerHTML = input_description;
+        };
+    };
+
+//this function clears the input type description display when hovering out of the field
+function clear_description() {
+    var description_block = document.getElementById('inputdescriptioncard');
+    description_block.style.display = 'none';
+
+};
+
 // while hovering over the output area this function displays the change in percentage to the default value next to it
 function viewchange(input_id, change_id, default_value) {
     var output = parseFloat(document.getElementById(input_id).innerHTML);
@@ -25,9 +42,15 @@ function clear_viewchange(change_id) {
 
 // this function displays the inputs in the output field
 function display_output_int(input_static_id, output_static_id, input_growth_id, output_growth_id) {
+    var slider_tip_costs = document.getElementById('slider_tip_cost_input');
+    var slider_tip_env = document.getElementById('slider_tip_env_input');
+    var slider_tip_operation = document.getElementById('slider_tip_operation_input');
     var input_static = document.getElementById(input_static_id);
     var output_static = document.getElementById(output_static_id); 
     output_static.value = Math.round(input_static.value);
+    slider_tip_costs.innerHTML = "";
+    slider_tip_env.innerHTML = "";
+    slider_tip_operation.innerHTML = "";
     if (typeof input_growth_id !== 'undefined') {
         var input_growth = document.getElementById(input_growth_id); 
         var output_growth = document.getElementById(output_growth_id);    
@@ -89,6 +112,15 @@ function update_env_chart(chart, update_array_params_env) {
     if (chart.data.datasets.length > 1) {
         chart.data.datasets[0].data = env_array;
     }    
+    chart.update();
+};
+
+function update_operation_chart(chart, update_array_params_operation) {
+    var operation_array = create_arrays.apply(this.id, update_array_params_operation);
+    console.log(operation_array)
+    if (chart.data.datasets.length > 1) {
+        chart.data.datasets[0].data = operation_array;
+    }
     chart.update();
 };
 

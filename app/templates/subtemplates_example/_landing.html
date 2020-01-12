@@ -1,4 +1,6 @@
-<div class="container py-5" id="landing">
+<div class="container py-4" id="landing">
+    <h3 class="text-secondary my-3">Introduction</h3>
+
 
     <div class="row">
         <div class="col col-lg-6" id="heroText">
@@ -8,6 +10,49 @@
                 other.</p>
         </div>
 
+    </div>
+
+
+    <div class="container-fluid mt-4 exampleContainer shadow-lg">
+        <div class="row">
+            <div class="col col-6">
+                <div class="card selector exampleCard">
+                    <div class="card-header">
+                        <p class="lead mb-0">Time Horizon</p>
+                    </div>
+                    <div class="card-body">
+                        <p>some content</p>
+                        <p>This a slider that specifies the time horizon of the simulation. By moving it can be set – in
+                            this case between 12 and 36 months – triggering a recalculation of all variables.</p>
+                        <input type="range" name="weight" id="time_horizon" value="{{ model.time_horizon }}" min="12"
+                            max="36" step="6" oninput="time_horizon_disp.value = time_horizon.value">
+                        <output id="time_horizon_disp">
+                            <p class="ml-5"></p>
+                        </output>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col col-6">
+                <div class="container-fluid">
+                    <div class="card selector">
+                        <div class="card-header">
+                            <p class="lead mb-0">User growth</p>
+                        </div>
+                        <div class="card-body">
+
+                            <p>some content</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <p class="text-center">The simulation’s context is the city of Berlin – a simplification, that allows to better
+            grasp important details of the ongoing mechanisms. In the following you can set different strategic
+            parameters and observe how changes play out across different KPIs.</p>
+        <br>
     </div>
 
 </div>
