@@ -27,7 +27,7 @@ function clear_viewchange(change_id) {
 function display_output_int(input_static_id, output_static_id, input_growth_id, output_growth_id) {
     var input_static = document.getElementById(input_static_id);
     var output_static = document.getElementById(output_static_id); 
-    output_static.value = input_static.value;
+    output_static.value = Math.round(input_static.value);
     if (typeof input_growth_id !== 'undefined') {
         var input_growth = document.getElementById(input_growth_id); 
         var output_growth = document.getElementById(output_growth_id);    
@@ -53,10 +53,10 @@ function create_arrays(max_T, input_type, static_input_id, static_output_id, gro
     if (input_type == 'static') {
         var array_env = array_env_initial;
     } else if (input_type == 'linear') {
-        var array_env = array_env_initial.map((value, index) => (Math.round((value * 1 + input_growth.value * index) * 100) / 100));
+        var array_env = array_env_initial.map((value, index) => (value * 1 + input_growth.value * index));
 
     } else if (input_type == 'exp') {
-        var array_env = array_env_initial.map((value, index) => (Math.round((value * ((1 + 1 * input_growth.value) ** index) + Number.EPSILON) * 100) / 100));
+        var array_env = array_env_initial.map((value, index) => (value * ((1 + 1 * input_growth.value) ** index)));
 
     };
     return array_env;  

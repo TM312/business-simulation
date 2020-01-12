@@ -10,6 +10,7 @@
     {
     "id": 1,
     "name": "Base Price",
+    "unit":"$",
     "description": "Base price for unlocking the scooter",
     "input_type": "static",
     "static_values": {
@@ -22,6 +23,7 @@
     {
     "id": 2,
     "name": "Fare Price",
+    "unit":"$",
     "description": "Some Text",
     "input_type": "static",
     "static_values": {
@@ -36,6 +38,7 @@
         "id": 1,
         "name": "Repair Costs",
         "bundle": "Costs per Ride",
+        "unit":"$",
         "description": "",
         "input_type": "linear",
         "static_values": {
@@ -54,6 +57,7 @@
         "id": 2,
         "name": "Customer Support Costs",
         "bundle": "Costs per Ride",
+        "unit":"$",
         "description": "",
         "input_type": "static",
         "static_values": {
@@ -71,6 +75,7 @@
       }, {
         "id": 3,
         "name": "Charging Costs",
+        "unit":"$",
         "description": "",
         "bundle": "Costs per Ride",
         "input_type": "linear",
@@ -89,6 +94,7 @@
       },{
         "id": 4,
         "name": "Insurance Costs",
+        "unit":"$",
         "description": "",
         "bundle": "Costs per Ride",
         "input_type": "static",
@@ -107,6 +113,7 @@
       },{
         "id": 5,
         "name": "Contra Revenue",
+        "unit":"$",
         "description": "",
         "bundle": "Costs per Ride",
         "input_type": "static",
@@ -126,6 +133,7 @@
         "id": 6,
         "name": "Scooter Costs",
         "bundle": "Scooter Related Costs",
+        "unit":"$",
         "description": "",
         "input_type": "linear",
         "static_values": {
@@ -144,6 +152,7 @@
         "id": 7,
         "name": "Daily City Fees [ per scooter / month] ",
         "bundle": "City Fees",
+        "unit":"$",
         "description": "",
         "input_type": "static",
         "static_values": {
@@ -162,6 +171,7 @@
         "id": 8,
         "name": "Annual City Fees [ per scooter / month] ",
         "bundle": "City Fees",
+        "unit":"$",
         "description": "",
         "input_type": "static",
         "static_values": {
@@ -181,6 +191,7 @@
     {
     "id": 1,
     "name": "Berlin Population",
+    "unit":"people",
     "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
     "input_type": "linear",
     "static_values": {
@@ -198,6 +209,7 @@
     },{
     "id": 2,
     "name": "Covered Area",
+    "unit":"km\u00B2",
     "description": "Refers to the km\u00B2 in which scooters are present.",
     "input_type": "linear",
     "static_values": {
@@ -215,6 +227,7 @@
     },{
     "id": 3,
     "name": "Usage Minutes",
+    "unit":"min/day",
     "description": "Is used for the calculation of costs. 93% of rides take place between 6am and 12am.",
     "input_type": "static",
     "static_values": {
@@ -232,6 +245,7 @@
     },{
     "id": 4,
     "name": "Market Share",
+    "unit":"",
     "description": "This variable represents the market share of the focal firm among shared scooter providers. At the current state, users can set the market share for the simulation. This is a major simplification compared to the real business. In reality, pricing, marketing, and further factors cause dynamics in customer behavior that are difficult to predict. In contrast, by allowing to simulate different scenarios you get an idea of how changes in market share may influence different KPIs.",
     "input_type": "exp",
     "static_values": {
@@ -248,7 +262,8 @@
     }
     },{
     "id": 5,
-    "name": "Average Scooter Lifespan [in days]",
+    "name": "Average Scooter Lifespan",
+    "unit":"days",
     "description": "In March 2019, Quartz released a report on different KPIs for scooter operators such as Lime and Bird, in which it “determined the average lifespan of a Bird scooter in Louisville to be 28.8 day”. The report is based on an open dataset provided by the city of Louisville, Kentucky. In response to Quartz’ report, Lime indicated that the lifespan of a scooter may be longer due to the dynamic moving of scooters across cities without providing details.",
     "input_type": "linear",
     "static_values": {
@@ -265,7 +280,8 @@
     }
     }, {
     "id": 6,
-    "name": "Share of Scooter Riders among Berlin People",
+    "name": "Share of Scooter Riders",
+    "unit":"",
     "description": "Only a part of the Berlin population makes use of the new dockless shared scooter mobility solution. A recent study on scooter adoption in revealed that 40% of all Parisians have used a scooter by one of the new mobility providers before. However, usage behavior varies heavily. Lime reports that “11% of Parisians report using e-scooters either ‘frequently’ or ‘from time to time’.",
     "input_type": "exp",
     "static_values": {
@@ -282,7 +298,8 @@
     }
     },{
       "id": 7,
-      "name": "Credit Card Fees [in % of transaction volume]",
+      "name": "Credit Card Fees",
+      "unit":"share of transaction volume",
       "description": "",
       "bundle": "Payment Processing",
       "input_type": "static",
@@ -301,6 +318,7 @@
     },{
       "id": 8,
       "name": "Usage",
+      "unit":"",
       "description": "",
       "bundle": "Usage",
       "input_type": "custom",
@@ -319,10 +337,12 @@
     }
  ],
   "kpis": [{ "name": "Berlin KPI",
-      "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
+    "unit":"$",  
+    "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
       "sources":"https://www.statistik-berlin-brandenburg.de/publikationen/stat_berichte/2019/SB_A01-01-00_2018q04_BE.pdf https://www.tagesspiegel.de/berlin/amt-fuer-statistik-berlin-waechst-langsamer-als-erwartet/23078220.html"
     },{
       "name": "KPI Share",
+      "unit":"$",
       "description": "As of Q4 2018 the population of Berlin lies at ~3’644’000 and is expected to grow by 30’000 per year for the near future. Given that the characteristics Berlin’s population remains relatively stable within the time horizon, it is a good input for subsequent estimations of potential users.",
       "sources":"https://www.statistik-berlin-brandenburg.de/publikationen/stat_berichte/2019/SB_A01-01-00_2018q04_BE.pdf https://www.tagesspiegel.de/berlin/amt-fuer-statistik-berlin-waechst-langsamer-als-erwartet/23078220.html"
     }]
