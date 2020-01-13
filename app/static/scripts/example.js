@@ -2,11 +2,27 @@
 function viewinputdescription(input_description) {
     var description_card = document.getElementById('inputdescriptioncard');
     var description_field = document.getElementById('inputdescription');
-    if (typeof input_description != 'undefined'){
+    if (typeof input_description != ''){
         description_card.style.display = 'block';
         description_field.innerHTML = input_description;
-        };
     };
+};
+
+function viewinputsource(input_source) {
+    console.log("clicked");
+    var description_card = document.getElementById('inputsourcecard');
+    var description_field = document.getElementById('inputsources');
+    if (description_card.style.display == 'block' && description_field.innerHTML == input_source) {
+        description_card.style.display = 'none'
+    } else {
+        if (typeof input_source != '') {
+            description_card.style.display = 'block';
+            description_field.innerHTML = input_source;
+        };
+    }
+
+    
+};
 
 //this function clears the input type description display when hovering out of the field
 function clear_description() {
