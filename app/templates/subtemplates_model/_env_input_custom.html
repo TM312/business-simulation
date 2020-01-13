@@ -4,7 +4,10 @@
     <div class="card-header form-inline py-3"
             onmouseover="viewinputdescription('{{ environment_input.description }}')" 
             onmouseout="clear_description()">
-        <p class="mb-0">{{ environment_input.name }}</p>        
+        <span class="mb-0">{{ environment_input.name }}</span>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill ml-auto mt-1"
+            data-toggle="popover" onclick="viewinputsource('{{ environment_input.sources }}')" title="Sources"
+            data-content="#"><i> i </i></a>
     </div>
     <div class="card-body">
         <button type="button" id="reset_button_environment_input_{{ environment_input.id }}"

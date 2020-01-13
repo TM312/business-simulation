@@ -8,7 +8,8 @@
             src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
             onclick="toggle_div_chart('div_chart_env_{{ environment_input.id }}', 'icon_chart_env_{{ environment_input.id }}')" />
         <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right mt-1"
-                data-toggle="popover" title="information" data-content="#"><i> i </i></a>
+                data-toggle="popover" onclick="viewinputsource('{{ environment_input.sources }}')" title="Sources" data-content="#"><i> i </i></a>
+
     </div>
     <div class="card-body">
             <div class="container py-1">
