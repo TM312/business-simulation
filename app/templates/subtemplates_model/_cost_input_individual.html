@@ -1,4 +1,6 @@
-<div class="container mb-2 py-1 rounded border">
+<div class="container mb-2 py-1 rounded border"
+            onmouseover="viewinputdescription('{{ cost_input.description }}')" 
+            onmouseout="clear_description()">
     <p class="mr-4 font-weight-bold">{{ cost_input.name }}</p>
 
     <div class="form-inline" id="inputs">

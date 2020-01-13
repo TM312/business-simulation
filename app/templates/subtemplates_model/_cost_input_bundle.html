@@ -3,10 +3,12 @@
 
 <div class="card shadow-sm mb-3 chartcanvas">
     <div class="card-header form-inline py-3">
-        <p class="mb-0">{{ bundle }}</p>
-            <input type="image" class="mr-3 ml-auto" id="icon_chart_costs_{{ bundle_id.index }}"
+        <span class="mb-0">{{ bundle }}</span>
+        <input type="image" class="mr-3 ml-auto" id="icon_chart_costs_{{ bundle_id.index }}"
                 src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
                 onclick="toggle_div_chart('div_chart_costs_{{ bundle_id.index }}', 'icon_chart_costs_{{ bundle_id.index }}')" />
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right mt-1"
+                    data-toggle="popover" title="information" data-content="#"><i> i </i></a>
     </div>
     <div class="card-body">
 
@@ -22,8 +24,7 @@
                 <canvas id="chart_costs_{{ bundle_id.index }}" height="200"></canvas>
             </div>
 
-        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
-            data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
+       
     </div>
 </div>
 

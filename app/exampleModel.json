@@ -44,7 +44,7 @@
         "name": "Repair Costs",
         "bundle": "Costs per Ride",
         "unit":"$",
-        "description": "",
+        "description": "TEST ",
         "input_type": "linear",
         "static_values": {
           "value_min": 0.10,
@@ -63,7 +63,7 @@
         "name": "Customer Support Costs",
         "bundle": "Costs per Ride",
         "unit":"$",
-        "description": "",
+        "description": "TEST TEST",
         "input_type": "static",
         "static_values": {
           "value_min": 0.0,
@@ -158,7 +158,7 @@
         "name": "Daily City Fees [ per scooter / month] ",
         "bundle": "City Fees",
         "unit":"$",
-        "description": "",
+        "description": "Test Description",
         "input_type": "static",
         "static_values": {
           "value_min": 0,
@@ -213,7 +213,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 2,
       "name": "Average Scooter Lifespan",
       "unit": "days",
       "description": "In March 2019, Quartz released a report on different KPIs for scooter operators such as Lime and Bird, in which it “determined the average lifespan of a Bird scooter in Louisville to be 28.8 day”. The report is based on an open dataset provided by the city of Louisville, Kentucky. In response to Quartz’ report, Lime indicated that the lifespan of a scooter may be longer due to the dynamic moving of scooters across cities without providing details.",
@@ -229,6 +229,25 @@
         "value_max": 5,
         "value_default": 0,
         "step": 0.5
+      }
+    },{
+      "id": 3,
+      "name": "Credit Card Fees",
+      "unit": "share of transaction volume",
+      "description": "",
+      "bundle": "Payment Processing",
+      "input_type": "static",
+      "static_values": {
+        "value_min": 0.05,
+        "value_max": 0.15,
+        "value_default": 0.1,
+        "step": 0.01
+      },
+      "growth_factor": {
+        "value_min": "",
+        "value_max": "",
+        "value_default": "",
+        "step": ""
       }
     }
   ],
@@ -307,28 +326,9 @@
     }
     },{
       "id": 5,
-      "name": "Credit Card Fees",
-      "unit":"share of transaction volume",
-      "description": "",
-      "bundle": "Payment Processing",
-      "input_type": "static",
-      "static_values": {
-        "value_min": 0.05,
-        "value_max": 0.15,
-        "value_default": 0.1,
-        "step": 0.01
-      },
-      "growth_factor": {
-        "value_min": "",
-        "value_max": "",
-        "value_default": "",
-        "step": ""
-      }
-    },{
-      "id": 6,
       "name": "Usage",
       "unit":"",
-      "description": "",
+      "description": "Test",
       "bundle": "Usage",
       "input_type": "custom",
       "static_values": {

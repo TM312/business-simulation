@@ -15,6 +15,11 @@
 
 /***** Typography *****/
 
+.card-header {
+  background-color: white;
+
+}
+
 .env_input_header {
   background-color: #82B8D9;
 }

@@ -1,7 +1,9 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-dragdata@latest/dist/chartjs-plugin-dragdata.min.js"></script>
 
 <div class="card shadow-sm mb-3 chartcanvas">
-    <div class="card-header form-inline py-3">
+    <div class="card-header form-inline py-3"
+            onmouseover="viewinputdescription('{{ environment_input.description }}')" 
+            onmouseout="clear_description()">
         <p class="mb-0">{{ environment_input.name }}</p>        
     </div>
     <div class="card-body">
@@ -14,9 +16,7 @@
         </div>
         <div class="container no-gutters"><small class="text-muted" name="slider_tip">You can set the value for each period by dragging.</small></div>
 
-        <hr>
-        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
-            data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
+       
     </div>
 </div>
 

@@ -1,13 +1,19 @@
 
 <div class="card shadow-sm mb-3 chartcanvas">
+    
     <div class="card-header price_input_header">
-        <p class="mb-0">Pricing</p>
+        <span class="mb-0">Pricing</span>
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right mt-1" data-toggle="popover"
+            title="information" data-content="#"><i> i </i></a>
     </div>
     <div class="card-body">
 
         {% for price_input in model.price_inputs %}
 
-            <div class="container mb-2 rounded border">
+            <div class="container mb-2 rounded border"
+            onmouseover="viewinputdescription('{{ price_input.description }}')" 
+            onmouseout="clear_description()"
+            >
                 <div class="form-inline py-2" id="inputs">
                     <span class="mr-4 font-weight-bold">{{ price_input.name}}</span>
                     <span class="col-2 text-center" onmouseover="viewchange(this.id, 'price_change_int_static_{{ price_input.id }}', {{ price_input.static_values.value_default }})" onmouseout="clear_viewchange('price_change_int_static_{{ price_input.id }}')" id="price_output_int_static_{{ price_input.id }}">{{ price_input.static_values.value_default }}</span>
@@ -38,8 +44,6 @@
                 
             {% endfor %}    
 
-        <hr>
-        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right"
-            data-toggle="popover" title="information" data-content="#"><b>more →</b></a>
+        
     </div>
 </div>

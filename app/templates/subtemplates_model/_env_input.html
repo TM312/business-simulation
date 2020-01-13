@@ -1,10 +1,14 @@
 
 <div class="card shadow-sm mb-3 chartcanvas">
-    <div class="card-header form-inline py-3">
-        <p class="mb-0">{{ environment_input.name }}</p>
+    <div class="card-header form-inline py-3"
+            onmouseover="viewinputdescription('{{ environment_input.description }}')" 
+            onmouseout="clear_description()">
+        <span class="mb-0">{{ environment_input.name }}</span>
         <input type="image" class="mr-3 ml-auto" id="icon_chart_env_{{ environment_input.id }}"
             src="{{ url_for('static', filename='images/icons/hide2.png')}}" width="30px"
             onclick="toggle_div_chart('div_chart_env_{{ environment_input.id }}', 'icon_chart_env_{{ environment_input.id }}')" />
+        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right mt-1"
+                data-toggle="popover" title="information" data-content="#"><i> i </i></a>
     </div>
     <div class="card-body">
             <div class="container py-1">
@@ -69,8 +73,7 @@
         <div class="mt-3" id="div_chart_env_{{ environment_input.id }}" style="display:none">
             <canvas id="chart_env_{{ environment_input.id }}" height="200"></canvas>
         </div>
-        <a href="javascript:void(0)" id="information" class="badge badge-light badge-pill float-right" data-toggle="popover"
-            title="information" data-content="#"><b>more →</b></a>
+        
     </div>
 </div>
 
